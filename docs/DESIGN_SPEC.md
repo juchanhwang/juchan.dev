@@ -1,6 +1,6 @@
 # DESIGN SPEC — juchan.dev UI/UX 가이드라인
 
-> **Author**: PD | **Status**: Draft | **Last Updated**: 2026-04-01
+> **Author**: PD | **Status**: Draft | **Last Updated**: 2026-04-02
 > **Based on**: [PRD.md](./PRD.md) | **Font/Layout Reference**: velog.io
 
 ---
@@ -254,6 +254,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 - 배경: `bg-background/80 backdrop-blur-sm`
 - 하단 border: `border-b border-border`
 - 모바일: 로고 + 다크토글만 노출, 나머지 Sheet(drawer)로
+- **단일 전역 네비게이션**: 블로그 포스트 상세 포함 전체 페이지에서 Header nav만 사용 — 포스트 내부에 중복 네비게이션 없음
 
 ### 3.5 Footer
 
@@ -290,6 +291,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 | `TOC` | `components/blog/TOC` | 목차 (H2/H3 자동 추출, 스크롤 하이라이트) |
 | `TagBadge` | `components/blog/TagBadge` | 태그 뱃지 |
 | `TagFilter` | `components/blog/TagFilter` | 태그 필터 탭 (blog 목록 페이지) |
+| `FloatingActions` | `components/blog/FloatingActions` | 좌측 플로팅 좋아요/공유 버튼 (포스트 상세) |
 | `GiscusComment` | `components/blog/GiscusComment` | Giscus 댓글 래퍼 |
 | `SeriesBox` | `components/blog/SeriesBox` | 시리즈 포스트 목록 박스 |
 
@@ -411,7 +413,7 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 ### 5.3 블로그 포스트 상세 (`/blog/[slug]`) — velog 레퍼런스
 
 ```
-┌──────────────────────────── Header ─────────────────────────────┐
+┌───────────── Header (전역 단일 nav — 포스트 내부 중복 nav 없음) ──┐
 │████████████░░░░░░░░░░ ← reading-progress-bar (2px, primary)    │
 
   ← max-w-3xl (768px) centered ──────────────────────────────────
@@ -428,28 +430,28 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 
   ────────────────────────────────────────────────────────────────
 
-  ┌─── 본문 (max-w: 768px) ──────────────────┐ ┌─ TOC (sticky) ─┐
-  │                                          │ │                │
-  │  ## H2 섹션 제목                         │ │ 목차           │
-  │  (border-bottom 포함)                    │ │ ──────────     │
-  │                                          │ │ H2 섹션 1      │
-  │  본문 텍스트 (17px / line-h 1.8)         │ │ ▶ H2 섹션 2  ← │ active
-  │  Lorem ipsum dolor sit amet,            │ │   H3 서브 1    │
-  │  consectetur adipiscing elit.            │ │   H3 서브 2    │
-  │                                          │ │ H2 섹션 3      │
-  │  ### H3 소제목                           │ │                │
-  │                                          │ └────────────────┘
-  │  ┌─ javascript ──────────── [복사] ─┐   │   (xl: 우측 고정)
-  │  │ const foo = "bar";               │   │   (lg 이하: 숨김)
-  │  │ console.log(foo);                │   │
-  │  └──────────────────────────────────┘   │
-  │                                          │
-  │  > 인용구 텍스트                         │
-  │                                          │
-  │  - 목록 항목 1                           │
-  │  - 목록 항목 2                           │
-  │                                          │
-  └──────────────────────────────────────────┘
+  ┌─ 좌측 Float ─┐  ┌─── 본문 (max-w: 768px) ───────────┐  ┌─ TOC (sticky) ─┐
+  │  [♥ 좋아요]  │  │                                   │  │                │
+  │  [↑ 공유]    │  │  ## H2 섹션 제목                  │  │ 목차           │
+  │  (sticky)    │  │  (border-bottom 포함)             │  │ ──────────     │
+  │              │  │                                   │  │ H2 섹션 1      │
+  │              │  │  본문 텍스트 (17px / line-h 1.8)  │  │ ▶ H2 섹션 2  ←│ active
+  │              │  │  Lorem ipsum dolor sit amet,     │  │   H3 서브 1    │
+  │              │  │  consectetur adipiscing elit.     │  │   H3 서브 2    │
+  │              │  │                                   │  │ H2 섹션 3      │
+  │              │  │  ### H3 소제목                    │  │                │
+  │              │  │                                   │  └────────────────┘
+  │              │  │  ┌─ javascript ─── [복사] ─┐     │  (xl+/1280px+: 콘텐츠 바깥 우측)
+  │              │  │  │ const foo = "bar";       │     │  (lg 이하: 숨김)
+  │              │  │  │ console.log(foo);        │     │
+  │              │  │  └─────────────────────────┘     │
+  │              │  │                                   │
+  │              │  │  > 인용구 텍스트                  │
+  │              │  │                                   │
+  │              │  │  - 목록 항목 1                    │
+  │              │  │  - 목록 항목 2                    │
+  │              │  │                                   │
+  └──────────────┘  └───────────────────────────────────┘
 
   ────────────────────────────────────────────────────────────────
 
@@ -477,7 +479,9 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mon
 ┌──────────────────────────── Footer ─────────────────────────────┐
 ```
 
-**모바일 TOC**: `xl` 미만에서 포스트 상단 아래 accordion으로 노출
+**좌측 플로팅 액션**: 본문 좌측 외부에 `position: sticky; top: 50%` 고정. `xl` 미만에서 숨김.
+
+**모바일 TOC**: `xl` 미만(< 1280px)에서 포스트 상단 아래 accordion으로 노출
 
 ```
   [≡ 목차 열기 ▼]
@@ -615,15 +619,17 @@ code:not(pre > code) {
 
 ### 6.3 TOC (Table of Contents)
 
-**데스크톱 (xl+)**:
-- 우측 고정 (`sticky top-20`), 포스트 상단과 함께 등장
+**데스크톱 (xl+, 1280px+)**:
+- 콘텐츠 영역 바깥 우측 플로팅 (`position: sticky; top: 100px`)
 - 너비: 220px
 - H2/H3 두 레벨 표시
 - 활성 항목: `--link` 컬러 + `font-medium`
 - 비활성: `--muted-foreground`
 - H3는 left-padding 12px 들여쓰기
 
-**모바일 (xl 미만)**:
+> **Rationale**: 3컬럼 레이아웃 최소 필요 너비 계산 — 좌측 float(~80px) + gap + 본문(768px) + gap + TOC(220px) ≈ 1116px. 1024px(lg)에서는 컬럼이 충분히 확보되지 않아 1280px(xl)을 기준으로 설정.
+
+**모바일 (xl 미만, < 1280px)**:
 - 포스트 본문 시작 전 accordion
 - 기본: 닫힘 상태
 - 펼침 시 전체 목차 표시
@@ -709,3 +715,4 @@ code:not(pre > code) {
 | 날짜 | 변경 내용 | 작성자 |
 |---|---|---|
 | 2026-04-01 | 초안 작성 (PRD + velog 실측 기반) | PD |
+| 2026-04-02 | 목업 피드백 반영: 1) 헤더 네비게이션 단일화 — 포스트 내부 중복 nav 제거 (3.4 + 5.3), 2) 블로그 상세 3컬럼 레이아웃 명시 — FloatingActions 좌측 플로팅 추가 (4.2 + 5.3), 3) TOC 위치 "콘텐츠 바깥 우측 position: sticky" 확정, 표시 기준 xl+(1280px+) — 3컬럼 공간 계산 기준 (5.3 + 6.3) | PD |
