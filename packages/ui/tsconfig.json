@@ -1,0 +1,10 @@
+{
+  "extends": "@juchan/tsconfig/base.json",
+  "compilerOptions": {
+    "paths": {
+      "@juchan/ui/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
