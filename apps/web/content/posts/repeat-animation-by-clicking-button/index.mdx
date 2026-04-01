@@ -1,0 +1,50 @@
+---
+title: "repeat animation by clicking button"
+date: "2020-01-17"
+description: "Resolution"
+tags: ["TIL"]
+draft: false
+---
+
+**요구사항**
+
+- 'reload' 버튼을 클릭할 때마다 icon이 스핀처럼 돌아가야한다.
+
+I**ssue**
+
+- classList로 add를 하면 클래스가 한 번 추가되고 '반복'이 안된다.
+- add한 뒤에 remove를 해도 한 함수 안에 동일 조건에 넣으면 마지막 값만(remove이든 add) 반환한다.
+- setTimeOut으로 구현할 수는 있으나, 좋은 방법인지에 대한 의문
+
+**Resolution**
+
+- window.requestAnimaiontFrame을 사용
+- 참고 자료: [stackOverFlow](https://stackoverflow.com/questions/45575265/repeat-animation-by-clicking-button)
+
+<img width="600" alt="chat" src="https://user-images.githubusercontent.com/36187948/81469692-66883500-9221-11ea-9166-2b17ceabdfe7.png" />
+
+```ts
+refresh() {
+    const reload = this.el.nativeElement.querySelector('.reload-i');
+    this.loader$.next('after');
+    reload.classList.remove('spin');
+    window.requestAnimationFrame(() => {
+      reload.classList.add('spin');
+    });
+  }
+```
+
+```scss
+.spin {
+  animation: spin 1s linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+```

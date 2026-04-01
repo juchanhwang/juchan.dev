@@ -1,0 +1,38 @@
+---
+title: "How to handle query parameters in a router link"
+date: "2020-05-08"
+description: "How to handle query parameters in a router link. One of:"
+tags: ["Angular"]
+draft: false
+---
+
+
+
+How to handle query parameters in a router link. One of:
+
+- `merge` : Merge new with current parameters.(현재 URL에 포함된 파라미터를 함께 전달)
+- `preserve` : Preserve current parameters.(현재 파라미터만 전달)
+- `default`: 기본형. 일반적인 방법으로 파라미터를 사용
+
+```ts
+type QueryParamsHandling = 'merge' | 'preserve' | '';
+```
+
+- use case
+
+```ts
+goUsers() {
+	this.router.navigate(['/users'], { queryParams: {filter: 'new'}, queryParamsHandling: 'merge' });
+}
+```
+
+⇒ result
+
+```ts
+<http://localhost:4200/users?order=popular&filter=new>
+```
+
+> 참고:
+
+- [Angular.io](https://angular.io/api/router/QueryParamsHandling)
+

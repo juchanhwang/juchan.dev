@@ -1,0 +1,16 @@
+---
+title: "How to debug on whether observable is unsubscribe"
+date: "2020-03-18"
+description: "const sub$ = new Subject();"
+tags: ["TIL"]
+draft: false
+---
+
+
+
+```ts
+const sub$ = new Subject();
+sub$.unsubscribe();
+sub$.closed //true;
+```
+

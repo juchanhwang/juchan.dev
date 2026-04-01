@@ -1,0 +1,116 @@
+---
+title: "타입 호환성"
+date: "2020-10-03"
+description: "타입 호환성은 어떤 타입을 다른 타입으로 취급해도 되는지 판단하는 것이다. 정적 타입 언어의 가장 중요한 역할은 타입 호환성을 통해 컴파일 타임에 호환되지 않는 타입을 찾아내는 것이다. 어떤 변수가 다른 변수에 할당 가능하기 위해서는 해당 변수의 타입이 다른 쪽 변수의 타입에 할당..."
+tags: ["TypeScript"]
+draft: false
+---
+
+타입 호환성은 어떤 타입을 다른 타입으로 취급해도 되는지 판단하는 것이다. 정적 타입 언어의 가장 중요한 역할은 **타입 호환성을 통해 컴파일 타임에 호환되지 않는 타입을 찾아내는 것**이다. 어떤 변수가 다른 변수에 할당 가능하기 위해서는 해당 변수의 타입이 다른 쪽 변수의 타입에 할당 가능해야한다. 할당 가능을 판단할 때는 타입이 가질 수 있는 값의 집합을 생각하면 이해하기 쉽다. 
+
+```ts
+function fn1(a: number, b: number | string) {
+  const v1: number | string = a;
+  const v2: number = b; // error
+}
+
+function fn2(a: 1 | 2) {
+  const v1: 1 | 3 = a; // error
+  const v2: 1 | 2 | 3 = a;
+}
+```
+
+`f1` 함수에서 변수에 값을 할당할 때  할당이 불가능하기 때문에 에러가 발생하고 있다. v2의 타입은 number이고 b라는 변수의 타입은 number 또는 string이다. 숫자와 문자열로 이루어진 값의 집합이 숫자로만 이루어진 값의 집합보다 크기 때문이다.
+
+`fn2` 함수의 v1변수도 마찬가지로, 1과 2로 이루어진 값의 집합은 1과 3으로 이루어진 값의 집합에 넣을 수 없다.
+
+>  타입스크립트는 값 자체의 타입보다 값이 가진 내부 구조에 가빈해서 타입 호환성을 검사한다.
+>
+> 이를 structural typing이라고 부른다.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Product {
+  name: string;
+  age: number;
+}
+
+const person: Person  = { name: 'mike', age: 23 };
+const product: Product = person;
+```
+
+structural typing의 예시이다.  Person과 Product는 서로 타입명이 다르지만 내부 구조는 동일하다. 모든 속성 이름과 타입이 같기 때문에 서로 할당이 가능하다.
+
+아래는 인터페이스의 할당 가능 조건이다.
+
+1. B에 있는 모든 필수 속성의 이름이 A에도 존재해야한다.
+
+2. 같은 속성 이름에 대해, A의 속성이 B의 속성에 할당 가능해야한다.
+
+
+
+```ts
+interface Person {
+  name: string;
+  age?: number;
+}
+
+interface Product {
+  name: string;
+  age: number;
+}
+
+const obj = {
+  name: 'mike',
+}
+
+const person: Person = obj;
+const product: Product = obj; // error
+```
+
+다음과 같이 Person의 age가 선택 속성이면 Person은 Product에 할당 가능하지 않다. Person 값의 집합은 Product 값의 집합보다 크기 때문이다. 
+
+<br />
+
+> 함수의 타입 호환성
+
+함수는 **호출하는 시점에 문제가 없어야** 할당 가능하다.
+
+###### 다음은 함수 타입 A가 타입 B로 할당 가능하기 위한 조건이다.
+
+1. A의 매개변수 개수가 B의 매개변수 개수보다 적어야한다.
+2. 같은 위치의 매개변수에 대해 B의 매개변수가 A의 매개변수로 할당 가능해야한다.
+3. A의 반환값은 B의 반환값으로 할당 가능해야한다.
+
+```ts
+type F1 = (a: number, b: string) => string;
+type F2 = (a: number, b: string | number) => string;
+type F3 = (a: number) => string;
+type F4 = (a: number) => number | string;
+
+let f1: F1 = (a, b) => `${a} ${b.length}`;
+let f2: F2 = (a, b) => `${a} ${b}`;
+let f3: F3 = a => `${a}`;
+let f4:  F4 = a => (a < 10 ? a : 'too big');
+
+f1 = f3;
+f3 = f1; // error
+
+f1 = f2;
+f2 = f1; // error
+
+f4 = f3;
+f3 = f4; // error
+```
+
+함수의 타입 호환성은 함수를 실제로 호출한다고 생각했을 때 문제가 없어야 가능하다.
+
+<br />
+
+> ### 참조 및 출처
+>
+> - [타입스크립트 시작하기](https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/dashboard)

@@ -1,0 +1,268 @@
+---
+title: "인터페이스"
+date: "2020-10-01"
+description: "자바와 같은 다른 언어에서 인터페이스는 클래스를 구현하기 전에 필요한 메서드를 정의하는 용도로 쓰인다. 타입스크립트에서는 좀 더 다양한 것들을 정의하는데 사용된다. 타입스크립트에서 인터페이스로 정의할 수 있는 타입의 종류와 인터페이스로 타입을 정의하는 방법을 알아보겠다."
+tags: ["TypeScript"]
+draft: false
+---
+
+자바와 같은 다른 언어에서 인터페이스는 클래스를 구현하기 전에 필요한 메서드를 정의하는 용도로 쓰인다. 타입스크립트에서는 좀 더 다양한 것들을 정의하는데 사용된다. 타입스크립트에서 인터페이스로 정의할 수 있는 타입의 종류와 인터페이스로 타입을 정의하는 방법을 알아보겠다.
+
+먼저 객체의 타입을 정의하는 방법이다.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+const p1: Person = { name: 'mike', age: 23 };
+const p2: Person = { name: 'mike', age: 'ten' }; // error age는 number타입이여야한다.
+```
+
+interface 키워드 오른쪽에 타입의 이름을 적는다. 그리고, 괄호 안에 필요한 속성을 입력한다.
+
+<br />
+
+> 선택 속성
+
+```ts
+interface Person {
+  name: string;
+  age?: number;
+}
+
+const p1: Person = { name: 'mike' }; // age는 선택 속성이기 때문에 없어도 된다.
+```
+
+> vs undefined 속성
+
+```ts
+interface Person {
+  name: string;
+  age: number | undefined;
+}
+
+const p1: Person = { name: 'mike' }; // error
+```
+
+age는 항상 존재하고, number 또는 undefined타입을 보장한다는 의미이다.
+
+```ts
+interface Person {
+  name: string;
+  age: number | undefined;
+}
+
+const p1: Person = { name: 'mike', age: undefined };
+```
+
+ <br />
+
+> readonly
+
+```ts
+interface Person {
+  readonly name: string;
+  age?: number;
+}
+
+const p1: Person = {
+  name: 'mike',
+}
+p1.name = 'jone' // error
+```
+
+readonly 속성은 읽기 전용이기 때문에 값을 변경하려고 하면 에러가 난다.
+
+<br />
+
+> 타입 호환성
+
+보통은 객체가 interface에 정의되지 않은 속성 값을 가지고 있어도 할당이 가능하다. 
+
+```ts
+interface Person {
+  readonly name: string;
+  age?: name;
+}
+
+const p2 = {
+  name: 'mike',
+  birthday: '1997-01-01'
+};
+const p3: Person = p2;
+```
+
+p2 객체 안에는 birthday라는 속성값이 있는데 Person 안에는 birthday가 없다. 하지만 p2를 Person 타입에 입력할 수 있다. 이는 p3 타입이 p2의 타입을 포함하는 더 큰 타입이기 때문이다. 
+
+<br />
+
+> 인덱스 타입
+
+```ts
+interface Person {
+  readonly name: string;
+  age: number;
+  [key: string]: string | number;
+}
+
+const p1: Person = {
+  name: 'mike',
+  birthday: '1997-01-01',
+  age: '25',
+};
+```
+
+interface에서 속성 이름을 구체적으로 정의하지 않고 **값의 타입만 정의하는 것**을 인덱스 타입이라고 한다.	
+
+```ts
+interface YearPriceMap {
+  [year: number]: A;
+  [year: string]: B;
+}
+```
+
+자바스크립트에서는 속성 이름에 숫자와 문자열을 사용할 수 있다. 그리고, 속성 이름에 숫자를 사용하면 내부적으로 문자열로 변환해서 사용한다. 따라서, 타입스크립트에서는 숫자인 속성 이름 값이 문자열인 속성 이름의 값으로 할당 가능한지 검사한다. 위에 있는 속성은 이름이 숫자이고  아래에 있는 속성은 문자열이다. 이 숫자의 값 A는 B로 할당 가능해야한다. 속성 이름이 숫자인 것은 내부적으로 문자열로 변환이 되서 취급되기 때문에 A는 B로 할당이 가능해야 한다. 
+
+```ts
+ interface YearPriceMap {
+  [year: number]: number;
+  [year: string]: string;
+}
+// error
+```
+
+number는 string에 할당 가능하지 않기 때문에 에러가 나고 있다.
+
+```ts
+ interface YearPriceMap {
+  [year: number]: number;
+  [year: string]: string | number;
+}
+
+const yearMap: YearPriceMap = {};
+yearMap[1998] = 1000;
+yearMap[1998] = 'abc'; // error
+yearMap['2000'] = 1234;
+yearMap['2000'] = 'million';
+```
+
+<br />
+
+> interface로 함수 타입 정의하기
+
+```ts
+// 첫 번째 방법
+interface GetText {
+  (name: string, age: number): string;
+}
+// 두 번째 방법
+type GetText = (name: string, age: number) => string;
+
+const getText: GetText = function (name, age) {
+  const nameText = name.substr(0, 10);
+  const ageText = age >= 35 ? 'senior' : 'junior';
+  return `name: ${nameText}, age: ${ageText};`
+};
+```
+
+왼쪽에 매개변수를 입력하고`(name: string, age: number)` 오른쪽에 반환 타입을 입력한다 `string`.
+
+<br />
+
+> interface로 class 타입 정의하기
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+  isYoungerThan(age: number): boolean;
+}
+
+class SomePerson implements Person {
+  name: string;
+  age: number;
+  constructor(name: strgin, age: number) {
+    this.name = name;
+    this.age = age;
+  }
+  isYoungerThan(age: number) {
+    return this.age < age;
+  }
+}
+```
+
+Person이라는 interface를 implements라는 키워드를 이용해서 class를 만들었다. interface에서 정의된 세 가지 속성을 class에서도 정의해서 사용하고 있다. 만약 interface에서 정의한 이러한 속성을 정의하지 않으면 에러가 발생한다. 
+
+<br />
+
+> interface를 확장한 interface
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Korean extends Person {
+  isLiveInSeoul: boolean;
+}
+
+// 위의 Korean과 동일하다
+interface Korean {
+  name: string;
+  age: number;
+  isLiveInSeoul: boolean;
+}
+```
+
+Person이라는 인터페이스를 extends라는 키워드를 통해 확장해서 새로운 인터페이스르 만들었다. 여기서 Korean은  아래와 같은 인터페이스를 만든 것과 동일하다.
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Programmer {
+  favoriteProgrammingLang: string;
+}
+
+interface Korean extends Person, Programmer {
+  isLiveInSeoul: boolean;
+}
+```
+
+Korean은 Person과 Programmer라는 interface를 확장했다. 따라서, 위에 있는 세 가지 속성이 korean에도 들어있다. 
+
+<br />
+
+> 교차 타입(& 기호)
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Product {
+  name: string;
+  price: number;
+}
+
+type PP = Person & Product;
+const pp: PP = {
+  name: 'a',
+  age: 23,
+  price: 1000,
+}
+```
+
+교차 타입을 interface에서 사용하면 여러 interface를 하나로 합칠 수 있다. 교차 타입은 집합에서의 교집합과 같은 기능을 가진다. 이는 속성의 교집합이 아니라, **타입이 가질 수 있는 값의 집합에 대한 교집합**이다. 타입 PP는 오른쪽에 있는 Person과 Product의 모든 속성값을 포함한다. 
+
+<br />
+
+> ### 참고 및 출처
+>
+> - [타입스크립트 시작하기](https://www.inflearn.com/course/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0/dashboard)

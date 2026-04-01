@@ -1,0 +1,26 @@
+---
+title: "고정된 헤더와 푸터 스크롤값에 따라 감추기"
+date: "2020-04-06"
+description: "고정된 헤더와 푸터 스크롤값에 따라 감추기"
+tags: ["TIL"]
+draft: false
+---
+
+
+
+고정된 헤더와 푸터 스크롤값에 따라 감추기
+
+### 원리의 이해
+
+1. 헤더 요소에 `position: fixed` 를 설정한다.
+2. 스크롤 방향이 아래로 향한다면 헤더 요소에 클래스를 추가하고 이 클래스에 의해 헤더가 위로 사라진다.
+3. 스크롤 방향이 위로 향한다면 추가한 클래스를 제거하여 헤더 요소가 재 등장한다.
+4. requestAnimationFrame을 사용할 것 ⇒ scroll event를 해제할 것.
+
+- 얼마만큼의 스크롤이 있을때 숨겨야할까?
+
+> 참고:
+
+- [Hide/Show header on scroll down/up using pure javascript](https://www.sysleaf.com/js-toggle-header-on-scroll/)
+- [Reactive Sticky Header in Angular](https://netbasal.com/reactive-sticky-header-in-angular-12dbffb3f1d3)
+

@@ -1,0 +1,94 @@
+---
+title: "클래스와 인터페이스"
+date: "2019-11-22"
+description: "인터페이스는 클래스에서 구현부가 빠졌다고 이해하면 편하다. 즉, 어떠한 객체가 이러이러한 프로퍼티 혹은 메소드를 가진다고 선언하는 것이다. 실질적인 구현은 이를 구현한다고 선언하는 클래스에 맡긴다."
+tags: ["TIL"]
+draft: false
+---
+
+
+
+## **클래스와 인터페이스**
+
+**인터페이스**는 클래스에서 구현부가 빠졌다고 이해하면 편하다. 즉, 어떠한 객체가 이러이러한 프로퍼티 혹은 메소드를 가진다고 선언하는 것이다. 실질적인 구현은 이를 구현한다고 선언하는 클래스에 맡긴다.
+
+인터페이스는 일반적으로 **타입 체크를 위해 사용되며 변수, 함수, 클래스**에 사용할 수 있다.
+
+인터페이스는 프로퍼티와 메소드를 가질 수 있다는 점에서 클래스와 유사하나 직접 인스턴스를 생성할 수 없고 모든 메소드는 추상 메소드이다. 단, 추상 클래스의 추상 메소드와 달리 absrtact 키워드를 사용하지 않는다.
+
+**why using class to define a contract hurts**
+
+you write typescript code on the left and it shows you rhe javascript it will be transformed into on the right. Let's try with two classes, with one inheriting from the previous one:
+
+TS code:
+
+```ts
+  class Test{
+      a: number;
+      b: string;
+  }
+  
+  class Test2 extends Test{
+      c: number;
+  }
+```
+
+JS code:
+
+```ts
+  var __extends = (this && this.__extends) || (function () {
+      var extendStatics = Object.setPrototypeOf ||
+          ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+          function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+      return function (d, b) {
+          extendStatics(d, b);
+          function __() { this.constructor = d; }
+          d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+      };
+  })();
+  var Test = /** @class */ (function () {
+      function Test() {
+      }
+      return Test;
+  }());
+  var Test2 = /** @class */ (function (_super) {
+      __extends(Test2, _super);
+      function Test2() {
+          return _super !== null && _super.apply(this, arguments) || this;
+      }
+      return Test2;
+  }(Test));
+```
+
+**now what about the same contract but with interfaces:**
+
+TS code:
+
+```ts
+  interface Test{
+      a: number;
+      b: string;
+  }
+  
+  interface Test2 extends Test{
+      c: number;
+  }
+```
+
+JS code: Nothing! Since TS uses interfaces just to see if you respect the contracts "at compile time", it doesn't translate into anything in JS(in opposite to classes).
+
+참조:
+
+- [TypeScript: 인터페이스(Interface)](https://hyunseob.github.io/2016/10/17/typescript-interface/)
+- [TypeScript(poiema)](https://poiemaweb.com/typescript-interface)
+- [Typescript : class vs interface](https://medium.com/front-end-weekly/typescript-class-vs-interface-99c0ae1c2136)
+- [using TypeScript class vs Using TypeScript interface](https://ultimatecourses.com/blog/classes-vs-interfaces-in-typescript#Using_TypeScript_class_vs_using_Typescript_interface)
+
+
+
+## Design-System
+
+참조:
+
+- [Everything you need to know about Design Systems](https://uxdesign.cc/everything-you-need-to-know-about-design-systems-54b109851969)
+
