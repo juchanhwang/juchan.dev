@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { jetbrainsMono } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -8,8 +10,7 @@ export const metadata: Metadata = {
     default: "juchan.dev",
     template: "%s | juchan.dev",
   },
-  description:
-    "프론트엔드 개발자 주찬황의 기술 블로그 + 포트폴리오",
+  description: "프론트엔드 개발자 주찬황의 기술 블로그 + 포트폴리오",
 };
 
 export default function RootLayout({
@@ -40,7 +41,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
