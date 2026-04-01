@@ -1,4 +1,4 @@
-import { formatDate } from "@/lib/posts";
+import { formatDate } from "../lib/posts";
 
 interface PostHeaderProps {
   title: string;

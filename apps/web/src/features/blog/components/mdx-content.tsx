@@ -2,7 +2,7 @@
 
 import * as runtime from "react/jsx-runtime";
 import { type ComponentPropsWithoutRef, type JSX, useMemo } from "react";
-import { CopyButton } from "@/components/mdx/copy-button";
+import { CopyButton } from "./copy-button";
 
 function useMDXComponent(code: string) {
   return useMemo(() => {

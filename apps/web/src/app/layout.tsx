@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { jetbrainsMono } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { Header, Footer } from "@/features/layout";
 import "./globals.css";
 
 export const metadata: Metadata = {

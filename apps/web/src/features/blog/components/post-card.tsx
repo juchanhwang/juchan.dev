@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatDate } from "@/lib/posts";
+import { formatDate } from "../lib/posts";
 
 interface PostCardProps {
   title: string;

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { filterPostsByTags, getAllTags } from "@/lib/posts";
-import { PostCard } from "@/components/blog/post-card";
-import { TagFilter } from "@/components/blog/tag-filter";
+import {
+  filterPostsByTags,
+  getAllTags,
+  PostCard,
+  TagFilter,
+} from "@/features/blog";
 
 export const metadata: Metadata = {
   title: "블로그",

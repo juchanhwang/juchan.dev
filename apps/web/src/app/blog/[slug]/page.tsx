@@ -6,12 +6,12 @@ import {
   getPublishedPosts,
   getRelatedPosts,
   formatDate,
-} from "@/lib/posts";
-import { MDXContent } from "@/lib/mdx";
-import { PostHeader } from "@/components/blog/post-header";
-import { TableOfContents } from "@/components/blog/table-of-contents";
-import { PostNavigation } from "@/components/blog/post-navigation";
-import { ReadingProgressBar } from "@/components/blog/reading-progress-bar";
+  MDXContent,
+  PostHeader,
+  TableOfContents,
+  PostNavigation,
+  ReadingProgressBar,
+} from "@/features/blog";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
