@@ -1,0 +1,137 @@
+---
+title: "TypeScript 실전 패턴 모음"
+date: "2026-03-20"
+description: "프론트엔드 개발에서 자주 사용하는 TypeScript 패턴들을 정리했습니다. 유틸리티 타입, 타입 가드, 제네릭 활용법을 다룹니다."
+tags: ["TypeScript", "React"]
+series: "TypeScript 마스터"
+draft: false
+---
+
+## Discriminated Union으로 상태 관리
+
+API 응답 상태를 안전하게 다루는 패턴입니다.
+
+```typescript title="types/api.ts"
+type AsyncState<T> =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: T }
+  | { status: "error"; error: Error };
+
+function renderState<T>(state: AsyncState<T>) {
+  switch (state.status) {
+    case "idle":
+      return null;
+    case "loading":
+      return <Spinner />;
+    case "success":
+      return <DataView data={state.data} />;
+    case "error":
+      return <ErrorMessage error={state.error} />;
+  }
+}
+```
+
+`switch`문에서 각 케이스의 타입이 자동으로 좁혀집니다. `state.status`가 `"success"`이면 `state.data`에 안전하게 접근할 수 있습니다.
+
+## 타입 가드 함수
+
+```typescript title="lib/type-guards.ts"
+// 배열에서 null/undefined 제거
+function isNotNullish<T>(value: T | null | undefined): value is T {
+  return value != null;
+}
+
+const items = [1, null, 2, undefined, 3];
+const cleaned = items.filter(isNotNullish);
+// 타입: number[] (null | undefined 제거됨)
+```
+
+### 커스텀 타입 가드 활용
+
+```typescript
+interface Post {
+  title: string;
+  slug: string;
+  draft: boolean;
+}
+
+function isPublished(post: Post): post is Post & { draft: false } {
+  return !post.draft;
+}
+
+const publishedPosts = posts.filter(isPublished);
+```
+
+## 컴포넌트 Props 패턴
+
+### Polymorphic Component
+
+`as` prop으로 렌더링할 HTML 요소를 동적으로 변경하는 패턴입니다.
+
+```tsx title="components/ui/text.tsx" {1-7}
+type TextProps<T extends React.ElementType = "span"> = {
+  as?: T;
+  children: React.ReactNode;
+} & Omit<React.ComponentPropsWithoutRef<T>, "as" | "children">;
+
+function Text<T extends React.ElementType = "span">({
+  as,
+  children,
+  ...props
+}: TextProps<T>) {
+  const Component = as ?? "span";
+  return <Component {...props}>{children}</Component>;
+}
+
+// 사용
+<Text as="h1" className="text-2xl font-bold">제목</Text>
+<Text as="p" className="text-muted-foreground">본문</Text>
+<Text as="label" htmlFor="email">이메일</Text>
+```
+
+### Strict Props with Exhaustive Check
+
+```typescript
+function exhaustiveCheck(value: never): never {
+  throw new Error(`Unhandled value: ${value}`);
+}
+
+type ButtonVariant = "primary" | "secondary" | "danger";
+
+function getButtonStyle(variant: ButtonVariant): string {
+  switch (variant) {
+    case "primary":
+      return "bg-primary text-primary-foreground";
+    case "secondary":
+      return "bg-secondary text-secondary-foreground";
+    case "danger":
+      return "bg-destructive text-white";
+    default:
+      return exhaustiveCheck(variant);
+  }
+}
+```
+
+새로운 variant를 추가하면 `exhaustiveCheck`에서 컴파일 에러가 발생해서 놓치지 않습니다.
+
+## satisfies 연산자 활용
+
+TypeScript 4.9에서 추가된 `satisfies`로 타입 안전성과 추론을 동시에 확보합니다.
+
+```typescript
+type RouteConfig = Record<string, { path: string; auth: boolean }>;
+
+const routes = {
+  home: { path: "/", auth: false },
+  blog: { path: "/blog", auth: false },
+  dashboard: { path: "/dashboard", auth: true },
+} satisfies RouteConfig;
+
+// routes.home.path의 타입이 string이 아니라 "/" 리터럴로 추론됨
+type HomePath = typeof routes.home.path; // "/"
+```
+
+## 정리
+
+TypeScript를 잘 활용하면 런타임 에러를 컴파일 타임에 잡을 수 있습니다. 핵심은 **타입 시스템이 코드의 의도를 표현하도록** 만드는 것입니다.
