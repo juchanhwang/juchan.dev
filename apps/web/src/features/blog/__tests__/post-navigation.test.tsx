@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { PostNavigation } from "./post-navigation";
+import { PostNavigation } from "../components/post-navigation";
 
 vi.mock("next/link", () => ({
   default: ({

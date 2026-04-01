@@ -6,12 +6,12 @@ import {
   getPublishedPosts,
   getRelatedPosts,
   formatDate,
-  MDXContent,
   PostHeader,
   TableOfContents,
   PostNavigation,
   ReadingProgressBar,
 } from "@/features/blog";
+import { MDXContent } from "@/features/mdx";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;

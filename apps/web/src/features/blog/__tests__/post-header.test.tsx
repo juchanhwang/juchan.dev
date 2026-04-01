@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { PostHeader } from "./post-header";
+import { PostHeader } from "../components/post-header";
 
 vi.mock("#velite", () => ({
   posts: [],

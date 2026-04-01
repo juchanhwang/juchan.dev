@@ -65,7 +65,7 @@ import {
   getAdjacentPosts,
   getRelatedPosts,
   formatDate,
-} from "./posts";
+} from "../lib/posts";
 
 describe("getPublishedPosts", () => {
   it("draft 포스트를 제외한다", () => {

@@ -5,7 +5,6 @@ export { PostNavigation } from "./components/post-navigation";
 export { TableOfContents } from "./components/table-of-contents";
 export { TagFilter } from "./components/tag-filter";
 export { ReadingProgressBar } from "./components/reading-progress-bar";
-export { MDXContent } from "./components/mdx-content";
 
 // Lib
 export {
