@@ -54,6 +54,19 @@ vi.mock("#velite", () => ({
       toc: [],
       body: "",
     },
+    {
+      title: "한글 슬러그 포스트",
+      slug: "posts/에서-테스트",
+      slugAsParams: "에서-테스트",
+      permalink: "/blog/에서-테스트",
+      date: "2026-02-01T00:00:00.000Z",
+      description: "한글 slug 테스트",
+      tags: ["React"],
+      draft: false,
+      metadata: { readingTime: 2, wordCount: 300 },
+      toc: [],
+      body: "",
+    },
   ],
 }));
 
@@ -71,23 +84,26 @@ describe("getPublishedPosts", () => {
   it("draft 포스트를 제외한다", () => {
     const posts = getPublishedPosts();
     expect(posts.every((p) => !p.draft)).toBe(true);
-    expect(posts).toHaveLength(3);
+    expect(posts).toHaveLength(4);
   });
 
   it("날짜 역순으로 정렬한다", () => {
     const posts = getPublishedPosts();
     expect(posts[0].slugAsParams).toBe("latest");
     expect(posts[1].slugAsParams).toBe("second");
-    expect(posts[2].slugAsParams).toBe("oldest");
+    expect(posts[2].slugAsParams).toBe("에서-테스트");
+    expect(posts[3].slugAsParams).toBe("oldest");
   });
 });
 
 describe("getAllTags", () => {
   it("published 포스트의 태그를 빈도순으로 반환한다", () => {
     const tags = getAllTags();
-    // TypeScript: 2번 (latest + second), React: 1번, Next.js: 1번, CSS: 1번
-    expect(tags[0]).toBe("TypeScript");
-    expect(tags).toContain("React");
+    // React: 2번 (latest + 한글), TypeScript: 2번 (latest + second) → 동률, 등장순
+    // 그 뒤: Next.js 1번, CSS 1번
+    expect(tags.slice(0, 2)).toEqual(
+      expect.arrayContaining(["React", "TypeScript"]),
+    );
     expect(tags).toContain("Next.js");
     expect(tags).toContain("CSS");
   });
@@ -95,28 +111,27 @@ describe("getAllTags", () => {
   it("draft 포스트의 태그는 포함하지 않는다", () => {
     const tags = getAllTags();
     // draft 포스트의 React 태그는 카운트에서 제외
-    // React는 latest에서만 1번 → TypeScript(2번)보다 빈도 낮음
-    const reactIndex = tags.indexOf("React");
-    const tsIndex = tags.indexOf("TypeScript");
-    expect(tsIndex).toBeLessThan(reactIndex);
+    // React: 2번(latest + 한글), TypeScript: 2번(latest + second) → 동일 빈도
+    expect(tags).not.toContain("Angular");
+    expect(tags).toContain("React");
+    expect(tags).toContain("TypeScript");
   });
 });
 
 describe("filterPostsByTags", () => {
   it("빈 태그 배열이면 전체 published 포스트를 반환한다", () => {
     const posts = filterPostsByTags([]);
-    expect(posts).toHaveLength(3);
+    expect(posts).toHaveLength(4);
   });
 
   it("태그로 필터링한다", () => {
     const posts = filterPostsByTags(["React"]);
-    expect(posts).toHaveLength(1);
-    expect(posts[0].slugAsParams).toBe("latest");
+    expect(posts).toHaveLength(2);
   });
 
   it("여러 태그로 필터링한다 (OR 조건)", () => {
     const posts = filterPostsByTags(["React", "CSS"]);
-    expect(posts).toHaveLength(2);
+    expect(posts).toHaveLength(3);
   });
 
   it("일치하는 태그가 없으면 빈 배열을 반환한다", () => {
@@ -140,12 +155,19 @@ describe("getPostBySlug", () => {
     const post = getPostBySlug("draft-post");
     expect(post).toBeUndefined();
   });
+
+  it("NFD로 인코딩된 한글 slug를 NFC로 정규화하여 찾는다", () => {
+    const nfdSlug = "에서-테스트".normalize("NFD");
+    const post = getPostBySlug(nfdSlug);
+    expect(post?.title).toBe("한글 슬러그 포스트");
+  });
 });
 
 describe("getAdjacentPosts", () => {
+  // 정렬 순서: latest(04-01) → second(03-15) → 에서-테스트(02-01) → oldest(01-01)
   it("이전/다음 포스트를 반환한다", () => {
     const { prev, next } = getAdjacentPosts("second");
-    expect(prev?.slugAsParams).toBe("oldest");
+    expect(prev?.slugAsParams).toBe("에서-테스트");
     expect(next?.slugAsParams).toBe("latest");
   });
 
@@ -158,6 +180,13 @@ describe("getAdjacentPosts", () => {
   it("마지막 포스트는 이전이 없다", () => {
     const { prev, next } = getAdjacentPosts("oldest");
     expect(prev).toBeNull();
+    expect(next?.slugAsParams).toBe("에서-테스트");
+  });
+
+  it("NFD slug로도 인접 포스트를 찾는다", () => {
+    const nfdSlug = "에서-테스트".normalize("NFD");
+    const { prev, next } = getAdjacentPosts(nfdSlug);
+    expect(prev?.slugAsParams).toBe("oldest");
     expect(next?.slugAsParams).toBe("second");
   });
 });
@@ -165,8 +194,9 @@ describe("getAdjacentPosts", () => {
 describe("getRelatedPosts", () => {
   it("같은 태그를 가진 다른 포스트를 반환한다", () => {
     const related = getRelatedPosts("latest");
-    // latest: [React, TypeScript] → second: [TypeScript, Next.js] 매칭
+    // latest: [React, TypeScript] → second(TypeScript), 에서-테스트(React) 매칭
     expect(related.some((p) => p.slugAsParams === "second")).toBe(true);
+    expect(related.some((p) => p.slugAsParams === "에서-테스트")).toBe(true);
   });
 
   it("자기 자신은 제외한다", () => {
@@ -182,6 +212,12 @@ describe("getRelatedPosts", () => {
   it("존재하지 않는 slug는 빈 배열을 반환한다", () => {
     const related = getRelatedPosts("nonexistent");
     expect(related).toHaveLength(0);
+  });
+
+  it("NFD slug로도 관련 포스트를 찾는다", () => {
+    const nfdSlug = "에서-테스트".normalize("NFD");
+    const related = getRelatedPosts(nfdSlug);
+    expect(related.some((p) => p.slugAsParams === "latest")).toBe(true);
   });
 });
 

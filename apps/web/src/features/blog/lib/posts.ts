@@ -30,12 +30,14 @@ export function filterPostsByTags(tags: string[]) {
 }
 
 export function getPostBySlug(slug: string) {
-  return getPublishedPosts().find((post) => post.slugAsParams === slug);
+  const normalized = slug.normalize("NFC");
+  return getPublishedPosts().find((post) => post.slugAsParams === normalized);
 }
 
 export function getAdjacentPosts(slug: string) {
+  const normalized = slug.normalize("NFC");
   const published = getPublishedPosts();
-  const index = published.findIndex((post) => post.slugAsParams === slug);
+  const index = published.findIndex((post) => post.slugAsParams === normalized);
   return {
     prev: index < published.length - 1 ? published[index + 1] : null,
     next: index > 0 ? published[index - 1] : null,
@@ -43,14 +45,15 @@ export function getAdjacentPosts(slug: string) {
 }
 
 export function getRelatedPosts(slug: string, limit = 3) {
+  const normalized = slug.normalize("NFC");
   const published = getPublishedPosts();
-  const current = published.find((post) => post.slugAsParams === slug);
+  const current = published.find((post) => post.slugAsParams === normalized);
   if (!current) return [];
 
   return published
     .filter(
       (post) =>
-        post.slugAsParams !== slug &&
+        post.slugAsParams !== normalized &&
         post.tags.some((tag) => current.tags.includes(tag)),
     )
     .slice(0, limit);

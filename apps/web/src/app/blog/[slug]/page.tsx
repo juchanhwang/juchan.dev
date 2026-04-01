@@ -17,6 +17,11 @@ interface PostPageProps {
   params: Promise<{ slug: string }>;
 }
 
+async function resolveSlug(params: Promise<{ slug: string }>) {
+  const { slug } = await params;
+  return decodeURIComponent(slug).normalize("NFC");
+}
+
 export function generateStaticParams() {
   return getPublishedPosts().map((post) => ({
     slug: post.slugAsParams,
@@ -26,7 +31,7 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const slug = await resolveSlug(params);
   const post = getPostBySlug(slug);
   if (!post) return {};
 
@@ -37,7 +42,7 @@ export async function generateMetadata({
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = await params;
+  const slug = await resolveSlug(params);
   const post = getPostBySlug(slug);
   if (!post) notFound();
 
