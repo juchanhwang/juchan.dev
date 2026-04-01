@@ -29,6 +29,33 @@ export function filterPostsByTags(tags: string[]) {
   );
 }
 
+export function getPostBySlug(slug: string) {
+  return getPublishedPosts().find((post) => post.slugAsParams === slug);
+}
+
+export function getAdjacentPosts(slug: string) {
+  const published = getPublishedPosts();
+  const index = published.findIndex((post) => post.slugAsParams === slug);
+  return {
+    prev: index < published.length - 1 ? published[index + 1] : null,
+    next: index > 0 ? published[index - 1] : null,
+  };
+}
+
+export function getRelatedPosts(slug: string, limit = 3) {
+  const published = getPublishedPosts();
+  const current = published.find((post) => post.slugAsParams === slug);
+  if (!current) return [];
+
+  return published
+    .filter(
+      (post) =>
+        post.slugAsParams !== slug &&
+        post.tags.some((tag) => current.tags.includes(tag)),
+    )
+    .slice(0, limit);
+}
+
 export function formatDate(dateString: string) {
   return new Intl.DateTimeFormat("ko-KR", {
     year: "numeric",
