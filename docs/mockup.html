@@ -267,8 +267,15 @@
     }
     .copy-btn:hover { color: var(--fg); border-color: var(--fg); }
 
-    /* --- TOC --- */
-    .toc { position: sticky; top: 80px; width: 220px; flex-shrink: 0; }
+    /* --- TOC (velog-style floating) --- */
+    .toc {
+      position: fixed;
+      top: 120px;
+      left: calc(50% + 400px + 40px);
+      width: 200px;
+      border-left: 2px solid var(--border);
+      padding-left: 16px;
+    }
     .toc-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
     .toc-link { display: block; padding: 3px 0; font-size: 13px; color: var(--muted); transition: color 0.15s; line-height: 1.4; }
     .toc-link:hover { color: var(--fg); }
@@ -316,21 +323,6 @@
     }
     .tag-btn:hover { background: var(--badge-bg); }
     .tag-btn.active { background: var(--fg); color: var(--bg); }
-
-    /* --- Page navigation tabs --- */
-    .page-tabs {
-      display: flex; gap: 2px; background: var(--bg-subtle);
-      padding: 4px; border-radius: 10px; flex-wrap: wrap;
-      position: sticky; top: 57px; z-index: 40;
-    }
-    .page-tab {
-      padding: 8px 16px; border-radius: 8px; border: none;
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      background: transparent; color: var(--muted);
-      font-family: var(--font-sans); transition: all 0.15s;
-    }
-    .page-tab:hover { color: var(--fg); }
-    .page-tab.active { background: var(--bg); color: var(--fg); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
     /* --- Page sections --- */
     .page-section { display: none; }
@@ -400,18 +392,6 @@
       </div>
     </nav>
   </header>
-
-  <!-- Page tabs (mobile-friendly) -->
-  <div class="container mt-2" style="padding-top:8px">
-    <div class="page-tabs" role="tablist">
-      <button class="page-tab active" onclick="switchPage('home')" role="tab">홈</button>
-      <button class="page-tab" onclick="switchPage('blog')" role="tab">블로그 목록</button>
-      <button class="page-tab" onclick="switchPage('post')" role="tab">글 상세</button>
-      <button class="page-tab" onclick="switchPage('tags')" role="tab">태그</button>
-      <button class="page-tab" onclick="switchPage('projects')" role="tab">프로젝트</button>
-      <button class="page-tab" onclick="switchPage('about')" role="tab">About</button>
-    </div>
-  </div>
 
   <main style="flex:1">
 
@@ -580,7 +560,7 @@
          ═══════════════════════════════════════════ -->
     <section id="page-post" class="page-section">
       <div class="reading-progress"></div>
-      <div class="container-narrow py-12">
+      <div class="container-narrow py-12" style="position:relative">
         <!-- Post header -->
         <div class="flex gap-2 flex-wrap">
           <span class="badge">React</span><span class="badge">Next.js</span><span class="badge">RSC</span>
@@ -591,10 +571,9 @@
         <p class="text-sm text-muted mt-3">2026.03.28 · 12분 읽기</p>
         <hr class="separator mt-6" />
 
-        <!-- Post body + TOC -->
-        <div style="display:flex;gap:48px;margin-top:32px">
-          <!-- Body -->
-          <div class="prose flex-1" style="min-width:0">
+        <!-- Post body -->
+        <div style="margin-top:32px">
+          <div class="prose">
             <h2>React Server Components란?</h2>
             <p>React Server Components(RSC)는 서버에서만 실행되는 새로운 유형의 컴포넌트입니다. 기존 SSR과 다른 점은, RSC는 <strong>번들에 포함되지 않는다</strong>는 것입니다.</p>
 
@@ -645,17 +624,16 @@
             <h2>마무리</h2>
             <p>RSC는 React의 미래입니다. 서버와 클라이언트의 역할을 명확히 분리하면서도, 하나의 컴포넌트 트리에서 자연스럽게 조합할 수 있게 해줍니다.</p>
           </div>
-
-          <!-- TOC (desktop) -->
-          <aside class="toc xl-only">
-            <p class="toc-title">목차</p>
-            <a href="#" class="toc-link active">React Server Components란?</a>
-            <a href="#" class="toc-link indent">SSR vs RSC</a>
-            <a href="#" class="toc-link indent">클라이언트 컴포넌트와의 경계</a>
-            <a href="#" class="toc-link">클라이언트 컴포넌트와의 경계</a>
-            <a href="#" class="toc-link">마무리</a>
-          </aside>
         </div>
+
+        <!-- TOC (velog-style floating, desktop only) -->
+        <aside class="toc xl-only">
+          <p class="toc-title">목차</p>
+          <a href="#" class="toc-link active">React Server Components란?</a>
+          <a href="#" class="toc-link indent">SSR vs RSC</a>
+          <a href="#" class="toc-link">클라이언트 컴포넌트와의 경계</a>
+          <a href="#" class="toc-link">마무리</a>
+        </aside>
 
         <hr class="separator mt-12" />
 
@@ -900,32 +878,17 @@
     // Page switching
     function switchPage(page) {
       document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
 
       document.getElementById('page-' + page).classList.add('active');
 
-      // Activate matching tab
-      document.querySelectorAll('.page-tab').forEach(t => {
-        if (t.textContent.trim().includes(getTabLabel(page))) t.classList.add('active');
-      });
-
       // Activate matching nav link
+      const navMap = { home: '홈', blog: '블로그', post: '글 상세', tags: '태그', projects: '프로젝트', about: 'About' };
       document.querySelectorAll('.nav-link').forEach(l => {
-        if (l.textContent.trim().includes(getNavLabel(page))) l.classList.add('active');
+        if (l.textContent.trim() === navMap[page]) l.classList.add('active');
       });
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function getTabLabel(page) {
-      const map = { home: '홈', blog: '블로그 목록', post: '글 상세', tags: '태그', projects: '프로젝트', about: 'About' };
-      return map[page] || '';
-    }
-
-    function getNavLabel(page) {
-      const map = { home: '홈', blog: '블로그', post: '글 상세', tags: '태그', projects: '프로젝트', about: 'About' };
-      return map[page] || '';
     }
 
     // Theme toggle
