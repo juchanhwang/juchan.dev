@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>juchan.dev — Design Mockup</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ═══════════════════════════════════════════════
+       0. CSS Custom Properties (Design Spec tokens)
+       ═══════════════════════════════════════════════ */
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f8f8f8;
+      --fg: #1a1a1a;
+      --muted: #666666;
+      --border: #e5e5e5;
+      --link: #1d6ed8;
+      --link-hover: #1554a8;
+      --code-bg: #f2f2f2;
+      --code-fg: #2e2e2e;
+      --inline-code-bg: rgba(150, 150, 150, 0.15);
+      --card-bg: #ffffff;
+      --badge-bg: #f0f0f0;
+      --badge-fg: #555;
+      --accent: #333;
+      --accent-fg: #fff;
+      --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", "Fira Code", Menlo, Monaco, Consolas, monospace;
+    }
+
+    .dark {
+      --bg: #121212;
+      --bg-subtle: #1e1e1e;
+      --fg: #ececec;
+      --muted: #9a9a9a;
+      --border: rgba(255, 255, 255, 0.1);
+      --link: #6aadff;
+      --link-hover: #9dc8ff;
+      --code-bg: #1e1e1e;
+      --code-fg: #e0e0e0;
+      --inline-code-bg: rgba(255, 255, 255, 0.08);
+      --card-bg: #1e1e1e;
+      --badge-bg: #2a2a2a;
+      --badge-fg: #bbb;
+      --accent: #e0e0e0;
+      --accent-fg: #1a1a1a;
+    }
+
+    /* ═══════════════════════════════════════════════
+       1. Reset & Base
+       ═══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { color: var(--link-hover); }
+
+    /* ═══════════════════════════════════════════════
+       2. Utility Classes
+       ═══════════════════════════════════════════════ */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; width: 100%; }
+    .container-narrow { max-width: 768px; margin: 0 auto; padding: 0 16px; width: 100%; }
+    .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 16px; width: 100%; }
+
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-1 { gap: 4px; }
+    .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; }
+    .gap-4 { gap: 16px; }
+    .gap-6 { gap: 24px; }
+    .flex-wrap { flex-wrap: wrap; }
+    .flex-1 { flex: 1; }
+    .shrink-0 { flex-shrink: 0; }
+    .grid { display: grid; }
+
+    .text-sm { font-size: 14px; }
+    .text-xs { font-size: 12px; }
+    .text-lg { font-size: 18px; }
+    .text-xl { font-size: 20px; }
+    .text-2xl { font-size: 24px; }
+    .text-3xl { font-size: 30px; }
+    .text-4xl { font-size: 36px; }
+    .font-bold { font-weight: 700; }
+    .font-extrabold { font-weight: 800; }
+    .font-semibold { font-weight: 600; }
+    .font-medium { font-weight: 500; }
+    .text-muted { color: var(--muted); }
+    .text-fg { color: var(--fg); }
+
+    .mt-1 { margin-top: 4px; }
+    .mt-2 { margin-top: 8px; }
+    .mt-3 { margin-top: 12px; }
+    .mt-4 { margin-top: 16px; }
+    .mt-6 { margin-top: 24px; }
+    .mt-8 { margin-top: 32px; }
+    .mt-10 { margin-top: 40px; }
+    .mt-12 { margin-top: 48px; }
+    .mb-4 { margin-bottom: 16px; }
+    .mb-6 { margin-bottom: 24px; }
+    .py-4 { padding-top: 16px; padding-bottom: 16px; }
+    .py-8 { padding-top: 32px; padding-bottom: 32px; }
+    .py-12 { padding-top: 48px; padding-bottom: 48px; }
+    .py-16 { padding-top: 64px; padding-bottom: 64px; }
+    .py-20 { padding-top: 80px; padding-bottom: 80px; }
+    .p-4 { padding: 16px; }
+    .p-5 { padding: 20px; }
+    .px-3 { padding-left: 12px; padding-right: 12px; }
+    .px-4 { padding-left: 16px; padding-right: 16px; }
+
+    .rounded { border-radius: 8px; }
+    .rounded-sm { border-radius: 4px; }
+    .rounded-full { border-radius: 9999px; }
+    .border { border: 1px solid var(--border); }
+    .border-b { border-bottom: 1px solid var(--border); }
+    .border-t { border-top: 1px solid var(--border); }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* ═══════════════════════════════════════════════
+       3. Components
+       ═══════════════════════════════════════════════ */
+
+    /* --- Header --- */
+    .header {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--bg) 80%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      height: 56px;
+    }
+    .header nav { height: 56px; }
+    .header .logo { font-size: 18px; font-weight: 700; color: var(--fg); letter-spacing: -0.02em; }
+    .header .nav-link {
+      font-size: 14px; font-weight: 500;
+      color: var(--muted); padding: 6px 12px; border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .header .nav-link:hover, .header .nav-link.active { color: var(--fg); background: var(--badge-bg); }
+
+    /* --- Theme Toggle --- */
+    .theme-toggle {
+      width: 36px; height: 36px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent; border: none; cursor: pointer;
+      color: var(--muted); font-size: 18px; transition: all 0.15s;
+    }
+    .theme-toggle:hover { background: var(--badge-bg); color: var(--fg); }
+
+    /* --- Badge --- */
+    .badge {
+      display: inline-block; padding: 2px 10px; border-radius: 9999px;
+      font-size: 12px; font-weight: 400;
+      background: var(--badge-bg); color: var(--badge-fg);
+      transition: background 0.15s;
+    }
+    .badge:hover { background: color-mix(in srgb, var(--badge-bg) 80%, var(--muted)); }
+
+    /* --- Button --- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; border: none;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: var(--accent-fg); }
+    .btn-primary:hover { opacity: 0.85; color: var(--accent-fg); }
+    .btn-outline {
+      background: transparent; color: var(--fg);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { background: var(--badge-bg); color: var(--fg); }
+    .btn-sm { padding: 5px 12px; font-size: 13px; }
+
+    /* --- Card --- */
+    .card {
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 20px; transition: all 0.15s; background: var(--bg);
+    }
+    .card:hover { background: color-mix(in srgb, var(--badge-bg) 50%, var(--bg)); }
+
+    .project-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .project-thumb {
+      width: 100%; aspect-ratio: 16/9; border-radius: 6px;
+      background: var(--bg-subtle); display: flex; align-items: center;
+      justify-content: center; font-size: 36px; margin-bottom: 12px;
+    }
+
+    /* --- Separator --- */
+    .separator { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* --- Footer --- */
+    .footer { border-top: 1px solid var(--border); margin-top: auto; }
+    .footer-icon {
+      color: var(--muted); transition: color 0.15s; width: 20px; height: 20px;
+    }
+    .footer-icon:hover { color: var(--fg); }
+
+    /* --- Prose (blog body) --- */
+    .prose { font-size: 17px; line-height: 1.8; letter-spacing: -0.01em; word-break: keep-all; }
+    .prose h2 {
+      font-size: 1.75rem; font-weight: 700;
+      margin-top: 2.5rem; margin-bottom: 1rem;
+      padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+    }
+    .prose h3 { font-size: 1.375rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; }
+    .prose p { margin-bottom: 1.25rem; }
+    .prose a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .prose a:hover { text-decoration-thickness: 2px; }
+    .prose blockquote {
+      border-left: 3px solid var(--border); padding-left: 1rem;
+      color: var(--muted); margin: 1.5rem 0;
+    }
+    .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .prose li { margin-bottom: 0.5rem; }
+    .prose pre {
+      background: var(--code-bg); color: var(--code-fg);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 16px 20px; font-family: var(--font-mono);
+      font-size: 14px; line-height: 1.6; overflow-x: auto; margin: 1.5rem 0;
+      position: relative;
+    }
+    .prose code:not(pre code) {
+      font-family: var(--font-mono); font-size: 0.9em;
+      padding: 0.1em 0.4em; border-radius: 4px;
+      background: var(--inline-code-bg); border: 1px solid var(--border);
+    }
+    .prose strong { font-weight: 700; }
+
+    .code-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px; font-size: 12px; color: var(--muted); font-family: var(--font-mono);
+    }
+    .copy-btn {
+      background: transparent; border: 1px solid var(--border); border-radius: 4px;
+      padding: 2px 8px; font-size: 11px; color: var(--muted); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .copy-btn:hover { color: var(--fg); border-color: var(--fg); }
+
+    /* --- TOC --- */
+    .toc { position: sticky; top: 80px; width: 220px; flex-shrink: 0; }
+    .toc-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
+    .toc-link { display: block; padding: 3px 0; font-size: 13px; color: var(--muted); transition: color 0.15s; line-height: 1.4; }
+    .toc-link:hover { color: var(--fg); }
+    .toc-link.active { color: var(--link); font-weight: 500; }
+    .toc-link.indent { padding-left: 12px; }
+
+    /* --- Reading Progress --- */
+    .reading-progress {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: var(--fg); z-index: 100; width: 35%;
+      transition: width 0.1s linear;
+    }
+
+    /* --- Timeline --- */
+    .timeline-item {
+      position: relative; padding-left: 24px;
+    }
+    .timeline-item::before {
+      content: ''; position: absolute; left: 0; top: 8px;
+      width: 10px; height: 10px; border-radius: 50%; background: var(--fg);
+    }
+    .timeline-item::after {
+      content: ''; position: absolute; left: 4.5px; top: 22px;
+      width: 1px; height: calc(100% + 16px); background: var(--border);
+    }
+    .timeline-item:last-child::after { display: none; }
+
+    /* --- Search Input --- */
+    .search-input {
+      width: 100%; height: 40px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg);
+      color: var(--fg); padding: 0 16px 0 40px; font-size: 14px;
+      font-family: var(--font-sans); outline: none; transition: border-color 0.15s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: var(--link); box-shadow: 0 0 0 3px color-mix(in srgb, var(--link) 20%, transparent); }
+    .search-wrap { position: relative; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 16px; }
+
+    /* --- Tag filter --- */
+    .tag-btn {
+      padding: 6px 12px; border-radius: 6px; border: none;
+      font-size: 14px; cursor: pointer; font-family: var(--font-sans);
+      background: transparent; color: var(--muted); transition: all 0.15s;
+    }
+    .tag-btn:hover { background: var(--badge-bg); }
+    .tag-btn.active { background: var(--fg); color: var(--bg); }
+
+    /* --- Page navigation tabs --- */
+    .page-tabs {
+      display: flex; gap: 2px; background: var(--bg-subtle);
+      padding: 4px; border-radius: 10px; flex-wrap: wrap;
+      position: sticky; top: 57px; z-index: 40;
+    }
+    .page-tab {
+      padding: 8px 16px; border-radius: 8px; border: none;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      background: transparent; color: var(--muted);
+      font-family: var(--font-sans); transition: all 0.15s;
+    }
+    .page-tab:hover { color: var(--fg); }
+    .page-tab.active { background: var(--bg); color: var(--fg); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+    /* --- Page sections --- */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* --- Post navigation --- */
+    .post-nav {
+      display: flex; gap: 16px;
+    }
+    .post-nav-item {
+      flex: 1; padding: 16px; border: 1px solid var(--border);
+      border-radius: 8px; transition: background 0.15s; text-decoration: none; color: var(--fg);
+    }
+    .post-nav-item:hover { background: var(--badge-bg); color: var(--fg); }
+
+    /* --- Pagination --- */
+    .pagination { display: flex; gap: 4px; justify-content: center; }
+    .page-num {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border-radius: 6px; font-size: 14px; color: var(--muted); cursor: pointer; transition: all 0.15s;
+    }
+    .page-num:hover { background: var(--badge-bg); }
+    .page-num.active { background: var(--fg); color: var(--bg); font-weight: 500; }
+
+    /* ═══════════════════════════════════════════════
+       4. Responsive
+       ═══════════════════════════════════════════════ */
+    @media (min-width: 640px) {
+      .sm-flex-row { flex-direction: row; }
+      .sm-grid-2 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 768px) { .md-grid-2 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) {
+      .lg-grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .lg-flex { display: flex; }
+    }
+    @media (min-width: 1280px) { .xl-show { display: block !important; } .xl-hide { display: none !important; } }
+    @media (max-width: 1279px) { .xl-only { display: none !important; } }
+    @media (max-width: 640px) {
+      .prose { font-size: 15px; }
+      .mobile-hide { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════ -->
+  <header class="header">
+    <nav class="container flex items-center justify-between" style="height:56px">
+      <span class="logo">juchan.dev</span>
+      <div class="flex items-center gap-1">
+        <a href="#" class="nav-link active" onclick="switchPage('home');return false">홈</a>
+        <a href="#" class="nav-link" onclick="switchPage('blog');return false">블로그</a>
+        <a href="#" class="nav-link" onclick="switchPage('post');return false">글 상세</a>
+        <a href="#" class="nav-link" onclick="switchPage('tags');return false">태그</a>
+        <a href="#" class="nav-link" onclick="switchPage('projects');return false">프로젝트</a>
+        <a href="#" class="nav-link" onclick="switchPage('about');return false">About</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+          <span class="theme-icon">☀️</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Page tabs (mobile-friendly) -->
+  <div class="container mt-2" style="padding-top:8px">
+    <div class="page-tabs" role="tablist">
+      <button class="page-tab active" onclick="switchPage('home')" role="tab">홈</button>
+      <button class="page-tab" onclick="switchPage('blog')" role="tab">블로그 목록</button>
+      <button class="page-tab" onclick="switchPage('post')" role="tab">글 상세</button>
+      <button class="page-tab" onclick="switchPage('tags')" role="tab">태그</button>
+      <button class="page-tab" onclick="switchPage('projects')" role="tab">프로젝트</button>
+      <button class="page-tab" onclick="switchPage('about')" role="tab">About</button>
+    </div>
+  </div>
+
+  <main style="flex:1">
+
+    <!-- ═══════════════════════════════════════════
+         PAGE: HOME
+         ═══════════════════════════════════════════ -->
+    <section id="page-home" class="page-section active">
+      <div class="container-wide py-20">
+        <!-- Hero -->
+        <p class="text-muted">안녕하세요, 저는</p>
+        <h1 class="text-4xl font-extrabold mt-2" style="letter-spacing:-0.03em">주찬황입니다.</h1>
+        <p class="text-lg text-muted mt-4" style="max-width:480px;line-height:1.7">
+          프론트엔드 개발자 — 읽기 쉬운 코드와 빠른 UI를 만듭니다.
+        </p>
+        <div class="flex gap-3 mt-8">
+          <a href="#" class="btn btn-primary" onclick="switchPage('blog');return false">블로그 읽기 →</a>
+          <a href="#" class="btn btn-outline" onclick="switchPage('projects');return false">프로젝트 보기</a>
+        </div>
+      </div>
+
+      <hr class="separator container-wide" />
+
+      <!-- Recent Posts -->
+      <div class="container-wide py-16">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold">최근 글</h2>
+          <a href="#" class="text-sm text-muted" onclick="switchPage('blog');return false" style="display:flex;align-items:center;gap:4px">
+            전체 글 보기 →
+          </a>
+        </div>
+        <div class="grid gap-4 mt-6 sm-grid-2 lg-grid-3">
+          <article class="card" onclick="switchPage('post')" style="cursor:pointer">
+            <h3 class="font-semibold" style="font-size:16px;line-height:1.4">React Server Components 딥다이브 — 서버와 클라이언트의 경계</h3>
+            <p class="text-sm text-muted mt-2 line-clamp-2">RSC가 기존 SSR과 어떻게 다른지, Next.js App Router에서 어떻게 동작하는지 깊게 살펴봅니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">Next.js</span></div>
+              <span class="text-xs text-muted">2026.03.28 · 12분</span>
+            </div>
+          </article>
+          <article class="card">
+            <h3 class="font-semibold" style="font-size:16px;line-height:1.4">TypeScript 타입 체조 — 실전 유틸리티 타입 만들기</h3>
+            <p class="text-sm text-muted mt-2 line-clamp-2">conditional type, infer를 활용해 실무에서 바로 쓸 수 있는 유틸리티 타입을 만들어봅니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">TypeScript</span></div>
+              <span class="text-xs text-muted">2026.03.15 · 8분</span>
+            </div>
+          </article>
+          <article class="card">
+            <h3 class="font-semibold" style="font-size:16px;line-height:1.4">Zustand vs Jotai — 2026년 상태 관리 비교</h3>
+            <p class="text-sm text-muted mt-2 line-clamp-2">두 라이브러리의 설계 철학 차이, 프로젝트 규모에 따른 선택 기준을 정리합니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">상태관리</span></div>
+              <span class="text-xs text-muted">2026.03.01 · 10분</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <hr class="separator container-wide" />
+
+      <!-- Featured Projects -->
+      <div class="container-wide py-16">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold">추천 프로젝트</h2>
+          <a href="#" class="text-sm text-muted" onclick="switchPage('projects');return false">모든 프로젝트 →</a>
+        </div>
+        <div class="grid gap-4 mt-6 sm-grid-2">
+          <article class="card project-card">
+            <div class="project-thumb">🚀</div>
+            <h3 class="font-semibold">juchan.dev</h3>
+            <p class="text-sm text-muted mt-1">기술 블로그 + 포트폴리오 통합 사이트. Next.js 16, MDX 기반.</p>
+            <div class="flex gap-1 mt-3"><span class="badge">Next.js</span><span class="badge">TypeScript</span><span class="badge">Tailwind</span></div>
+            <div class="flex gap-3 mt-3"><a href="#" class="text-sm text-muted">↗ Demo</a><a href="#" class="text-sm text-muted">↗ GitHub</a></div>
+          </article>
+          <article class="card project-card">
+            <div class="project-thumb">⛪</div>
+            <h3 class="font-semibold">missionary</h3>
+            <p class="text-sm text-muted mt-1">교회 선교 관리 플랫폼. Next.js + NestJS 모노레포.</p>
+            <div class="flex gap-1 mt-3"><span class="badge">Next.js</span><span class="badge">NestJS</span><span class="badge">PostgreSQL</span></div>
+            <div class="flex gap-3 mt-3"><a href="#" class="text-sm text-muted">↗ GitHub</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE: BLOG LIST
+         ═══════════════════════════════════════════ -->
+    <section id="page-blog" class="page-section">
+      <div class="container-narrow py-12">
+        <h1 class="text-3xl font-bold">블로그</h1>
+
+        <!-- Tag filter -->
+        <div class="flex gap-2 flex-wrap mt-6">
+          <button class="tag-btn active">전체</button>
+          <button class="tag-btn">React</button>
+          <button class="tag-btn">TypeScript</button>
+          <button class="tag-btn">Next.js</button>
+          <button class="tag-btn">CSS</button>
+          <button class="tag-btn">성능</button>
+          <button class="tag-btn">상태관리</button>
+          <button class="tag-btn">Testing</button>
+        </div>
+
+        <!-- Search -->
+        <div class="search-wrap mt-4">
+          <span class="search-icon">🔍</span>
+          <input type="search" class="search-input" placeholder="검색어를 입력하세요..." aria-label="블로그 포스트 검색" />
+        </div>
+
+        <!-- Post list -->
+        <div class="flex flex-col gap-4 mt-8">
+          <article class="card" onclick="switchPage('post')" style="cursor:pointer">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">React Server Components 딥다이브 — 서버와 클라이언트의 경계</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">RSC가 기존 SSR과 어떻게 다른지, Next.js App Router에서 어떻게 동작하는지 깊게 살펴봅니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">Next.js</span><span class="badge">RSC</span></div>
+              <span class="text-xs text-muted">2026.03.28 · 12분 읽기</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">TypeScript 타입 체조 — 실전에서 유용한 유틸리티 타입 만들기</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">conditional type, infer, template literal type을 활용해 실무에서 바로 쓸 수 있는 유틸리티 타입을 만들어봅니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">TypeScript</span></div>
+              <span class="text-xs text-muted">2026.03.15 · 8분 읽기</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">Zustand vs Jotai — 2026년 상태 관리 라이브러리 비교</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">Zustand과 Jotai의 설계 철학 차이, 프로젝트 규모에 따른 선택 기준을 정리합니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">상태관리</span></div>
+              <span class="text-xs text-muted">2026.03.01 · 10분 읽기</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">Core Web Vitals 완벽 가이드 — LCP, INP, CLS 최적화</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">Google의 Core Web Vitals 지표를 실제 프로젝트에서 측정하고 개선하는 방법을 단계별로 알아봅니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">성능</span><span class="badge">Web</span></div>
+              <span class="text-xs text-muted">2026.02.20 · 15분 읽기</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">CSS :has() 셀렉터로 JavaScript 없이 인터랙션 구현하기</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">:has() 셀렉터의 브라우저 지원이 완성된 지금, JavaScript 없이 구현할 수 있는 UI 패턴들을 소개합니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">CSS</span></div>
+              <span class="text-xs text-muted">2026.02.10 · 7분 읽기</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination mt-12">
+          <span class="page-num active">1</span>
+          <span class="page-num">2</span>
+          <span class="page-num">3</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE: POST DETAIL (velog style)
+         ═══════════════════════════════════════════ -->
+    <section id="page-post" class="page-section">
+      <div class="reading-progress"></div>
+      <div class="container-narrow py-12">
+        <!-- Post header -->
+        <div class="flex gap-2 flex-wrap">
+          <span class="badge">React</span><span class="badge">Next.js</span><span class="badge">RSC</span>
+        </div>
+        <h1 class="font-extrabold mt-4" style="font-size:clamp(2rem,5vw,2.5rem);line-height:1.4;letter-spacing:-0.02em">
+          React Server Components 딥다이브 — 서버와 클라이언트의 경계
+        </h1>
+        <p class="text-sm text-muted mt-3">2026.03.28 · 12분 읽기</p>
+        <hr class="separator mt-6" />
+
+        <!-- Post body + TOC -->
+        <div style="display:flex;gap:48px;margin-top:32px">
+          <!-- Body -->
+          <div class="prose flex-1" style="min-width:0">
+            <h2>React Server Components란?</h2>
+            <p>React Server Components(RSC)는 서버에서만 실행되는 새로운 유형의 컴포넌트입니다. 기존 SSR과 다른 점은, RSC는 <strong>번들에 포함되지 않는다</strong>는 것입니다.</p>
+
+            <h3>SSR vs RSC</h3>
+            <p>기존 SSR은 서버에서 HTML을 렌더링한 뒤, 클라이언트에서 hydration을 통해 인터랙티브하게 만듭니다. 반면 RSC는 서버에서 렌더링된 결과를 직렬화된 형태로 클라이언트에 전달합니다.</p>
+
+            <!-- Code block -->
+            <pre><div class="code-header"><span>typescript</span><button class="copy-btn" onclick="this.textContent='✓ 복사됨';setTimeout(()=>this.textContent='복사',2000)">복사</button></div><code><span style="color:#c586c0">async function</span> <span style="color:#dcdcaa">PostList</span>() {
+  <span style="color:#c586c0">const</span> posts = <span style="color:#c586c0">await</span> db.posts.<span style="color:#dcdcaa">findMany</span>();
+  <span style="color:#c586c0">return</span> (
+    &lt;<span style="color:#4ec9b0">ul</span>&gt;
+      {posts.<span style="color:#dcdcaa">map</span>(post =&gt; (
+        &lt;<span style="color:#4ec9b0">PostCard</span> <span style="color:#9cdcfe">key</span>={post.id} <span style="color:#9cdcfe">post</span>={post} /&gt;
+      ))}
+    &lt;/<span style="color:#4ec9b0">ul</span>&gt;
+  );
+}</code></pre>
+
+            <p>이 접근 방식의 장점은 명확합니다:</p>
+            <ul>
+              <li><strong>번들 크기 감소</strong>: 서버 전용 코드가 클라이언트로 전송되지 않음</li>
+              <li><strong>직접 데이터 접근</strong>: API 레이어 없이 DB에 직접 접근 가능</li>
+              <li><strong>보안</strong>: 민감한 로직이 서버에서만 실행됨</li>
+            </ul>
+
+            <h2>클라이언트 컴포넌트와의 경계</h2>
+            <blockquote><p>"use client" 디렉티브는 서버와 클라이언트의 경계를 명시적으로 선언합니다.</p></blockquote>
+            <p>클라이언트 컴포넌트가 필요한 경우:</p>
+            <ol>
+              <li><code>useState</code>, <code>useEffect</code> 등 React 훅 사용</li>
+              <li>브라우저 API 접근 (<code>localStorage</code>, <code>window</code> 등)</li>
+              <li>이벤트 핸들러 (<code>onClick</code>, <code>onChange</code> 등)</li>
+            </ol>
+
+            <pre><div class="code-header"><span>typescript</span><button class="copy-btn" onclick="this.textContent='✓ 복사됨';setTimeout(()=>this.textContent='복사',2000)">복사</button></div><code><span style="color:#ce9178">"use client"</span>;
+
+<span style="color:#c586c0">import</span> { <span style="color:#9cdcfe">useState</span> } <span style="color:#c586c0">from</span> <span style="color:#ce9178">"react"</span>;
+
+<span style="color:#c586c0">function</span> <span style="color:#dcdcaa">LikeButton</span>({ initialCount }) {
+  <span style="color:#c586c0">const</span> [count, setCount] = <span style="color:#dcdcaa">useState</span>(initialCount);
+  <span style="color:#c586c0">return</span> (
+    &lt;<span style="color:#4ec9b0">button</span> <span style="color:#9cdcfe">onClick</span>={() =&gt; <span style="color:#dcdcaa">setCount</span>(c =&gt; c + 1)}&gt;
+      ♥ {count}
+    &lt;/<span style="color:#4ec9b0">button</span>&gt;
+  );
+}</code></pre>
+
+            <h2>마무리</h2>
+            <p>RSC는 React의 미래입니다. 서버와 클라이언트의 역할을 명확히 분리하면서도, 하나의 컴포넌트 트리에서 자연스럽게 조합할 수 있게 해줍니다.</p>
+          </div>
+
+          <!-- TOC (desktop) -->
+          <aside class="toc xl-only">
+            <p class="toc-title">목차</p>
+            <a href="#" class="toc-link active">React Server Components란?</a>
+            <a href="#" class="toc-link indent">SSR vs RSC</a>
+            <a href="#" class="toc-link indent">클라이언트 컴포넌트와의 경계</a>
+            <a href="#" class="toc-link">클라이언트 컴포넌트와의 경계</a>
+            <a href="#" class="toc-link">마무리</a>
+          </aside>
+        </div>
+
+        <hr class="separator mt-12" />
+
+        <!-- Related posts -->
+        <div class="mt-8">
+          <h3 class="text-lg font-semibold mb-4">관련 포스트</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-muted">· TypeScript 타입 체조 — 실전 유틸리티 타입 만들기</span>
+              <span class="text-xs text-muted">2026.03.15</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <span class="text-muted">· Zustand vs Jotai — 2026년 상태 관리 비교</span>
+              <span class="text-xs text-muted">2026.03.01</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post navigation -->
+        <div class="post-nav mt-8">
+          <a href="#" class="post-nav-item" style="text-align:left">
+            <p class="text-xs text-muted">← 이전 글</p>
+            <p class="text-sm font-medium mt-1">Core Web Vitals 완벽 가이드</p>
+          </a>
+          <a href="#" class="post-nav-item" style="text-align:right">
+            <p class="text-xs text-muted">다음 글 →</p>
+            <p class="text-sm font-medium mt-1">TypeScript 타입 체조</p>
+          </a>
+        </div>
+
+        <!-- Giscus placeholder -->
+        <div class="mt-12 p-5 border rounded" style="text-align:center">
+          <p class="text-sm text-muted">💬 Giscus 댓글 영역 (GitHub Discussions 연동 예정)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE: TAGS
+         ═══════════════════════════════════════════ -->
+    <section id="page-tags" class="page-section">
+      <div class="container-narrow py-12">
+        <a href="#" class="text-sm text-muted" onclick="switchPage('blog');return false">← 전체 태그 목록</a>
+        <h1 class="text-3xl font-bold mt-4">#React <span class="text-muted">(3개)</span></h1>
+
+        <div class="flex flex-col gap-4 mt-8">
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">React Server Components 딥다이브</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">RSC가 기존 SSR과 어떻게 다른지 살펴봅니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">Next.js</span></div>
+              <span class="text-xs text-muted">2026.03.28 · 12분</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">Zustand vs Jotai — 2026년 상태 관리 비교</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">두 라이브러리의 설계 철학 차이를 정리합니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">상태관리</span></div>
+              <span class="text-xs text-muted">2026.03.01 · 10분</span>
+            </div>
+          </article>
+          <article class="card">
+            <h2 class="text-lg font-semibold" style="line-height:1.4">React 컴포넌트 테스트 전략</h2>
+            <p class="text-sm text-muted mt-2 line-clamp-2">Vitest + RTL로 효과적으로 테스트하는 전략과 패턴을 공유합니다.</p>
+            <div class="flex items-center justify-between mt-3">
+              <div class="flex gap-1"><span class="badge">React</span><span class="badge">Testing</span></div>
+              <span class="text-xs text-muted">2026.01.25 · 11분</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE: PROJECTS
+         ═══════════════════════════════════════════ -->
+    <section id="page-projects" class="page-section">
+      <div class="container-wide py-12">
+        <h1 class="text-3xl font-bold">프로젝트</h1>
+        <div class="grid gap-6 mt-8 sm-grid-2 lg-grid-3">
+          <article class="card project-card">
+            <div class="project-thumb">🚀</div>
+            <h3 class="font-semibold">juchan.dev</h3>
+            <p class="text-sm text-muted mt-1" style="line-height:1.6">기술 블로그 + 포트폴리오 통합 사이트. Next.js 16, MDX 기반.</p>
+            <div class="flex gap-1 flex-wrap mt-3"><span class="badge">Next.js</span><span class="badge">TypeScript</span><span class="badge">Tailwind</span><span class="badge">MDX</span></div>
+            <div class="flex gap-3 mt-4"><a href="#" class="text-sm text-muted">↗ Demo</a><a href="#" class="text-sm text-muted">↗ GitHub</a></div>
+          </article>
+          <article class="card project-card">
+            <div class="project-thumb">⛪</div>
+            <h3 class="font-semibold">missionary</h3>
+            <p class="text-sm text-muted mt-1" style="line-height:1.6">교회 선교 관리 플랫폼. Next.js + NestJS 모노레포, overlay-kit.</p>
+            <div class="flex gap-1 flex-wrap mt-3"><span class="badge">Next.js</span><span class="badge">NestJS</span><span class="badge">PostgreSQL</span><span class="badge">Turborepo</span></div>
+            <div class="flex gap-3 mt-4"><a href="#" class="text-sm text-muted">↗ GitHub</a></div>
+          </article>
+          <article class="card project-card">
+            <div class="project-thumb">🎨</div>
+            <h3 class="font-semibold">class101-ui</h3>
+            <p class="text-sm text-muted mt-1" style="line-height:1.6">Class101 디자인 시스템 UI 라이브러리. 접근성 준수, Storybook 문서화.</p>
+            <div class="flex gap-1 flex-wrap mt-3"><span class="badge">React</span><span class="badge">TypeScript</span><span class="badge">Storybook</span><span class="badge">Emotion</span></div>
+            <div class="flex gap-3 mt-4"><a href="#" class="text-sm text-muted">↗ GitHub</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE: ABOUT
+         ═══════════════════════════════════════════ -->
+    <section id="page-about" class="page-section">
+      <div class="container-narrow py-12">
+        <!-- Bio -->
+        <div class="flex gap-6" style="flex-wrap:wrap">
+          <div class="shrink-0" style="width:96px;height:96px;border-radius:50%;background:var(--bg-subtle);display:flex;align-items:center;justify-content:center;font-size:40px">
+            👨‍💻
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold">주찬황</h1>
+            <p class="text-muted mt-1">Frontend Engineer</p>
+            <div class="flex gap-2 flex-wrap mt-3">
+              <a href="#" class="btn btn-outline btn-sm">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+              </a>
+              <a href="#" class="btn btn-outline btn-sm">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </a>
+              <a href="#" class="btn btn-outline btn-sm">✉ 이메일</a>
+              <a href="#" class="btn btn-outline btn-sm">⬇ 이력서 PDF</a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="separator mt-10" />
+
+        <!-- Intro -->
+        <section class="mt-10">
+          <h2 class="text-xl font-bold">소개</h2>
+          <div class="mt-4 text-muted" style="font-size:15px;line-height:1.7;display:flex;flex-direction:column;gap:12px">
+            <p>"변경하기 쉬운 코드가 좋은 코드"라는 철학을 가진 프론트엔드 개발자입니다.</p>
+            <p>사용자에게 빠르고 접근성 높은 인터페이스를 제공하는 것에 관심이 많으며, 컴포넌트 설계와 성능 최적화를 즐깁니다.</p>
+            <p>기술 글을 쓰면서 학습한 내용을 정리하고, 오픈소스 생태계에 기여하는 것을 좋아합니다.</p>
+          </div>
+        </section>
+
+        <hr class="separator mt-10" />
+
+        <!-- Skills -->
+        <section class="mt-10">
+          <h2 class="text-xl font-bold">기술 스택</h2>
+          <div class="mt-4" style="display:flex;flex-direction:column;gap:16px">
+            <div>
+              <p class="text-sm font-semibold text-muted">Frontend</p>
+              <div class="flex gap-2 flex-wrap mt-2">
+                <span class="badge" style="font-size:13px;padding:4px 12px">React</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">Next.js</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">TypeScript</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">Tailwind CSS</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">Zustand</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-muted">Backend</p>
+              <div class="flex gap-2 flex-wrap mt-2">
+                <span class="badge" style="font-size:13px;padding:4px 12px">Node.js</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">NestJS</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">PostgreSQL</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-muted">DevOps / Tools</p>
+              <div class="flex gap-2 flex-wrap mt-2">
+                <span class="badge" style="font-size:13px;padding:4px 12px">Docker</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">Vercel</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">GitHub Actions</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">Figma</span>
+                <span class="badge" style="font-size:13px;padding:4px 12px">Turborepo</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="separator mt-10" />
+
+        <!-- Career -->
+        <section class="mt-10">
+          <h2 class="text-xl font-bold">경력</h2>
+          <div class="mt-6" style="display:flex;flex-direction:column;gap:32px">
+            <div class="timeline-item">
+              <p class="text-sm text-muted">2024.03 ~ 현재</p>
+              <p class="font-semibold mt-1">스타트업 A · Frontend Engineer</p>
+              <ul class="mt-2 text-sm text-muted" style="list-style:none;padding-left:0;display:flex;flex-direction:column;gap:6px">
+                <li>· 디자인 시스템 구축으로 UI 개발 속도 40% 향상</li>
+                <li>· Core Web Vitals LCP 3.2s → 1.8s 개선</li>
+                <li>· Next.js App Router 마이그레이션 리드</li>
+              </ul>
+            </div>
+            <div class="timeline-item">
+              <p class="text-sm text-muted">2022.01 ~ 2024.02</p>
+              <p class="font-semibold mt-1">스타트업 B · Frontend Developer</p>
+              <ul class="mt-2 text-sm text-muted" style="list-style:none;padding-left:0;display:flex;flex-direction:column;gap:6px">
+                <li>· React + TypeScript 기반 어드민 대시보드 구축</li>
+                <li>· Storybook 기반 컴포넌트 문서화 체계 도입</li>
+                <li>· E2E 테스트 커버리지 0% → 60% 달성</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container flex items-center justify-between py-8" style="flex-wrap:wrap;gap:16px">
+      <div class="text-sm text-muted">
+        <p>© 2026 juchan.dev</p>
+        <p class="mt-1">Powered by Next.js & Vercel</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#" class="footer-icon" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="#" class="footer-icon" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="#" class="footer-icon" aria-label="RSS">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+       ═══════════════════════════════════════════ -->
+  <script>
+    // Page switching
+    function switchPage(page) {
+      document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      document.getElementById('page-' + page).classList.add('active');
+
+      // Activate matching tab
+      document.querySelectorAll('.page-tab').forEach(t => {
+        if (t.textContent.trim().includes(getTabLabel(page))) t.classList.add('active');
+      });
+
+      // Activate matching nav link
+      document.querySelectorAll('.nav-link').forEach(l => {
+        if (l.textContent.trim().includes(getNavLabel(page))) l.classList.add('active');
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function getTabLabel(page) {
+      const map = { home: '홈', blog: '블로그 목록', post: '글 상세', tags: '태그', projects: '프로젝트', about: 'About' };
+      return map[page] || '';
+    }
+
+    function getNavLabel(page) {
+      const map = { home: '홈', blog: '블로그', post: '글 상세', tags: '태그', projects: '프로젝트', about: 'About' };
+      return map[page] || '';
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark');
+      html.classList.toggle('dark');
+      document.querySelector('.theme-icon').textContent = isDark ? '🌙' : '☀️';
+    }
+
+    // Tag filter interaction (demo)
+    document.querySelectorAll('.tag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.flex').querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
