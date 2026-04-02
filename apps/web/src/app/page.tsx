@@ -1,30 +1,10 @@
 import Link from "next/link";
 import { getPublishedPosts, PostCard } from "@/features/blog";
-
-const FEATURED_PROJECTS = [
-  {
-    emoji: "🚀",
-    name: "juchan.dev",
-    description: "기술 블로그 + 포트폴리오 통합 사이트. Next.js 16, MDX 기반.",
-    tags: ["Next.js", "TypeScript", "Tailwind"],
-    links: {
-      demo: "https://juchan.dev",
-      github: "https://github.com/juchanhwang/juchan.dev",
-    },
-  },
-  {
-    emoji: "⛪",
-    name: "missionary",
-    description: "교회 선교 관리 플랫폼. Next.js + NestJS 모노레포.",
-    tags: ["Next.js", "NestJS", "PostgreSQL"],
-    links: {
-      github: "https://github.com/juchanhwang/missionary",
-    },
-  },
-] as const;
+import { getFeaturedProjects, ProjectCard } from "@/features/portfolio";
 
 export default function Home() {
   const recentPosts = getPublishedPosts().slice(0, 3);
+  const featuredProjects = getFeaturedProjects();
 
   return (
     <>
@@ -95,49 +75,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {FEATURED_PROJECTS.map((project) => (
-            <article
-              key={project.name}
-              className="rounded-lg border border-border p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary text-xl">
-                {project.emoji}
-              </div>
-              <h3 className="mt-3 font-semibold">{project.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {project.description}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-secondary px-2.5 py-0.5 text-xs text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-3 flex gap-3">
-                {"demo" in project.links && (
-                  <a
-                    href={project.links.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    ↗ Demo
-                  </a>
-                )}
-                <a
-                  href={project.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  ↗ GitHub
-                </a>
-              </div>
-            </article>
+          {featuredProjects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
           ))}
         </div>
       </section>
