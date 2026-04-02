@@ -7,17 +7,8 @@ interface ProcessTimelineProps {
 }
 
 export function ProcessTimeline({ steps, intro }: ProcessTimelineProps) {
-  const hasAnyImage = steps.some((step) => step.image);
-
   return (
-    <section
-      id="process"
-      className={
-        hasAnyImage
-          ? "mx-auto max-w-[1100px] px-4 py-20"
-          : "mx-auto max-w-3xl px-4 py-20"
-      }
-    >
+    <section id="process" className="mx-auto max-w-[1100px] px-4 py-20">
       <div className="scroll-reveal">
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Process

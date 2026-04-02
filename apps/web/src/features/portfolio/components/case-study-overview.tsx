@@ -19,7 +19,7 @@ export function CaseStudyOverview({
       </div>
 
       <FadeInUp delay={0.2}>
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-[1.05rem] leading-[1.85] text-muted-foreground">
+        <div className="mt-8 space-y-4 text-[1.05rem] leading-[1.85] text-muted-foreground">
           {overview.split("\n\n").map((paragraph, i) => (
             <p
               key={i}
