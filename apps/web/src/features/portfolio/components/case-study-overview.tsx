@@ -48,7 +48,7 @@ export function CaseStudyOverview({
               key={i}
               dangerouslySetInnerHTML={{
                 __html: paragraph.replace(
-                  /(\d[\d,.]*\s*[명개만]+|[\d]+[개%+])/g,
+                  /(\d[\d,.]*[~\-]\d[\d,.]*\s*[명개만]+|\d[\d,.]*\s*[명개만]+|[\d]+[개%+])/g,
                   '<strong class="text-foreground font-semibold">$1</strong>'
                 ),
               }}
