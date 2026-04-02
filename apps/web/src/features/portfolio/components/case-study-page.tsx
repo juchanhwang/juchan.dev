@@ -56,7 +56,6 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         role={caseStudy.role}
         period={caseStudy.period}
         teamSize={caseStudy.teamSize}
-        tech={project.tags}
         overview={caseStudy.overview}
         overviewLink={caseStudy.overviewLink}
       />
@@ -71,7 +70,7 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
 
       <hr className="mx-auto max-w-3xl border-border" />
 
-      <ProcessTimeline steps={caseStudy.processSteps} />
+      <ProcessTimeline steps={caseStudy.processSteps} tech={project.tags} />
 
       {caseStudy.devProcess && (
         <>

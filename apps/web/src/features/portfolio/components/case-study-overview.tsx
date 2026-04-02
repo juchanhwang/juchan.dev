@@ -11,7 +11,6 @@ interface CaseStudyOverviewProps {
   role: string;
   period: string;
   teamSize: string;
-  tech: string[];
   overview: string;
   overviewLink?: { title: string; href: string };
 }
@@ -20,7 +19,6 @@ export function CaseStudyOverview({
   role,
   period,
   teamSize,
-  tech,
   overview,
   overviewLink,
 }: CaseStudyOverviewProps) {
@@ -45,18 +43,7 @@ export function CaseStudyOverview({
         ))}
       </div>
 
-      <FadeInUp delay={0.4} className="mt-8 flex flex-wrap justify-center gap-2">
-        {tech.map((t) => (
-          <span
-            key={t}
-            className="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground"
-          >
-            {t}
-          </span>
-        ))}
-      </FadeInUp>
-
-      <FadeInUp delay={0.5}>
+      <FadeInUp delay={0.4}>
         <p className="mx-auto mt-8 max-w-2xl text-center leading-relaxed text-muted-foreground">
           {overview}
         </p>

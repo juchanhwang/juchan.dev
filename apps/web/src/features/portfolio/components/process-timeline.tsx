@@ -3,9 +3,10 @@ import type { ProcessStep } from "../lib/projects";
 
 interface ProcessTimelineProps {
   steps: ProcessStep[];
+  tech?: string[];
 }
 
-export function ProcessTimeline({ steps }: ProcessTimelineProps) {
+export function ProcessTimeline({ steps, tech }: ProcessTimelineProps) {
   const hasAnyImage = steps.some((step) => step.image);
 
   return (
@@ -23,6 +24,19 @@ export function ProcessTimeline({ steps }: ProcessTimelineProps) {
         </p>
         <h2 className="mt-2 text-2xl font-bold">어떻게 해결했나</h2>
       </div>
+
+      {tech && tech.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-2">
+          {tech.map((t) => (
+            <span
+              key={t}
+              className="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div className="mt-12 space-y-20">
         {steps.map((step, index) => {
