@@ -52,9 +52,9 @@ export default defineConfig({
         {
           theme: {
             light: "github-light",
-            dark: "github-dark-dimmed",
+            dark: "one-dark-pro",
           },
-          keepBackground: false,
+          keepBackground: true,
         },
       ],
       [

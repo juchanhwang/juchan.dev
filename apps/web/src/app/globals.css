@@ -221,8 +221,6 @@
 }
 
 .prose pre {
-  background: var(--code-bg);
-  color: var(--code-fg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px 20px;
@@ -269,8 +267,6 @@ html.dark .shiki span {
 
 /* Code block figure wrapper */
 [data-rehype-pretty-code-figure] pre {
-  background: var(--code-bg);
-  color: var(--code-fg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px 20px;
@@ -288,7 +284,7 @@ html.dark .shiki span {
   font-weight: 500;
   font-family: var(--font-jetbrains-mono), var(--font-mono);
   color: var(--muted-foreground);
-  background: var(--code-bg);
+  background: var(--background-subtle);
   border: 1px solid var(--border);
   border-bottom: none;
   border-radius: 8px 8px 0 0;

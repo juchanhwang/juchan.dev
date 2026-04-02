@@ -60,7 +60,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
   if (flatItems.length === 0) return null;
 
   return (
-    <aside className="absolute left-full top-0 ml-10 hidden xl:block">
+    <aside className="absolute left-full top-0 bottom-0 ml-10 hidden xl:block">
       <nav className="sticky top-28 w-52" aria-label="목차">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
           목차
