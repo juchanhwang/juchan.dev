@@ -61,6 +61,7 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         teamSize={caseStudy.teamSize}
         tech={project.tags}
         overview={caseStudy.overview}
+        overviewLink={caseStudy.overviewLink}
       />
 
       <hr className="mx-auto max-w-3xl border-border" />
