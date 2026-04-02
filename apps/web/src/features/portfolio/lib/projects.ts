@@ -36,6 +36,8 @@ export interface TeamMember {
 
 export interface DevDocument {
   title: string;
+  description: string;
+  emoji: string;
   href: string;
 }
 
@@ -146,7 +148,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/juchanhwang/missionary",
     featured: true,
     caseStudy: {
-      category: "Full-Stack Web Application",
+      category: "AI Native Web Application",
       impact:
         "교회 선교 운영의 모든 것을 하나의 플랫폼으로",
       period: "2026.01 — ing",
@@ -262,23 +264,33 @@ export const projects: Project[] = [
         documents: [
           {
             title: "PRD — 등록 관리",
-            href: "/projects/missionary/docs/participation-prd.md",
+            description: "등록 관리 기능 요구사항 v1.11",
+            emoji: "📋",
+            href: "/projects/missionary/docs/participation-prd",
           },
           {
             title: "디자인 스펙",
-            href: "/projects/missionary/docs/participation-design-spec.md",
+            description: "등록 관리 UI/UX 설계 명세",
+            emoji: "🎨",
+            href: "/projects/missionary/docs/participation-design-spec",
           },
           {
             title: "FE 테크스펙",
-            href: "/projects/missionary/docs/participation-fe-plan.md",
+            description: "React/Next.js 구현 계획",
+            emoji: "⚙️",
+            href: "/projects/missionary/docs/participation-fe-plan",
           },
           {
             title: "BE 테크스펙",
-            href: "/projects/missionary/docs/participation-be-plan.md",
+            description: "NestJS API 구현 계획",
+            emoji: "🔧",
+            href: "/projects/missionary/docs/participation-be-plan",
           },
           {
             title: "PRD — 연계지 관리",
-            href: "/projects/missionary/docs/region-prd.md",
+            description: "연계지 관리 기능 요구사항",
+            emoji: "📋",
+            href: "/projects/missionary/docs/region-prd",
           },
         ],
       },
