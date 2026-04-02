@@ -14,4 +14,7 @@ export type {
   AsIsRow,
   Screenshot,
   DemoVideo,
+  TeamMember,
+  DevDocument,
+  DevProcess,
 } from "./lib/projects";

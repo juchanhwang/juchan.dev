@@ -28,6 +28,24 @@ export interface DemoVideo {
   poster?: string;
 }
 
+export interface TeamMember {
+  role: string;
+  label: string;
+  description: string;
+}
+
+export interface DevDocument {
+  title: string;
+  href: string;
+}
+
+export interface DevProcess {
+  description: string;
+  team: TeamMember[];
+  cycle: string[];
+  documents: DevDocument[];
+}
+
 export interface CaseStudy {
   category: string;
   impact: string;
@@ -40,6 +58,7 @@ export interface CaseStudy {
   problemContent: string;
   asIsTable?: AsIsRow[];
   processSteps: ProcessStep[];
+  devProcess?: DevProcess;
   metrics: Metric[];
   resultContent: string;
   screenshots?: Screenshot[];
@@ -200,6 +219,69 @@ export const projects: Project[] = [
             "등록 현황 대시보드. 등록자 목록, 입금 상태, 필터링 및 일괄 작업 기능을 보여준다.",
         },
       ],
+      devProcess: {
+        description:
+          "Claude의 Agent Team 모드를 활용하여, 5명의 AI 에이전트가 협업하는 방식으로 개발했습니다. 각 에이전트가 역할에 맞는 산출물을 생성하고, 파이프라인을 따라 검증·구현·테스트까지 일관된 프로세스로 진행합니다.",
+        team: [
+          {
+            role: "PO",
+            label: "Product Owner",
+            description: "요구사항 정의, PRD 작성",
+          },
+          {
+            role: "PD",
+            label: "Product Designer",
+            description: "UI/UX 설계, 디자인 스펙",
+          },
+          {
+            role: "FE",
+            label: "Frontend Engineer",
+            description: "React/Next.js 구현",
+          },
+          {
+            role: "BE",
+            label: "Backend Engineer",
+            description: "NestJS API 구현",
+          },
+          {
+            role: "QA",
+            label: "QA Engineer",
+            description: "테스트 전략, 코드 검증",
+          },
+        ],
+        cycle: [
+          "PRD",
+          "디자인 스펙",
+          "FE/BE 테크스펙",
+          "구현",
+          "QA",
+          "PR",
+          "코드 리뷰",
+          "배포",
+        ],
+        documents: [
+          {
+            title: "PRD — 등록 관리",
+            href: "/projects/missionary/docs/participation-prd.md",
+          },
+          {
+            title: "디자인 스펙",
+            href: "/projects/missionary/docs/participation-design-spec.md",
+          },
+          {
+            title: "FE 테크스펙",
+            href: "/projects/missionary/docs/participation-fe-plan.md",
+          },
+          {
+            title: "BE 테크스펙",
+            href: "/projects/missionary/docs/participation-be-plan.md",
+          },
+          {
+            title: "PRD — 연계지 관리",
+            href: "/projects/missionary/docs/region-prd.md",
+          },
+        ],
+      },
       metrics: [
         { value: 4, suffix: "개", label: "모노레포 패키지" },
         { value: 18, suffix: "개", label: "DB 모델" },
