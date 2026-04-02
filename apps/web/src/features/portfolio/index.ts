@@ -4,5 +4,11 @@ export {
   getFeaturedProjects,
   getProjectBySlug,
   getProjectSlugs,
+  getNextProject,
 } from "./lib/projects";
-export type { Project, CaseStudy, CaseStudySection } from "./lib/projects";
+export type {
+  Project,
+  CaseStudy,
+  Metric,
+  ProcessStep,
+} from "./lib/projects";

@@ -348,3 +348,44 @@ code[data-line-numbers] > [data-line]::before {
   color: var(--muted-foreground);
   opacity: 0.5;
 }
+
+/* ─── Scroll-Driven Reveal Animations ─── */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    translate: 0 32px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.scroll-reveal {
+  animation: reveal-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 25%;
+}
+
+.scroll-reveal-fade {
+  animation: reveal-in linear both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 20%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal-fade {
+    animation: none;
+  }
+}
