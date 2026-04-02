@@ -1,9 +1,16 @@
+import type { AsIsRow } from "../lib/projects";
+
 interface CaseStudyProblemProps {
   callout: string;
   content: string;
+  asIsTable?: AsIsRow[];
 }
 
-export function CaseStudyProblem({ callout, content }: CaseStudyProblemProps) {
+export function CaseStudyProblem({
+  callout,
+  content,
+  asIsTable,
+}: CaseStudyProblemProps) {
   return (
     <section id="problem" className="mx-auto max-w-3xl px-4 py-20">
       <div className="scroll-reveal">
@@ -24,6 +31,71 @@ export function CaseStudyProblem({ callout, content }: CaseStudyProblemProps) {
           </p>
         ))}
       </div>
+
+      {asIsTable && asIsTable.length > 0 && (
+        <div className="scroll-reveal mt-10">
+          <h3 className="text-lg font-semibold">AS-IS</h3>
+
+          {/* Desktop: table */}
+          <div className="mt-4 hidden overflow-hidden rounded-lg border border-border sm:block">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-secondary/50">
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">
+                    업무
+                  </th>
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">
+                    사용 도구
+                  </th>
+                  <th className="px-4 py-3 text-left font-medium text-muted-foreground">
+                    한계
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {asIsTable.map((row) => (
+                  <tr
+                    key={row.task}
+                    className="border-b border-border last:border-b-0"
+                  >
+                    <td className="px-4 py-3 font-medium">{row.task}</td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {row.tool}
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {row.limitation}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile: cards */}
+          <div className="mt-4 space-y-3 sm:hidden">
+            {asIsTable.map((row) => (
+              <div
+                key={row.task}
+                className="rounded-lg border border-border p-4"
+              >
+                <p className="font-medium">{row.task}</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  <span className="text-xs uppercase tracking-wide text-muted-foreground/70">
+                    도구:
+                  </span>{" "}
+                  {row.tool}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  <span className="text-xs uppercase tracking-wide text-muted-foreground/70">
+                    한계:
+                  </span>{" "}
+                  {row.limitation}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

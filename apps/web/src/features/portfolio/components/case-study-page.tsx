@@ -63,6 +63,7 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
       <CaseStudyProblem
         callout={caseStudy.problemCallout}
         content={caseStudy.problemContent}
+        asIsTable={caseStudy.asIsTable}
       />
 
       <hr className="mx-auto max-w-3xl border-border" />
