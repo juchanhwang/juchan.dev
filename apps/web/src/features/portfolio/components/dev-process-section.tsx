@@ -45,7 +45,7 @@ export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
         <h3 className="text-center text-lg font-semibold">개발 싸이클</h3>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           {devProcess.cycle.map((step, i) => (
-            <div key={step} className="flex items-center gap-2">
+            <div key={step} className="flex items-center gap-2 whitespace-nowrap">
               <span className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium">
                 {step}
               </span>
@@ -83,6 +83,7 @@ export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
               className="rounded-lg border border-border px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
             >
               {doc.title}
+              <span className="sr-only">(새 탭에서 열기)</span>
             </a>
           ))}
         </div>
