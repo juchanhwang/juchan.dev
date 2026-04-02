@@ -1,4 +1,7 @@
+"use client";
+
 import type { AsIsRow } from "../lib/projects";
+import { FadeInUp } from "../animation/fade-in-up";
 
 interface CaseStudyProblemProps {
   callout: string;
@@ -13,27 +16,31 @@ export function CaseStudyProblem({
 }: CaseStudyProblemProps) {
   return (
     <section id="problem" className="mx-auto max-w-[1100px] px-4 py-20">
-      <div className="scroll-reveal">
+      <FadeInUp>
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Problem
         </p>
         <h2 className="mt-2 text-2xl font-bold">무엇이 문제였나</h2>
-      </div>
+      </FadeInUp>
 
-      <blockquote className="scroll-reveal mt-8 border-l-4 border-foreground pl-6 text-xl italic leading-relaxed text-foreground/90">
-        &ldquo;{callout}&rdquo;
-      </blockquote>
+      <FadeInUp delay={0.1}>
+        <blockquote className="mt-8 border-l-4 border-foreground pl-6 text-xl italic leading-relaxed text-foreground/90">
+          &ldquo;{callout}&rdquo;
+        </blockquote>
+      </FadeInUp>
 
-      <div className="scroll-reveal mt-8 leading-relaxed text-muted-foreground">
-        {content.split("\n\n").map((paragraph, i) => (
-          <p key={i} className={i > 0 ? "mt-4" : ""}>
-            {paragraph}
-          </p>
-        ))}
-      </div>
+      <FadeInUp delay={0.2}>
+        <div className="mt-8 leading-relaxed text-muted-foreground">
+          {content.split("\n\n").map((paragraph, i) => (
+            <p key={i} className={i > 0 ? "mt-4" : ""}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </FadeInUp>
 
       {asIsTable && asIsTable.length > 0 && (
-        <div className="scroll-reveal mt-10">
+        <FadeInUp delay={0.3} className="mt-10">
           <h3 className="text-lg font-semibold">AS-IS</h3>
 
           {/* Desktop: table */}
@@ -94,7 +101,7 @@ export function CaseStudyProblem({
               </div>
             ))}
           </div>
-        </div>
+        </FadeInUp>
       )}
     </section>
   );
