@@ -42,9 +42,19 @@ export function CaseStudyOverview({
       </div>
 
       <FadeInUp delay={0.4}>
-        <p className="mx-auto mt-8 max-w-2xl text-center leading-relaxed text-muted-foreground">
-          {overview}
-        </p>
+        <div className="mx-auto mt-10 max-w-2xl space-y-4 text-center text-[1.05rem] leading-[1.85] text-muted-foreground">
+          {overview.split("\n\n").map((paragraph, i) => (
+            <p
+              key={i}
+              dangerouslySetInnerHTML={{
+                __html: paragraph.replace(
+                  /(\d[\d,.]*\s*[명개만]+|[\d]+[개%+])/g,
+                  '<strong class="text-foreground font-semibold">$1</strong>'
+                ),
+              }}
+            />
+          ))}
+        </div>
       </FadeInUp>
     </section>
   );
