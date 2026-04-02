@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Project } from "../lib/projects";
 
 interface ProjectCardProps {
@@ -25,6 +26,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
         ))}
       </div>
       <div className="mt-4 flex gap-3">
+        {project.slug && (
+          <Link
+            href={`/projects/${project.slug}`}
+            className="text-sm font-medium text-foreground transition-colors hover:text-foreground/80"
+          >
+            케이스 스터디 →
+          </Link>
+        )}
         {project.demoUrl && (
           <a
             href={project.demoUrl}
