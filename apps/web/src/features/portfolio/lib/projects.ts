@@ -294,6 +294,13 @@ export const projects: Project[] = [
             href: "/projects/missionary/mockups/enrollment-card-list.html",
             external: true,
           },
+          {
+            title: "시스템 Overview",
+            description: "선교 관리 시스템 전체 구조",
+            emoji: "🗺️",
+            href: "https://juchanhwang.github.io/missionary-project-overview/",
+            external: true,
+          },
         ],
       },
       metrics: [
