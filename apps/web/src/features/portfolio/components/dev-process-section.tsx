@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { DevProcess } from "../lib/projects";
 import { FadeInUp } from "../animation/fade-in-up";
 
@@ -73,18 +74,25 @@ export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
       {/* Document links */}
       <FadeInUp delay={0.4} className="mt-12">
         <h3 className="text-center text-lg font-semibold">산출물</h3>
-        <div className="mt-4 flex flex-wrap justify-center gap-3">
-          {devProcess.documents.map((doc) => (
-            <a
-              key={doc.href}
-              href={doc.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg border border-border px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
-            >
-              {doc.title}
-              <span className="sr-only">(새 탭에서 열기)</span>
-            </a>
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {devProcess.documents.map((doc, i) => (
+            <FadeInUp key={doc.href} delay={0.4 + i * 0.08}>
+              <Link
+                href={doc.href}
+                className="group flex flex-col rounded-lg border border-border p-4 transition-all hover:border-foreground/30 hover:shadow-md"
+              >
+                <span className="text-2xl" aria-hidden="true">
+                  {doc.emoji}
+                </span>
+                <p className="mt-2 text-sm font-semibold">{doc.title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {doc.description}
+                </p>
+                <span className="mt-3 text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+                  보기 →
+                </span>
+              </Link>
+            </FadeInUp>
           ))}
         </div>
       </FadeInUp>
