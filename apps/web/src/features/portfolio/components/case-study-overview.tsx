@@ -11,7 +11,7 @@ export function CaseStudyOverview({
 }: CaseStudyOverviewProps) {
   return (
     <section id="overview" className="mx-auto max-w-[1100px] px-4 py-20">
-      <div className="scroll-reveal text-center">
+      <div className="scroll-reveal">
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Overview
         </p>
