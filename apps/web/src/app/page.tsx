@@ -20,7 +20,7 @@ export default function Home() {
         <div className="mt-8 flex gap-3">
           <Link
             href="/blog"
-            className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-85"
+            className="rounded-md border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
             블로그 읽기 →
           </Link>
@@ -30,6 +30,26 @@ export default function Home() {
           >
             프로젝트 보기
           </Link>
+        </div>
+      </section>
+
+      <hr className="mx-auto max-w-[1100px] border-border" />
+
+      {/* Featured Projects */}
+      <section className="mx-auto max-w-[1100px] px-4 py-16">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold">추천 프로젝트</h2>
+          <Link
+            href="/projects"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            모든 프로젝트 →
+          </Link>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          {featuredProjects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
         </div>
       </section>
 
@@ -57,26 +77,6 @@ export default function Home() {
               readingTime={post.metadata.readingTime}
               permalink={post.permalink}
             />
-          ))}
-        </div>
-      </section>
-
-      <hr className="mx-auto max-w-[1100px] border-border" />
-
-      {/* Featured Projects */}
-      <section className="mx-auto max-w-[1100px] px-4 py-16">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">추천 프로젝트</h2>
-          <Link
-            href="/projects"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            모든 프로젝트 →
-          </Link>
-        </div>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
           ))}
         </div>
       </section>
