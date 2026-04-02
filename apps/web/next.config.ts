@@ -7,16 +7,7 @@ if (!process.env.VELITE_STARTED && isDev) {
 }
 
 const nextConfig: NextConfig = {
-  async redirects() {
-    return [
-      {
-        source: "/resume",
-        destination:
-          "https://juchan-about.notion.site/Ju-Chan-Hwang-f36abb2007f243c89e3809716b050122",
-        permanent: false,
-      },
-    ];
-  },
+  /* config options here */
 };
 
 export default nextConfig;

@@ -6,11 +6,20 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 
-const NAV_ITEMS = [
+const NOTION_RESUME_URL =
+  "https://juchan-about.notion.site/Ju-Chan-Hwang-f36abb2007f243c89e3809716b050122";
+
+interface NavItem {
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
+const NAV_ITEMS: NavItem[] = [
   { href: "/blog", label: "블로그" },
   { href: "/projects", label: "프로젝트" },
-  { href: "/about", label: "About" },
-] as const;
+  { href: NOTION_RESUME_URL, label: "About", external: true },
+];
 
 export function Header() {
   const pathname = usePathname();
@@ -28,20 +37,35 @@ export function Header() {
 
         {/* Desktop nav */}
         <div className="hidden items-center gap-1 sm:flex">
-          {NAV_ITEMS.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-                pathname.startsWith(href)
-                  ? "bg-secondary text-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground",
-              )}
-            >
-              {label}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            if (item.external) {
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                >
+                  {item.label}
+                </a>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                  pathname.startsWith(item.href)
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <ThemeToggle />
         </div>
 
@@ -66,21 +90,37 @@ export function Header() {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="border-t border-border px-4 pb-4 sm:hidden">
-          {NAV_ITEMS.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setMobileMenuOpen(false)}
-              className={cn(
-                "block rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                pathname.startsWith(href)
-                  ? "bg-secondary text-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground",
-              )}
-            >
-              {label}
-            </Link>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            if (item.external) {
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                >
+                  {item.label}
+                </a>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "block rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  pathname.startsWith(item.href)
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground",
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       )}
     </header>
