@@ -39,6 +39,7 @@ export interface DevDocument {
   description: string;
   emoji: string;
   href: string;
+  external?: boolean;
 }
 
 export interface DevProcess {
@@ -291,6 +292,27 @@ export const projects: Project[] = [
             description: "연계지 관리 기능 요구사항",
             emoji: "📋",
             href: "/projects/missionary/docs/region-prd",
+          },
+          {
+            title: "목업 — 등록 관리",
+            description: "등록 카드 목록 + 상세 화면",
+            emoji: "🖼️",
+            href: "/projects/missionary/mockups/enrollment-card-list.html",
+            external: true,
+          },
+          {
+            title: "목업 — 폼 빌더",
+            description: "커스텀 등록 양식 빌더",
+            emoji: "🖼️",
+            href: "/projects/missionary/mockups/form-builder.html",
+            external: true,
+          },
+          {
+            title: "목업 — 연계지 관리",
+            description: "연계지 CRUD 화면",
+            emoji: "🖼️",
+            href: "/projects/missionary/mockups/region-management.html",
+            external: true,
           },
         ],
       },

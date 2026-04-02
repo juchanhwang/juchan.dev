@@ -1,8 +1,67 @@
 "use client";
 
 import Link from "next/link";
-import type { DevProcess } from "../lib/projects";
+import type { DevDocument, DevProcess } from "../lib/projects";
 import { FadeInUp } from "../animation/fade-in-up";
+
+const CARD_CLASS =
+  "group flex h-full flex-col rounded-lg border border-border p-4 transition-all hover:border-foreground/50 hover:shadow-md";
+
+function ExternalLinkIcon() {
+  return (
+    <svg
+      className="h-3 w-3"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"
+      />
+    </svg>
+  );
+}
+
+function DocCard({ doc }: { doc: DevDocument }) {
+  const content = (
+    <>
+      <span className="text-2xl" aria-hidden="true">
+        {doc.emoji}
+      </span>
+      <p className="mt-2 text-sm font-semibold">{doc.title}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{doc.description}</p>
+      <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+        보기 {doc.external ? <ExternalLinkIcon /> : "→"}
+        {doc.external && (
+          <span className="sr-only">(새 탭에서 열기)</span>
+        )}
+      </span>
+    </>
+  );
+
+  if (doc.external) {
+    return (
+      <a
+        href={doc.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={CARD_CLASS}
+      >
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={doc.href} className={CARD_CLASS}>
+      {content}
+    </Link>
+  );
+}
 
 interface DevProcessSectionProps {
   devProcess: DevProcess;
@@ -77,21 +136,7 @@ export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
         <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {devProcess.documents.map((doc, i) => (
             <FadeInUp key={doc.href} delay={0.4 + i * 0.08}>
-              <Link
-                href={doc.href}
-                className="group flex flex-col rounded-lg border border-border p-4 transition-all hover:border-foreground/50 hover:shadow-md"
-              >
-                <span className="text-2xl" aria-hidden="true">
-                  {doc.emoji}
-                </span>
-                <p className="mt-2 text-sm font-semibold">{doc.title}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {doc.description}
-                </p>
-                <span className="mt-3 text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
-                  보기 →
-                </span>
-              </Link>
+              <DocCard doc={doc} />
             </FadeInUp>
           ))}
         </div>
