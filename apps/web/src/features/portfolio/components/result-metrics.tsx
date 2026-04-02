@@ -1,0 +1,49 @@
+"use client";
+
+import type { Metric } from "../lib/projects";
+import { FadeInUp } from "../animation/fade-in-up";
+import { CountUp } from "../animation/count-up";
+
+interface ResultMetricsProps {
+  metrics: Metric[];
+  resultContent: string;
+}
+
+export function ResultMetrics({ metrics, resultContent }: ResultMetricsProps) {
+  return (
+    <section id="result" className="mx-auto max-w-[1100px] px-4 py-20">
+      <div className="scroll-reveal">
+        <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          Result
+        </p>
+        <h2 className="mt-2 text-2xl font-bold">무엇을 만들었나</h2>
+      </div>
+
+      <div className="mt-12 grid gap-4 sm:grid-cols-3">
+        {metrics.map((metric, i) => (
+          <FadeInUp key={metric.label} delay={i * 0.1}>
+            <div className="rounded-lg border border-border p-6 text-center">
+              <p className="text-[clamp(2.5rem,5vw,3rem)] font-bold leading-none">
+                <CountUp end={metric.value} suffix={metric.suffix} />
+              </p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {metric.label}
+              </p>
+            </div>
+          </FadeInUp>
+        ))}
+      </div>
+
+      <div className="scroll-reveal mx-auto mt-12 max-w-3xl">
+        <h3 className="text-lg font-semibold">회고</h3>
+        <div className="mt-4 leading-relaxed text-muted-foreground">
+          {resultContent.split("\n\n").map((paragraph, i) => (
+            <p key={i} className={i > 0 ? "mt-3" : ""}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

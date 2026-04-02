@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProjectBySlug, getProjectSlugs } from "@/features/portfolio";
+import {
+  getProjectBySlug,
+  getProjectSlugs,
+  getNextProject,
+} from "@/features/portfolio";
 import { CaseStudyPage } from "@/features/portfolio/components/case-study-page";
 
 interface Props {
@@ -19,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${project.title} — 케이스 스터디`,
-    description: project.caseStudy?.overview.content ?? project.description,
+    description: project.caseStudy?.overview ?? project.description,
   };
 }
 
@@ -32,6 +36,12 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
   }
 
   const { caseStudy } = project;
+  const nextProject = getNextProject(slug);
 
-  return <CaseStudyPage project={{ ...project, caseStudy }} />;
+  return (
+    <CaseStudyPage
+      project={{ ...project, caseStudy }}
+      nextProject={nextProject}
+    />
+  );
 }
