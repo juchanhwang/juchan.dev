@@ -11,4 +11,5 @@ export type {
   CaseStudy,
   Metric,
   ProcessStep,
+  AsIsRow,
 } from "./lib/projects";

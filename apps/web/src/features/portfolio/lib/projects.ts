@@ -12,6 +12,12 @@ export interface ProcessStep {
   imageAlt?: string;
 }
 
+export interface AsIsRow {
+  task: string;
+  tool: string;
+  limitation: string;
+}
+
 export interface CaseStudy {
   category: string;
   impact: string;
@@ -23,6 +29,7 @@ export interface CaseStudy {
   overview: string;
   problemCallout: string;
   problemContent: string;
+  asIsTable?: AsIsRow[];
   processSteps: ProcessStep[];
   metrics: Metric[];
   resultContent: string;
@@ -102,12 +109,88 @@ export const projects: Project[] = [
   },
   {
     title: "missionary",
+    slug: "missionary",
     description:
       "교회 선교 관리 플랫폼. Next.js + NestJS 모노레포, overlay-kit.",
-    tags: ["Next.js", "NestJS", "PostgreSQL", "Turborepo"],
+    tags: ["Next.js", "React", "NestJS", "PostgreSQL", "Prisma", "pnpm"],
     emoji: "⛪",
     githubUrl: "https://github.com/juchanhwang/missionary",
     featured: true,
+    caseStudy: {
+      category: "Full-Stack Web Application",
+      impact:
+        "교회 군선교 운영의 모든 것을 하나의 플랫폼으로",
+      period: "2025 — 현재",
+      role: "풀스택 개발",
+      teamSize: "1명",
+      contribution: "100%",
+      overview:
+        "교회 선교 운영 과정에서 발견한 구조적 문제를 해결하기 위해 시작된 프로젝트입니다. 등록 신청부터 팀 편성, 회계, 보고서까지 6개 이상의 도구에 흩어져 있던 워크플로우를 하나의 통합 플랫폼으로 일원화했습니다. Next.js 16 + NestJS 11 모노레포 구조로, 사용자앱·관리자앱·API서버·디자인시스템을 4개 패키지로 관리합니다.",
+      problemCallout:
+        "6개 이상의 도구에 흩어진 워크플로우를 하나의 통합 플랫폼으로 일원화",
+      problemContent:
+        "선교 기간이 되면 각 선교별 준비팀이 독립적으로 선교를 준비합니다. 이 과정에서 다음과 같은 문제가 반복적으로 발생했습니다.\n\n첫째, 프로세스별 도구 파편화입니다. 선교 운영에 필요한 업무마다 서로 다른 도구를 사용하고 있어, 데이터와 워크플로우가 분산되었습니다.\n\n둘째, 통합 관리 뷰의 부재입니다. 관리자가 선교 전체 현황을 하나의 시스템에서 파악할 수 없었습니다.\n\n셋째, 정보 접근성 한계입니다. 자신이 담당한 업무 외에는 진행 상황을 확인하기 어려워, 팀 간 협업에 병목이 발생했습니다.\n\n넷째, 포맷 비통일입니다. 선교팀마다 문서 양식과 관리 방식이 달라, 교회 차원의 일관성 유지가 불가능했습니다.",
+      asIsTable: [
+        {
+          task: "등록 신청",
+          tool: "Google Form",
+          limitation: "차수마다 재생성, 응답 데이터 분산",
+        },
+        {
+          task: "개인정보 수집",
+          tool: "교회 자체 시스템",
+          limitation: "등록 데이터와 연동 불가",
+        },
+        {
+          task: "공지 및 대원 소통",
+          tool: "카카오톡",
+          limitation: "이력 관리·검색 어려움",
+        },
+        {
+          task: "준비팀 문서 관리",
+          tool: "Notion",
+          limitation: "팀별 포맷 제각각",
+        },
+        {
+          task: "회계·영수증 관리",
+          tool: "엑셀, 한글 문서",
+          limitation: "수작업, 버전 충돌",
+        },
+        {
+          task: "선교 보고서 관리",
+          tool: "한글 문서",
+          limitation: "양식 비통일, 협업 불가",
+        },
+      ],
+      processSteps: [
+        {
+          number: "01",
+          title: "모노레포 아키텍처 설계",
+          description:
+            "사용자앱(Next.js) + 관리자앱(Next.js) + API서버(NestJS) + 디자인시스템을 pnpm workspace로 통합했습니다. 패키지 간 타입 공유와 일관된 린트/빌드 파이프라인을 구축하고, Prisma를 ORM으로 채택해 PostgreSQL 스키마를 18개 모델로 설계했습니다.",
+        },
+        {
+          number: "02",
+          title: "동적 폼 빌더 구현",
+          description:
+            "Google Forms를 대체하는 WYSIWYG 폼 빌더를 구현했습니다. 관리자가 선교별 커스텀 등록 양식을 드래그앤드롭으로 설계할 수 있으며, 텍스트·선택·파일 업로드 등 다양한 필드 타입을 지원합니다. 응답 데이터는 자동으로 대원 프로필과 연동됩니다.",
+        },
+        {
+          number: "03",
+          title: "통합 관리 대시보드",
+          description:
+            "등록 현황, 입금 확인, 팀 편성, 공지 관리를 한 곳에서 처리할 수 있는 관리자 대시보드를 구축했습니다. overlay-kit + react-modal 조합으로 복잡한 CRUD 워크플로우를 모달 기반으로 처리하고, 실시간 필터링과 일괄 작업 기능을 제공합니다.",
+        },
+      ],
+      metrics: [
+        { value: 4, suffix: "개", label: "모노레포 패키지" },
+        { value: 18, suffix: "개", label: "DB 모델" },
+        { value: 20, suffix: "+", label: "페이지" },
+        { value: 25, suffix: "개", label: "디자인시스템 컴포넌트" },
+      ],
+      resultContent:
+        "6개 이상의 외부 도구에 분산되어 있던 선교 운영 워크플로우를 하나의 웹 플랫폼으로 통합했습니다. 관리자는 등록부터 팀 편성, 회계, 보고서까지 단일 대시보드에서 관리할 수 있게 되었고, 대원들은 자신의 등록 상태와 공지를 한 곳에서 확인할 수 있습니다. pnpm 모노레포로 4개 패키지를 일관되게 관리하며, 18개 DB 모델과 25개 디자인시스템 컴포넌트로 확장 가능한 구조를 갖추었습니다.",
+    },
   },
   {
     title: "class101-ui",
