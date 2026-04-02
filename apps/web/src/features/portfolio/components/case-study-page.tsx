@@ -19,6 +19,12 @@ const ProcessTimeline = dynamic(
       default: m.ProcessTimeline,
     })),
 );
+const DevProcessSection = dynamic(
+  () =>
+    import("./dev-process-section").then((m) => ({
+      default: m.DevProcessSection,
+    })),
+);
 const ResultMetrics = dynamic(
   () =>
     import("./result-metrics").then((m) => ({ default: m.ResultMetrics })),
@@ -68,6 +74,13 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
       <hr className="mx-auto max-w-3xl border-border" />
 
       <ProcessTimeline steps={caseStudy.processSteps} />
+
+      {caseStudy.devProcess && (
+        <>
+          <hr className="mx-auto max-w-3xl border-border" />
+          <DevProcessSection devProcess={caseStudy.devProcess} />
+        </>
+      )}
 
       <hr className="mx-auto max-w-3xl border-border" />
 
