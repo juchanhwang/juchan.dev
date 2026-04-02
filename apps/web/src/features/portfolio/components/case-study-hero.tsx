@@ -5,8 +5,6 @@ import { motion } from "motion/react";
 interface CaseStudyHeroProps {
   title: string;
   impact: string;
-  role: string;
-  period: string;
   tech: string[];
   category: string;
 }
@@ -33,8 +31,6 @@ const itemVariants = {
 export function CaseStudyHero({
   title,
   impact,
-  role,
-  period,
   tech,
   category,
 }: CaseStudyHeroProps) {
@@ -68,12 +64,6 @@ export function CaseStudyHero({
           variants={itemVariants}
           className="mt-6 flex flex-wrap justify-center gap-2"
         >
-          <span className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground">
-            {role}
-          </span>
-          <span className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground">
-            {period}
-          </span>
           {tech.slice(0, 6).map((t) => (
             <span
               key={t}

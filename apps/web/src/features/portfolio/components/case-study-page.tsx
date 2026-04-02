@@ -49,8 +49,6 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
       <CaseStudyHero
         title={project.title}
         impact={caseStudy.impact}
-        role={caseStudy.role}
-        period={caseStudy.period}
         tech={project.tags}
         category={caseStudy.category}
       />
