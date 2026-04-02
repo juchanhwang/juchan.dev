@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import type { ProcessStep } from "../lib/projects";
+import { FadeInUp } from "../animation/fade-in-up";
 
 interface ProcessTimelineProps {
   steps: ProcessStep[];
@@ -9,24 +12,26 @@ interface ProcessTimelineProps {
 export function ProcessTimeline({ steps, intro }: ProcessTimelineProps) {
   return (
     <section id="process" className="mx-auto max-w-[1100px] px-4 py-20">
-      <div className="scroll-reveal">
+      <FadeInUp>
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Process
         </p>
         <h2 className="mt-2 text-2xl font-bold">어떻게 해결했나</h2>
-      </div>
+      </FadeInUp>
 
       {intro && (
-        <p className="mt-6 max-w-2xl leading-relaxed text-muted-foreground scroll-reveal">
-          {intro}
-        </p>
+        <FadeInUp delay={0.1}>
+          <p className="mt-6 max-w-2xl leading-relaxed text-muted-foreground">
+            {intro}
+          </p>
+        </FadeInUp>
       )}
 
       <div className="mt-12 space-y-20">
         {steps.map((step, index) => {
           if (!step.image) {
             return (
-              <div key={step.number} className="scroll-reveal">
+              <FadeInUp key={step.number} delay={index * 0.1}>
                 <p className="text-sm font-medium text-muted-foreground">
                   {step.number}
                 </p>
@@ -38,16 +43,17 @@ export function ProcessTimeline({ steps, intro }: ProcessTimelineProps) {
                     </p>
                   ))}
                 </div>
-              </div>
+              </FadeInUp>
             );
           }
 
           const isEven = index % 2 === 1;
 
           return (
-            <div
+            <FadeInUp
               key={step.number}
-              className="scroll-reveal grid items-center gap-8 md:grid-cols-2 md:gap-12"
+              delay={index * 0.1}
+              className="grid items-center gap-8 md:grid-cols-2 md:gap-12"
             >
               <div className={isEven ? "md:order-last" : ""}>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -73,7 +79,7 @@ export function ProcessTimeline({ steps, intro }: ProcessTimelineProps) {
                   />
                 </div>
               </div>
-            </div>
+            </FadeInUp>
           );
         })}
       </div>
