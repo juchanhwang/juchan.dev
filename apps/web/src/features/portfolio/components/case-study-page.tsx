@@ -69,7 +69,7 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
 
       <hr className="mx-auto max-w-3xl border-border" />
 
-      <ProcessTimeline steps={caseStudy.processSteps} />
+      <ProcessTimeline steps={caseStudy.processSteps} intro={caseStudy.processIntro} />
 
       {caseStudy.devProcess && (
         <>

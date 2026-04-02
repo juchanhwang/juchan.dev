@@ -61,6 +61,7 @@ export interface CaseStudy {
   problemCallout: string;
   problemContent: string;
   asIsTable?: AsIsRow[];
+  processIntro?: string;
   processSteps: ProcessStep[];
   devProcess?: DevProcess;
   metrics: Metric[];
@@ -168,7 +169,7 @@ export const projects: Project[] = [
       impact:
         "교회 선교 운영의 모든 것을 하나의 플랫폼으로",
       period: "2026.01 — ing",
-      role: "AI Native Development",
+      role: "Harness Engineering",
       teamSize: "1인",
       overview:
         "매년 여름·겨울 약 1만 명의 교인이 9개 해외선교와 10개 국내선교에 50~700명 규모로 참여합니다.\n\n이 대규모 선교 운영 과정에서 발견한 구조적 문제를 해결하기 위해 시작된 프로젝트입니다. 등록 신청부터 팀 편성, 회계, 보고서까지 6개 이상의 도구에 흩어져 있던 워크플로우를 하나의 통합 플랫폼으로 일원화했습니다.\n\nNext.js 16 + NestJS 11 모노레포 구조로, 사용자앱·관리자앱·API서버·디자인시스템을 4개 패키지로 관리합니다.",
@@ -212,6 +213,8 @@ export const projects: Project[] = [
           limitation: "양식 비통일, 협업 불가",
         },
       ],
+      processIntro:
+        "흩어진 도구들을 하나로 묶기 위해, 선교 운영 전체를 관리하는 어드민 시스템과 대원들이 직접 사용하는 사용자 애플리케이션을 개발했습니다. 등록부터 팀 편성, 공지, 회계까지 하나의 플랫폼 안에서 처리할 수 있도록 설계했으며, 구체적으로 다음 세 가지에 집중했습니다.",
       processSteps: [
         {
           number: "01",
