@@ -21,12 +21,12 @@ export function ResultMetrics({
   return (
     <>
     <section id="result" className="mx-auto max-w-[1100px] px-4 py-20">
-      <div className="scroll-reveal">
+      <FadeInUp>
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Result
         </p>
         <h2 className="mt-2 text-2xl font-bold">무엇을 만들었나</h2>
-      </div>
+      </FadeInUp>
 
       <div className="mt-12 grid gap-4 sm:grid-cols-3">
         {metrics.map((metric, i) => (
