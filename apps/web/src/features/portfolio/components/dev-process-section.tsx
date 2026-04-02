@@ -79,7 +79,7 @@ export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
             <FadeInUp key={doc.href} delay={0.4 + i * 0.08}>
               <Link
                 href={doc.href}
-                className="group flex flex-col rounded-lg border border-border p-4 transition-all hover:border-foreground/30 hover:shadow-md"
+                className="group flex flex-col rounded-lg border border-border p-4 transition-all hover:border-foreground/50 hover:shadow-md"
               >
                 <span className="text-2xl" aria-hidden="true">
                   {doc.emoji}
