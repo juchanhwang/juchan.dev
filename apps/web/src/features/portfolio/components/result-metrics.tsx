@@ -7,19 +7,16 @@ import { CountUp } from "../animation/count-up";
 
 interface ResultMetricsProps {
   metrics: Metric[];
-  resultContent: string;
   screenshots?: Screenshot[];
   demoVideo?: DemoVideo;
 }
 
 export function ResultMetrics({
   metrics,
-  resultContent,
   screenshots,
   demoVideo,
 }: ResultMetricsProps) {
   return (
-    <>
     <section id="result" className="mx-auto max-w-[1100px] px-4 py-20">
       <FadeInUp>
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
@@ -80,24 +77,5 @@ export function ResultMetrics({
       )}
 
     </section>
-
-    <section id="retrospective" className="mx-auto max-w-[1100px] px-4 py-20">
-      <FadeInUp>
-        <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-          Retrospective
-        </p>
-        <h2 className="mt-2 text-2xl font-bold">회고</h2>
-      </FadeInUp>
-      <FadeInUp delay={0.1}>
-        <div className="mt-6 text-[1.05rem] leading-[1.85] text-muted-foreground">
-          {resultContent.split("\n\n").map((paragraph, i) => (
-            <p key={i} className={i > 0 ? "mt-3" : ""}>
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </FadeInUp>
-    </section>
-    </>
   );
 }

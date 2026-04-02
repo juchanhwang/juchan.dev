@@ -11,12 +11,12 @@ export function CaseStudyOverview({
 }: CaseStudyOverviewProps) {
   return (
     <section id="overview" className="mx-auto max-w-[1100px] px-4 py-20">
-      <div className="scroll-reveal">
+      <FadeInUp>
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Overview
         </p>
         <h2 className="mt-2 text-2xl font-bold">프로젝트 배경</h2>
-      </div>
+      </FadeInUp>
 
       <FadeInUp delay={0.2}>
         <div className="mt-8 space-y-4 text-[1.05rem] leading-[1.85] text-muted-foreground">

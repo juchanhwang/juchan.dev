@@ -72,7 +72,7 @@ export function CaseStudyHero({
         >
           {status === "in-progress" && (
             <span className="rounded-full border border-yellow-500/50 bg-yellow-500/10 px-3 py-1 text-sm font-medium text-yellow-600 dark:text-yellow-400">
-              🔧 In Progress
+              <span aria-hidden="true">🔧</span> In Progress
             </span>
           )}
           {[role, period, `${teamSize} 개발`].map((tag) => (

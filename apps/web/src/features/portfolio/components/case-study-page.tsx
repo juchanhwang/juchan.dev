@@ -6,6 +6,7 @@ import type { Project } from "../lib/projects";
 import { CaseStudyHero } from "./case-study-hero";
 import { CaseStudyOverview } from "./case-study-overview";
 import { SectionProgress } from "./section-progress";
+import { FadeInUp } from "../animation/fade-in-up";
 
 const CaseStudyProblem = dynamic(
   () =>
@@ -89,7 +90,6 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
 
       <ResultMetrics
         metrics={caseStudy.metrics}
-        resultContent={caseStudy.resultContent}
         screenshots={caseStudy.screenshots}
         demoVideo={caseStudy.demoVideo}
       />
@@ -100,6 +100,26 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
           <WhatsNextSection roadmap={caseStudy.roadmap} />
         </>
       )}
+
+      <hr className="mx-auto max-w-3xl border-border" />
+
+      <section id="retrospective" className="mx-auto max-w-[1100px] px-4 py-20">
+        <FadeInUp>
+          <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+            Retrospective
+          </p>
+          <h2 className="mt-2 text-2xl font-bold">회고</h2>
+        </FadeInUp>
+        <FadeInUp delay={0.1}>
+          <div className="mt-6 text-[1.05rem] leading-[1.85] text-muted-foreground">
+            {caseStudy.resultContent.split("\n\n").map((paragraph, i) => (
+              <p key={i} className={i > 0 ? "mt-3" : ""}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </FadeInUp>
+      </section>
 
       <hr className="mx-auto max-w-3xl border-border" />
 
