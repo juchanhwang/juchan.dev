@@ -12,4 +12,6 @@ export type {
   Metric,
   ProcessStep,
   AsIsRow,
+  Screenshot,
+  DemoVideo,
 } from "./lib/projects";

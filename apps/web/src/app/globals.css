@@ -103,7 +103,7 @@
   --background: oklch(0.11 0 0);
   --background-subtle: oklch(0.155 0 0);
   --foreground: oklch(0.925 0 0);
-  --muted-foreground: oklch(0.65 0 0);
+  --muted-foreground: oklch(0.75 0 0);
   --border: oklch(1 0 0 / 10%);
   --link: oklch(0.67 0.16 240);
   --link-hover: oklch(0.77 0.16 240);

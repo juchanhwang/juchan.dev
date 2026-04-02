@@ -75,6 +75,8 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
       <ResultMetrics
         metrics={caseStudy.metrics}
         resultContent={caseStudy.resultContent}
+        screenshots={caseStudy.screenshots}
+        demoVideo={caseStudy.demoVideo}
       />
 
       <hr className="mx-auto max-w-3xl border-border" />

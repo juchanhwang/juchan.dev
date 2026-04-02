@@ -18,6 +18,16 @@ export interface AsIsRow {
   limitation: string;
 }
 
+export interface Screenshot {
+  src: string;
+  alt: string;
+}
+
+export interface DemoVideo {
+  src: string;
+  poster?: string;
+}
+
 export interface CaseStudy {
   category: string;
   impact: string;
@@ -33,6 +43,8 @@ export interface CaseStudy {
   processSteps: ProcessStep[];
   metrics: Metric[];
   resultContent: string;
+  screenshots?: Screenshot[];
+  demoVideo?: DemoVideo;
   relatedPosts?: { title: string; href: string }[];
 }
 
@@ -119,7 +131,7 @@ export const projects: Project[] = [
     caseStudy: {
       category: "Full-Stack Web Application",
       impact:
-        "교회 군선교 운영의 모든 것을 하나의 플랫폼으로",
+        "교회 선교 운영의 모든 것을 하나의 플랫폼으로",
       period: "2025 — 현재",
       role: "풀스택 개발",
       teamSize: "1명",
@@ -168,18 +180,27 @@ export const projects: Project[] = [
           title: "모노레포 아키텍처 설계",
           description:
             "사용자앱(Next.js) + 관리자앱(Next.js) + API서버(NestJS) + 디자인시스템을 pnpm workspace로 통합했습니다. 패키지 간 타입 공유와 일관된 린트/빌드 파이프라인을 구축하고, Prisma를 ORM으로 채택해 PostgreSQL 스키마를 18개 모델로 설계했습니다.",
+          image: "/projects/missionary/mission-management.png",
+          imageAlt:
+            "선교 그룹과 차수를 관리하는 관리자 화면. 선교 목록, 차수별 상태, 등록 기간 설정을 한 눈에 보여준다.",
         },
         {
           number: "02",
           title: "동적 폼 빌더 구현",
           description:
             "Google Forms를 대체하는 WYSIWYG 폼 빌더를 구현했습니다. 관리자가 선교별 커스텀 등록 양식을 드래그앤드롭으로 설계할 수 있으며, 텍스트·선택·파일 업로드 등 다양한 필드 타입을 지원합니다. 응답 데이터는 자동으로 대원 프로필과 연동됩니다.",
+          image: "/projects/missionary/registration-form.png",
+          imageAlt:
+            "커스텀 등록 양식 빌더 화면. 텍스트, 선택, 파일 업로드 등 다양한 필드 타입을 드래그앤드롭으로 구성할 수 있다.",
         },
         {
           number: "03",
           title: "통합 관리 대시보드",
           description:
             "등록 현황, 입금 확인, 팀 편성, 공지 관리를 한 곳에서 처리할 수 있는 관리자 대시보드를 구축했습니다. overlay-kit + react-modal 조합으로 복잡한 CRUD 워크플로우를 모달 기반으로 처리하고, 실시간 필터링과 일괄 작업 기능을 제공합니다.",
+          image: "/projects/missionary/registration-dashboard.png",
+          imageAlt:
+            "등록 현황 대시보드. 등록자 목록, 입금 상태, 필터링 및 일괄 작업 기능을 보여준다.",
         },
       ],
       metrics: [
@@ -190,6 +211,20 @@ export const projects: Project[] = [
       ],
       resultContent:
         "6개 이상의 외부 도구에 분산되어 있던 선교 운영 워크플로우를 하나의 웹 플랫폼으로 통합했습니다. 관리자는 등록부터 팀 편성, 회계, 보고서까지 단일 대시보드에서 관리할 수 있게 되었고, 대원들은 자신의 등록 상태와 공지를 한 곳에서 확인할 수 있습니다. pnpm 모노레포로 4개 패키지를 일관되게 관리하며, 18개 DB 모델과 25개 디자인시스템 컴포넌트로 확장 가능한 구조를 갖추었습니다.",
+      screenshots: [
+        {
+          src: "/projects/missionary/user-management.png",
+          alt: "사용자 관리 화면. 대원 목록, 역할 배정, 개인정보 관리 기능을 보여준다.",
+        },
+        {
+          src: "/projects/missionary/partner-management.png",
+          alt: "연계지 관리 화면. 선교 연계지 목록과 배정 현황을 관리한다.",
+        },
+      ],
+      demoVideo: {
+        src: "/projects/missionary/registration-demo.mov",
+        poster: "/projects/missionary/registration-dashboard.png",
+      },
     },
   },
   {
