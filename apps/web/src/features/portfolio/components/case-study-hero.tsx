@@ -74,7 +74,7 @@ export function CaseStudyHero({
           <span className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground">
             {period}
           </span>
-          {tech.map((t) => (
+          {tech.slice(0, 6).map((t) => (
             <span
               key={t}
               className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground"
@@ -82,6 +82,11 @@ export function CaseStudyHero({
               {t}
             </span>
           ))}
+          {tech.length > 6 && (
+            <span className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground">
+              +{tech.length - 6}
+            </span>
+          )}
         </motion.div>
         <motion.div
           variants={itemVariants}
