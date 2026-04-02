@@ -78,7 +78,7 @@ export function ResultMetrics({
         </div>
       )}
 
-      <div className="scroll-reveal mt-16">
+      <FadeInUp className="mt-16">
         <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
           Retrospective
         </p>
@@ -90,7 +90,7 @@ export function ResultMetrics({
             </p>
           ))}
         </div>
-      </div>
+      </FadeInUp>
     </section>
   );
 }

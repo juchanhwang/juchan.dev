@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import type { Project } from "../lib/projects";
+import { FadeInUp } from "../animation/fade-in-up";
 
 interface ProjectLinksProps {
   demoUrl?: string;
@@ -16,7 +19,7 @@ export function ProjectLinks({
 }: ProjectLinksProps) {
   return (
     <section id="links" className="mx-auto max-w-3xl px-4 py-20">
-      <div className="scroll-reveal flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <FadeInUp className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         {githubUrl && (
           <a
             href={githubUrl}
@@ -50,12 +53,12 @@ export function ProjectLinks({
             관련 글 ↗
           </Link>
         ))}
-      </div>
+      </FadeInUp>
 
       {nextProject?.slug && (
         <>
           <hr className="mx-auto mt-12 max-w-xs border-border" />
-          <div className="scroll-reveal mt-12 text-center">
+          <FadeInUp delay={0.1} className="mt-12 text-center">
             <p className="text-sm text-muted-foreground">다음 프로젝트</p>
             <Link
               href={`/projects/${nextProject.slug}`}
@@ -63,7 +66,7 @@ export function ProjectLinks({
             >
               {nextProject.emoji} {nextProject.title} →
             </Link>
-          </div>
+          </FadeInUp>
         </>
       )}
     </section>
