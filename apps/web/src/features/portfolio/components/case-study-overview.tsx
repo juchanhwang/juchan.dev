@@ -11,8 +11,15 @@ export function CaseStudyOverview({
 }: CaseStudyOverviewProps) {
   return (
     <section id="overview" className="mx-auto max-w-[1100px] px-4 py-20">
-      <FadeInUp>
-        <div className="mx-auto max-w-2xl space-y-4 text-center text-[1.05rem] leading-[1.85] text-muted-foreground">
+      <div className="scroll-reveal">
+        <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          Overview
+        </p>
+        <h2 className="mt-2 text-2xl font-bold">프로젝트 배경</h2>
+      </div>
+
+      <FadeInUp delay={0.2}>
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-[1.05rem] leading-[1.85] text-muted-foreground">
           {overview.split("\n\n").map((paragraph, i) => (
             <p
               key={i}
