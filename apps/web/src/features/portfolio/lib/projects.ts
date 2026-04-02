@@ -35,7 +35,6 @@ export interface CaseStudy {
   period: string;
   role: string;
   teamSize: string;
-  contribution: string;
   overview: string;
   problemCallout: string;
   problemContent: string;
@@ -77,7 +76,6 @@ export const projects: Project[] = [
       period: "2025.12 — 현재",
       role: "프론트엔드 개발",
       teamSize: "1명",
-      contribution: "100%",
       overview:
         "Gatsby 2.x로 운영하던 기술 블로그가 빌드 실패와 플러그인 비호환으로 더 이상 유지보수가 불가능해졌습니다. 동시에 포트폴리오가 별도 Notion 페이지로 분리되어 있어 채용 담당자에게 일관된 인상을 주기 어려웠습니다. Next.js 16 App Router와 Velite MDX 파이프라인 기반으로 블로그 + 포트폴리오를 하나의 사이트로 신규 구축했습니다.",
       problemCallout:
@@ -132,12 +130,11 @@ export const projects: Project[] = [
       category: "Full-Stack Web Application",
       impact:
         "교회 선교 운영의 모든 것을 하나의 플랫폼으로",
-      period: "2025 — 현재",
-      role: "풀스택 개발",
+      period: "2026.01 — ing",
+      role: "AI Native Development",
       teamSize: "1명",
-      contribution: "100%",
       overview:
-        "교회 선교 운영 과정에서 발견한 구조적 문제를 해결하기 위해 시작된 프로젝트입니다. 등록 신청부터 팀 편성, 회계, 보고서까지 6개 이상의 도구에 흩어져 있던 워크플로우를 하나의 통합 플랫폼으로 일원화했습니다. Next.js 16 + NestJS 11 모노레포 구조로, 사용자앱·관리자앱·API서버·디자인시스템을 4개 패키지로 관리합니다.",
+        "매년 여름·겨울 약 1만 명의 교인이 9개 해외선교와 10개 국내선교에 50~700명 규모로 참여합니다. 이 대규모 선교 운영 과정에서 발견한 구조적 문제를 해결하기 위해 시작된 프로젝트입니다. 등록 신청부터 팀 편성, 회계, 보고서까지 6개 이상의 도구에 흩어져 있던 워크플로우를 하나의 통합 플랫폼으로 일원화했습니다. Next.js 16 + NestJS 11 모노레포 구조로, 사용자앱·관리자앱·API서버·디자인시스템을 4개 패키지로 관리합니다.",
       problemCallout:
         "6개 이상의 도구에 흩어진 워크플로우를 하나의 통합 플랫폼으로 일원화",
       problemContent:

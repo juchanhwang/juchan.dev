@@ -53,7 +53,6 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         role={caseStudy.role}
         period={caseStudy.period}
         teamSize={caseStudy.teamSize}
-        contribution={caseStudy.contribution}
         tech={project.tags}
         overview={caseStudy.overview}
       />

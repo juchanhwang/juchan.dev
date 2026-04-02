@@ -11,7 +11,6 @@ interface CaseStudyOverviewProps {
   role: string;
   period: string;
   teamSize: string;
-  contribution: string;
   tech: string[];
   overview: string;
 }
@@ -20,7 +19,6 @@ export function CaseStudyOverview({
   role,
   period,
   teamSize,
-  contribution,
   tech,
   overview,
 }: CaseStudyOverviewProps) {
@@ -28,12 +26,11 @@ export function CaseStudyOverview({
     { label: "역할", value: role },
     { label: "기간", value: period },
     { label: "팀 규모", value: teamSize },
-    { label: "기여도", value: contribution },
   ];
 
   return (
     <section id="overview" className="mx-auto max-w-[1100px] px-4 py-20">
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {metaItems.map((item, i) => (
           <FadeInUp key={item.label} delay={i * 0.1}>
             <div className="rounded-lg border border-border p-6 text-center">
