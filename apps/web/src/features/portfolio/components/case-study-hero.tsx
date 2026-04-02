@@ -93,7 +93,7 @@ export function CaseStudyHero({
           className="mt-12 text-muted-foreground"
           aria-hidden="true"
         >
-          <span className="inline-block animate-bounce text-xl">↓</span>
+          <span className="inline-block motion-safe:animate-bounce text-xl">↓</span>
         </motion.div>
       </motion.div>
     </section>
