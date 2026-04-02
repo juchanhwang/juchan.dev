@@ -14,7 +14,6 @@ const VALID_DOCS = [
   "participation-design-spec",
   "participation-fe-plan",
   "participation-be-plan",
-  "region-prd",
 ] as const;
 
 type DocName = (typeof VALID_DOCS)[number];
@@ -24,7 +23,6 @@ const DOC_TITLES: Record<DocName, string> = {
   "participation-design-spec": "디자인 스펙 — 등록 관리",
   "participation-fe-plan": "FE 테크스펙 — 등록 관리",
   "participation-be-plan": "BE 테크스펙 — 등록 관리",
-  "region-prd": "PRD — 연계지 관리",
 };
 
 interface Props {
