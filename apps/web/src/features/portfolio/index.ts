@@ -17,4 +17,5 @@ export type {
   TeamMember,
   DevDocument,
   DevProcess,
+  RoadmapItem,
 } from "./lib/projects";

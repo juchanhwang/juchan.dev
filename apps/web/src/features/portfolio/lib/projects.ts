@@ -49,10 +49,16 @@ export interface DevProcess {
   documents: DevDocument[];
 }
 
+export interface RoadmapItem {
+  label: string;
+  status: "done" | "in-progress" | "planned";
+}
+
 export interface CaseStudy {
   category: string;
   impact: string;
   heroImage?: string;
+  status?: "in-progress" | "completed";
   period: string;
   role: string;
   teamSize: string;
@@ -66,6 +72,7 @@ export interface CaseStudy {
   devProcess?: DevProcess;
   metrics: Metric[];
   resultContent: string;
+  roadmap?: RoadmapItem[];
   screenshots?: Screenshot[];
   demoVideo?: DemoVideo;
   relatedPosts?: { title: string; href: string }[];
@@ -166,6 +173,7 @@ export const projects: Project[] = [
     featured: true,
     caseStudy: {
       category: "AI Native Web Application",
+      status: "in-progress",
       impact:
         "교회 선교 운영의 모든 것을 하나의 플랫폼으로",
       period: "2026.01 — ing",
@@ -326,6 +334,12 @@ export const projects: Project[] = [
       ],
       resultContent:
         "실제 선교를 준비하는 사용자를 인터뷰하고, 문제를 정의하고, 해결하는 전체 과정을 경험했습니다. 프론트엔드 개발자로서 한 프로젝트의 기획부터 설계, 구현, 테스트까지 전체 싸이클을 직접 경험할 수 있었던 것이 가장 큰 수확이었습니다.\n\n특히 AI 에이전트(PO, PD)를 통해 PRD와 디자인 스펙을 작성하고, 검토하고, 구체화하는 과정이 예상보다 긴 시간이 필요했습니다. 더 많은 시간과 노력을 들일수록 좋은 결과물이 나온다는 것을 체감했습니다.\n\n아직 어드민 기능의 고도화와 사용자 앱 개발이 남아있습니다. 동시에 교회의 선교 전체를 담당하는 부서에 이 앱을 소개하고 도입을 제안하는 단계도 준비 중입니다. 현재 부서 담당자와 만날 예정이며, 이 과정 또한 작은 Sales 경험이 될 것 같아 기대하고 있습니다.",
+      roadmap: [
+        { label: "어드민 — 선교·등록·유저·연계지 관리", status: "done" },
+        { label: "어드민 기능 고도화", status: "in-progress" },
+        { label: "사용자 앱 개발", status: "planned" },
+        { label: "교회 선교 부서 도입 제안", status: "planned" },
+      ],
       screenshots: [
         {
           src: "/projects/missionary/user-management.png",
