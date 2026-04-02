@@ -20,11 +20,18 @@ const posts = defineCollection({
       metadata: s.metadata(),
       body: s.mdx(),
     })
-    .transform((data) => ({
-      ...data,
-      slugAsParams: data.slug.split("/").slice(1).join("/"),
-      permalink: `/blog/${data.slug.split("/").slice(1).join("/")}`,
-    })),
+    .transform((data) => {
+      const slugAsParams = data.slug
+        .split("/")
+        .slice(1)
+        .join("/")
+        .normalize("NFC");
+      return {
+        ...data,
+        slugAsParams,
+        permalink: `/blog/${slugAsParams}`,
+      };
+    }),
 });
 
 export default defineConfig({
