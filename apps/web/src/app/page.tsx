@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { getPublishedPosts, PostCard } from "@/features/blog";
 import { getFeaturedProjects, ProjectCard } from "@/features/portfolio";
 
@@ -15,22 +16,8 @@ export default function Home() {
           황주찬입니다.
         </h1>
         <p className="mt-4 max-w-[480px] text-lg leading-relaxed text-muted-foreground">
-          프론트엔드 개발자 &mdash; 읽기 쉬운 코드와 빠른 UI를 만듭니다.
+          제품과 함께 성장하는 프론트엔드 개발자입니다.
         </p>
-        <div className="mt-8 flex gap-3">
-          <Link
-            href="/blog"
-            className="rounded-md border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-          >
-            블로그 읽기 →
-          </Link>
-          <Link
-            href="/projects"
-            className="rounded-md border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-          >
-            프로젝트 보기
-          </Link>
-        </div>
       </section>
 
       <hr className="mx-auto max-w-[1100px] border-border" />
@@ -41,9 +28,9 @@ export default function Home() {
           <h2 className="text-xl font-bold">추천 프로젝트</h2>
           <Link
             href="/projects"
-            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            모든 프로젝트 →
+            모든 프로젝트 <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -63,7 +50,7 @@ export default function Home() {
             href="/blog"
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            전체 글 보기 →
+            전체 글 보기 <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
