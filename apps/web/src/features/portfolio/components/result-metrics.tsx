@@ -78,9 +78,12 @@ export function ResultMetrics({
         </div>
       )}
 
-      <div className="scroll-reveal mx-auto mt-12 max-w-3xl">
-        <h3 className="text-lg font-semibold">회고</h3>
-        <div className="mt-4 leading-relaxed text-muted-foreground">
+      <div className="scroll-reveal mt-16">
+        <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+          Retrospective
+        </p>
+        <h2 className="mt-2 text-2xl font-bold">회고</h2>
+        <div className="mt-6 text-[1.05rem] leading-[1.85] text-muted-foreground">
           {resultContent.split("\n\n").map((paragraph, i) => (
             <p key={i} className={i > 0 ? "mt-3" : ""}>
               {paragraph}
