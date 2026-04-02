@@ -65,9 +65,11 @@ function DocCard({ doc }: { doc: DevDocument }) {
 
 interface DevProcessSectionProps {
   devProcess: DevProcess;
+  tech?: string[];
+  overviewLink?: { title: string; href: string };
 }
 
-export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
+export function DevProcessSection({ devProcess, tech, overviewLink }: DevProcessSectionProps) {
   return (
     <section id="dev-process" className="mx-auto max-w-[1100px] px-4 py-20">
       <div className="scroll-reveal">
@@ -82,6 +84,34 @@ export function DevProcessSection({ devProcess }: DevProcessSectionProps) {
           {devProcess.description}
         </p>
       </FadeInUp>
+
+      {tech && tech.length > 0 && (
+        <FadeInUp delay={0.1} className="mt-6 flex flex-wrap justify-center gap-2">
+          {tech.map((t) => (
+            <span
+              key={t}
+              className="rounded-full border border-border px-3 py-1 text-sm text-muted-foreground"
+            >
+              {t}
+            </span>
+          ))}
+        </FadeInUp>
+      )}
+
+      {overviewLink && (
+        <FadeInUp delay={0.15} className="mt-4 text-center">
+          <a
+            href={overviewLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {overviewLink.title}
+            <ExternalLinkIcon />
+            <span className="sr-only">(새 탭에서 열기)</span>
+          </a>
+        </FadeInUp>
+      )}
 
       {/* Team composition */}
       <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
