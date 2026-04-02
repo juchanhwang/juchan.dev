@@ -50,12 +50,12 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         title={project.title}
         impact={caseStudy.impact}
         category={caseStudy.category}
-      />
-
-      <CaseStudyOverview
         role={caseStudy.role}
         period={caseStudy.period}
         teamSize={caseStudy.teamSize}
+      />
+
+      <CaseStudyOverview
         overview={caseStudy.overview}
       />
 

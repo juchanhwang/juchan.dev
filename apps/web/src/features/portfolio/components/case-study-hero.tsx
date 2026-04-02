@@ -6,6 +6,9 @@ interface CaseStudyHeroProps {
   title: string;
   impact: string;
   category: string;
+  role: string;
+  period: string;
+  teamSize: string;
 }
 
 const containerVariants = {
@@ -31,6 +34,9 @@ export function CaseStudyHero({
   title,
   impact,
   category,
+  role,
+  period,
+  teamSize,
 }: CaseStudyHeroProps) {
   return (
     <section className="flex min-h-[100svh] flex-col items-center justify-center px-4 text-center">
@@ -58,6 +64,19 @@ export function CaseStudyHero({
         >
           {impact}
         </motion.p>
+        <motion.div
+          variants={itemVariants}
+          className="mt-6 flex flex-wrap justify-center gap-2"
+        >
+          {[role, period, `${teamSize} 개발`].map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground"
+            >
+              {tag}
+            </span>
+          ))}
+        </motion.div>
         <motion.div
           variants={itemVariants}
           className="mt-12 text-muted-foreground"
