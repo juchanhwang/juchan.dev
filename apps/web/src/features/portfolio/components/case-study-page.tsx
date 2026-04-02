@@ -30,6 +30,12 @@ const ResultMetrics = dynamic(
     import("./result-metrics").then((m) => ({ default: m.ResultMetrics })),
   { ssr: false },
 );
+const WhatsNextSection = dynamic(
+  () =>
+    import("./whats-next-section").then((m) => ({
+      default: m.WhatsNextSection,
+    })),
+);
 const ProjectLinks = dynamic(
   () => import("./project-links").then((m) => ({ default: m.ProjectLinks })),
 );
@@ -53,6 +59,7 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         role={caseStudy.role}
         period={caseStudy.period}
         teamSize={caseStudy.teamSize}
+        status={caseStudy.status}
       />
 
       <CaseStudyOverview
@@ -86,6 +93,13 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         screenshots={caseStudy.screenshots}
         demoVideo={caseStudy.demoVideo}
       />
+
+      {caseStudy.roadmap && (
+        <>
+          <hr className="mx-auto max-w-3xl border-border" />
+          <WhatsNextSection roadmap={caseStudy.roadmap} />
+        </>
+      )}
 
       <hr className="mx-auto max-w-3xl border-border" />
 

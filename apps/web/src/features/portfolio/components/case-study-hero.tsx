@@ -9,6 +9,7 @@ interface CaseStudyHeroProps {
   role: string;
   period: string;
   teamSize: string;
+  status?: "in-progress" | "completed";
 }
 
 const containerVariants = {
@@ -37,6 +38,7 @@ export function CaseStudyHero({
   role,
   period,
   teamSize,
+  status,
 }: CaseStudyHeroProps) {
   return (
     <section className="flex min-h-[100svh] flex-col items-center justify-center px-4 text-center">
@@ -68,6 +70,11 @@ export function CaseStudyHero({
           variants={itemVariants}
           className="mt-6 flex flex-wrap justify-center gap-2"
         >
+          {status === "in-progress" && (
+            <span className="rounded-full border border-yellow-500/50 bg-yellow-500/10 px-3 py-1 text-sm font-medium text-yellow-600 dark:text-yellow-400">
+              🔧 In Progress
+            </span>
+          )}
           {[role, period, `${teamSize} 개발`].map((tag) => (
             <span
               key={tag}
