@@ -503,9 +503,12 @@ export const projects: Project[] = [
         },
         {
           number: "04",
-          title: "프론트엔드 기술 설계",
+          title: "등록자 상세 관리",
           description:
-            "React Hook Form + Zod 조합으로 타입 안전한 폼 검증을 구현하고, TanStack Query로 서버 상태를 관리합니다. 목록 페이지는 Server Component로 초기 데이터를 패칭하고, 필터링·정렬 등 인터랙션은 Client Component에서 처리하는 하이브리드 렌더링 전략을 적용했습니다. 라우트 코로케이션 패턴(_components, _hooks, _schemas, _actions)으로 도메인별 응집도를 높이고, 자체 디자인시스템(25개 컴포넌트)으로 UI 일관성을 유지합니다.",
+            "등록자 목록에서 이름을 클릭하면 우측 슬라이드 패널이 열리며, 기본 정보·참석 정보·추가 신청 정보를 바로 확인하고 수정할 수 있습니다. 폼 빌더에서 정의한 커스텀 필드(셔틀버스 탑승, 알러지 등)가 동적으로 렌더링되어, 선교마다 다른 등록 양식에도 하나의 UI로 대응합니다.",
+          image: "/projects/missionary/registration-panel.png",
+          imageAlt:
+            "등록자 상세 슬라이드 패널. 기본 정보, 참석 정보, 커스텀 필드를 한 화면에서 확인하고 수정할 수 있다.",
         },
       ],
       devProcess: {
