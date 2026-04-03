@@ -97,6 +97,7 @@ export interface Project {
   demoUrl?: string;
   githubUrl?: string;
   featured?: boolean;
+  updatedAt: string;
   caseStudy?: CaseStudy;
 }
 
@@ -116,6 +117,7 @@ export const projects: Project[] = [
     emoji: "🤖",
     githubUrl: "https://github.com/juchanhwang/my-harness",
     featured: true,
+    updatedAt: "2026-04-03",
     caseStudy: {
       category: "AI Agent Engineering",
       impact: "전문 에이전트 팀이 협업하는 AI 네이티브 개발 환경",
@@ -418,6 +420,7 @@ export const projects: Project[] = [
     emoji: "⛪",
     githubUrl: "https://github.com/juchanhwang/missionary",
     featured: true,
+    updatedAt: "2026-04-03",
     caseStudy: {
       category: "AI Native Web Application",
       status: "in-progress",
@@ -617,7 +620,9 @@ export const projects: Project[] = [
 ];
 
 export function getFeaturedProjects() {
-  return projects.filter((p) => p.featured);
+  return projects
+    .filter((p) => p.featured)
+    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 }
 
 export function getProjectBySlug(slug: string) {
