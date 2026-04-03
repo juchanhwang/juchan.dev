@@ -468,7 +468,7 @@ export const projects: Project[] = [
         {
           task: "선교 보고서 관리",
           tool: "한글 문서",
-          limitation: "양식 비통일, 협업 불가",
+          limitation: "정보 파편화, 버전 관리 어려움",
         },
       ],
       processIntro:
