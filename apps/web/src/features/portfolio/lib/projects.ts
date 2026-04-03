@@ -491,12 +491,18 @@ export const projects: Project[] = [
         },
         {
           number: "03",
-          title: "통합 관리 대시보드",
+          title: "일관된 어드민 대시보드 패턴",
           description:
-            "등록 현황과 입금 확인을 한 곳에서 처리할 수 있는 관리자 대시보드를 구축했습니다. overlay-kit + react-modal 조합으로 복잡한 CRUD 워크플로우를 모달 기반으로 처리하고, 실시간 필터링과 일괄 작업 기능을 제공합니다.",
+            "선교·등록·유저·연계지 각 도메인별로 일관된 관리 대시보드를 구축했습니다. 목록 조회, 상세 확인, 생성/수정/삭제를 동일한 UI 패턴으로 제공하며, overlay-kit 기반 슬라이드 패널과 모달로 페이지 이동 없이 빠르게 작업할 수 있습니다.",
           image: "/projects/missionary/registration-dashboard.png",
           imageAlt:
-            "등록 현황 대시보드. 등록자 목록, 입금 상태, 필터링 및 일괄 작업 기능을 보여준다.",
+            "등록 현황 대시보드. 등록자 목록, 입금 상태, 필터링 및 일괄 승인 기능을 보여준다.",
+        },
+        {
+          number: "04",
+          title: "프론트엔드 기술 설계",
+          description:
+            "React Hook Form + Zod 조합으로 타입 안전한 폼 검증을 구현하고, TanStack Query로 서버 상태를 관리합니다. 목록 페이지는 Server Component로 초기 데이터를 패칭하고, 필터링·정렬 등 인터랙션은 Client Component에서 처리하는 하이브리드 렌더링 전략을 적용했습니다. 라우트 코로케이션 패턴(_components, _hooks, _schemas, _actions)으로 도메인별 응집도를 높이고, 자체 디자인시스템(25개 컴포넌트)으로 UI 일관성을 유지합니다.",
         },
       ],
       devProcess: {
