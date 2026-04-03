@@ -90,13 +90,16 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         </>
       )}
 
-      <hr className="mx-auto max-w-3xl border-border" />
-
-      <ResultMetrics
-        metrics={caseStudy.metrics}
-        screenshots={caseStudy.screenshots}
-        demoVideo={caseStudy.demoVideo}
-      />
+      {(caseStudy.metrics.length > 0 || caseStudy.screenshots || caseStudy.demoVideo) && (
+        <>
+          <hr className="mx-auto max-w-3xl border-border" />
+          <ResultMetrics
+            metrics={caseStudy.metrics}
+            screenshots={caseStudy.screenshots}
+            demoVideo={caseStudy.demoVideo}
+          />
+        </>
+      )}
 
       {caseStudy.roadmap && (
         <>
