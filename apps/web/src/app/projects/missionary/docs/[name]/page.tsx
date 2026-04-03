@@ -7,6 +7,7 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
+import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
 
 const VALID_DOCS = [
@@ -48,6 +49,13 @@ async function getDocContent(name: DocName): Promise<string> {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(rehypePrettyCode, {
+      theme: {
+        light: "github-light",
+        dark: "one-dark-pro",
+      },
+      keepBackground: true,
+    })
     .use(rehypeStringify)
     .process(markdown);
 
