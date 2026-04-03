@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { DevDocument, DevProcess } from "../lib/projects";
 import { FadeInUp } from "../animation/fade-in-up";
@@ -27,18 +28,32 @@ function ExternalLinkIcon() {
 }
 
 function DocCard({ doc }: { doc: DevDocument }) {
-  const content = (
+  const inner = (
     <>
       <span className="text-2xl" aria-hidden="true">
         {doc.emoji}
       </span>
       <p className="mt-2 text-sm font-semibold">{doc.title}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{doc.description}</p>
+      {doc.description && (
+        <p className="mt-1 text-xs text-muted-foreground">{doc.description}</p>
+      )}
+    </>
+  );
+
+  if (!doc.href) {
+    return (
+      <div className="flex h-full flex-col rounded-lg border border-border p-4">
+        {inner}
+      </div>
+    );
+  }
+
+  const linkContent = (
+    <>
+      {inner}
       <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
         보기 {doc.external ? <ExternalLinkIcon /> : "→"}
-        {doc.external && (
-          <span className="sr-only">(새 탭에서 열기)</span>
-        )}
+        {doc.external && <span className="sr-only">(새 탭에서 열기)</span>}
       </span>
     </>
   );
@@ -51,15 +66,95 @@ function DocCard({ doc }: { doc: DevDocument }) {
         rel="noopener noreferrer"
         className={CARD_CLASS}
       >
-        {content}
+        {linkContent}
       </a>
     );
   }
 
   return (
     <Link href={doc.href} className={CARD_CLASS}>
-      {content}
+      {linkContent}
     </Link>
+  );
+}
+
+export function DocTable({ doc }: { doc: DevDocument }) {
+  return (
+    <div>
+      <h4 className="flex items-center gap-2 text-base font-semibold">
+        <span aria-hidden="true">{doc.emoji}</span>
+        {doc.title}
+      </h4>
+      {doc.description && (
+        <p className="mt-1 text-sm text-muted-foreground">{doc.description}</p>
+      )}
+      {doc.headers && doc.rows && (
+        <>
+          {/* Desktop: table */}
+          <div className="mt-3 hidden overflow-hidden rounded-lg border border-border sm:block">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-secondary/50">
+                  {doc.headers.map((h) => (
+                    <th
+                      key={h}
+                      className="px-4 py-2.5 text-left font-medium text-muted-foreground"
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {doc.rows.map((row, ri) => (
+                  <tr
+                    key={ri}
+                    className="border-b border-border last:border-b-0"
+                  >
+                    {row.map((cell, ci) => (
+                      <td
+                        key={ci}
+                        className={`px-4 py-2.5 ${ci === 0 ? "font-medium" : "text-muted-foreground"}`}
+                      >
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile: cards */}
+          <div className="mt-3 space-y-2 sm:hidden">
+            {doc.rows.map((row, ri) => (
+              <div
+                key={ri}
+                className="rounded-lg border border-border p-3"
+              >
+                {row.map((cell, ci) => (
+                  <p
+                    key={ci}
+                    className={
+                      ci === 0
+                        ? "font-medium"
+                        : "mt-0.5 text-sm text-muted-foreground"
+                    }
+                  >
+                    {doc.headers?.[ci] && ci > 0 && (
+                      <span className="text-xs uppercase tracking-wide text-muted-foreground/70">
+                        {doc.headers[ci]}:{" "}
+                      </span>
+                    )}
+                    {cell}
+                  </p>
+                ))}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -67,9 +162,17 @@ interface DevProcessSectionProps {
   devProcess: DevProcess;
   tech?: string[];
   overviewLink?: { title: string; href: string };
+  hideDocuments?: boolean;
 }
 
-export function DevProcessSection({ devProcess, tech, overviewLink }: DevProcessSectionProps) {
+export function DevProcessSection({
+  devProcess,
+  tech,
+  overviewLink,
+  hideDocuments,
+}: DevProcessSectionProps) {
+  const hasTableDocs = devProcess.documents.some((d) => d.rows);
+
   return (
     <section id="dev-process" className="mx-auto max-w-[1100px] px-4 py-20">
       <div className="scroll-reveal">
@@ -86,7 +189,10 @@ export function DevProcessSection({ devProcess, tech, overviewLink }: DevProcess
       </FadeInUp>
 
       {tech && tech.length > 0 && (
-        <FadeInUp delay={0.1} className="mt-6 flex flex-wrap justify-center gap-2">
+        <FadeInUp
+          delay={0.1}
+          className="mt-6 flex flex-wrap justify-center gap-2"
+        >
           {tech.map((t) => (
             <span
               key={t}
@@ -131,46 +237,81 @@ export function DevProcessSection({ devProcess, tech, overviewLink }: DevProcess
       </div>
 
       {/* Development cycle flow */}
-      <FadeInUp delay={0.3} className="mt-12">
-        <h3 className="text-center text-lg font-semibold">개발 싸이클</h3>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-          {devProcess.cycle.map((step, i) => (
-            <div key={step} className="flex items-center gap-2 whitespace-nowrap">
-              <span className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium">
-                {step}
-              </span>
-              {i < devProcess.cycle.length - 1 && (
-                <svg
-                  className="h-4 w-4 shrink-0 text-muted-foreground"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              )}
+      {devProcess.cycles.map((cycle, ci) => (
+        <FadeInUp
+          key={cycle.label}
+          delay={0.3 + ci * 0.15}
+          className="mt-12"
+        >
+          <h3 className="text-center text-lg font-semibold">{cycle.label}</h3>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            {cycle.steps.map((step, i) => (
+              <div
+                key={step}
+                className="flex items-center gap-2 whitespace-nowrap"
+              >
+                <span className="rounded-full border border-border bg-background px-4 py-2 text-sm font-medium">
+                  {step}
+                </span>
+                {i < cycle.steps.length - 1 && (
+                  <svg
+                    className="h-4 w-4 shrink-0 text-muted-foreground"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                )}
+              </div>
+            ))}
+          </div>
+          {cycle.image && (
+            <div className="mt-8 overflow-hidden rounded-lg border border-border shadow-lg">
+              <Image
+                src={cycle.image}
+                alt={cycle.imageAlt ?? `${cycle.label} 스크린샷`}
+                width={1100}
+                height={600}
+                className="h-auto w-full"
+              />
             </div>
-          ))}
-        </div>
-      </FadeInUp>
+          )}
+        </FadeInUp>
+      ))}
 
-      {/* Document links */}
-      <FadeInUp delay={0.4} className="mt-12">
-        <h3 className="text-center text-lg font-semibold">산출물</h3>
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {devProcess.documents.map((doc, i) => (
-            <FadeInUp key={doc.href} delay={0.4 + i * 0.08}>
-              <DocCard doc={doc} />
-            </FadeInUp>
-          ))}
-        </div>
-      </FadeInUp>
+      {/* Documents: table view or card grid */}
+      {!hideDocuments && (
+        <FadeInUp delay={0.4} className="mt-12">
+          <h3 className="text-center text-lg font-semibold">
+            {devProcess.documentsLabel ?? "산출물"}
+          </h3>
+
+          {hasTableDocs ? (
+            <div className="mt-8 space-y-10">
+              {devProcess.documents.map((doc, i) => (
+                <FadeInUp key={doc.title} delay={0.4 + i * 0.06}>
+                  <DocTable doc={doc} />
+                </FadeInUp>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {devProcess.documents.map((doc, i) => (
+                <FadeInUp key={doc.href ?? doc.title} delay={0.4 + i * 0.08}>
+                  <DocCard doc={doc} />
+                </FadeInUp>
+              ))}
+            </div>
+          )}
+        </FadeInUp>
+      )}
     </section>
   );
 }

@@ -16,6 +16,7 @@ export function ResultMetrics({
   screenshots,
   demoVideo,
 }: ResultMetricsProps) {
+
   return (
     <section id="result" className="mx-auto max-w-[1100px] px-4 py-20">
       <FadeInUp>
@@ -26,19 +27,19 @@ export function ResultMetrics({
       </FadeInUp>
 
       <div className="mt-12 grid gap-4 sm:grid-cols-3">
-        {metrics.map((metric, i) => (
-          <FadeInUp key={metric.label} delay={i * 0.1}>
-            <div className="rounded-lg border border-border p-6 text-center">
-              <p className="text-[clamp(2.5rem,5vw,3rem)] font-bold leading-none">
-                <CountUp end={metric.value} suffix={metric.suffix} />
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {metric.label}
-              </p>
-            </div>
-          </FadeInUp>
-        ))}
-      </div>
+          {metrics.map((metric, i) => (
+            <FadeInUp key={metric.label} delay={i * 0.1}>
+              <div className="rounded-lg border border-border p-6 text-center">
+                <p className="text-[clamp(2.5rem,5vw,3rem)] font-bold leading-none">
+                  <CountUp end={metric.value} suffix={metric.suffix} />
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {metric.label}
+                </p>
+              </div>
+            </FadeInUp>
+          ))}
+        </div>
 
       {demoVideo && (
         <FadeInUp className="mt-12">
@@ -75,7 +76,6 @@ export function ResultMetrics({
           ))}
         </div>
       )}
-
     </section>
   );
 }

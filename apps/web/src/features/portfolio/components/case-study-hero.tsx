@@ -75,7 +75,7 @@ export function CaseStudyHero({
               <span aria-hidden="true">🔧</span> In Progress
             </span>
           )}
-          {[role, period, `${teamSize} 개발`].map((tag) => (
+          {[role, period, ...(teamSize ? [`${teamSize} 개발`] : [])].map((tag) => (
             <span
               key={tag}
               className="rounded-full border border-border bg-secondary/50 px-3 py-1 text-sm text-muted-foreground"

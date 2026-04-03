@@ -82,7 +82,11 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
       {caseStudy.devProcess && (
         <>
           <hr className="mx-auto max-w-3xl border-border" />
-          <DevProcessSection devProcess={caseStudy.devProcess} tech={project.tags} overviewLink={caseStudy.overviewLink} />
+          <DevProcessSection
+            devProcess={caseStudy.devProcess}
+            tech={project.tags}
+            overviewLink={caseStudy.overviewLink}
+          />
         </>
       )}
 

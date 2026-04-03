@@ -16,6 +16,7 @@ export type {
   DemoVideo,
   TeamMember,
   DevDocument,
+  DevCycle,
   DevProcess,
   RoadmapItem,
 } from "./lib/projects";

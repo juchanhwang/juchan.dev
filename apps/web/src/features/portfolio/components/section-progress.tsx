@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const SECTIONS = [
+interface Section {
+  id: string;
+  label: string;
+}
+
+const ALL_SECTIONS: Section[] = [
   { id: "overview", label: "Overview" },
   { id: "problem", label: "Problem" },
   { id: "process", label: "Process" },
@@ -12,13 +17,17 @@ const SECTIONS = [
   { id: "whats-next", label: "What's Next" },
   { id: "retrospective", label: "Retrospective" },
   { id: "links", label: "Links" },
-] as const;
+];
 
 export function SectionProgress() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [progress, setProgress] = useState(0);
+  const [visibleSections, setVisibleSections] = useState(ALL_SECTIONS);
 
   useEffect(() => {
+    const present = ALL_SECTIONS.filter((s) => document.getElementById(s.id));
+    setVisibleSections(present);
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -30,7 +39,7 @@ export function SectionProgress() {
       { rootMargin: "-40% 0px -40% 0px" },
     );
 
-    for (const section of SECTIONS) {
+    for (const section of present) {
       const el = document.getElementById(section.id);
       if (el) observer.observe(el);
     }
@@ -71,7 +80,7 @@ export function SectionProgress() {
         aria-label="섹션 네비게이션"
       >
         <ul className="flex flex-col gap-4">
-          {SECTIONS.map((section) => {
+          {visibleSections.map((section) => {
             const isActive = activeSection === section.id;
             return (
               <li key={section.id}>
