@@ -205,12 +205,12 @@ export function DevProcessSection({
       )}
 
       {overviewLink && (
-        <FadeInUp delay={0.15} className="mt-4 text-center">
+        <FadeInUp delay={0.15} className="mt-6 text-center">
           <a
             href={overviewLink.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="inline-flex items-center gap-2 rounded-lg border border-border px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:border-foreground/50 hover:shadow-md"
           >
             {overviewLink.title}
             <ExternalLinkIcon />
