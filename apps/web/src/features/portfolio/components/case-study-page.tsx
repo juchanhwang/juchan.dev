@@ -119,11 +119,25 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         </FadeInUp>
         <FadeInUp delay={0.1}>
           <div className="mt-6 text-[1.05rem] leading-[1.85] text-muted-foreground">
-            {caseStudy.resultContent.split("\n\n").map((paragraph, i) => (
-              <p key={i} className={i > 0 ? "mt-3" : ""}>
-                {paragraph}
-              </p>
-            ))}
+            {(() => {
+              const paragraphs = caseStudy.resultContent.split("\n\n");
+              const last = paragraphs.length > 1 ? paragraphs[paragraphs.length - 1] : null;
+              const rest = last ? paragraphs.slice(0, -1) : paragraphs;
+              return (
+                <>
+                  {rest.map((paragraph, i) => (
+                    <p key={i} className={i > 0 ? "mt-3" : ""}>
+                      {paragraph}
+                    </p>
+                  ))}
+                  {last && (
+                    <blockquote className="mt-6 border-l-4 border-foreground/30 pl-5 text-[1.1rem] font-medium leading-[1.9] text-foreground/85 italic">
+                      {last}
+                    </blockquote>
+                  )}
+                </>
+              );
+            })()}
           </div>
         </FadeInUp>
       </section>
