@@ -1,4 +1,7 @@
 import Link from "next/link";
+
+import { ViewCountBadge } from "@/features/views";
+
 import { formatDate } from "../lib/posts";
 
 interface PostCardProps {
@@ -8,6 +11,7 @@ interface PostCardProps {
   tags: string[];
   readingTime: number;
   permalink: string;
+  viewCount?: number;
 }
 
 export function PostCard({
@@ -17,6 +21,7 @@ export function PostCard({
   tags,
   readingTime,
   permalink,
+  viewCount,
 }: PostCardProps) {
   return (
     <article>
@@ -41,9 +46,17 @@ export function PostCard({
               </span>
             ))}
           </div>
-          <span className="shrink-0 text-xs text-muted-foreground">
-            {formatDate(date)} · {readingTime}분 읽기
-          </span>
+          <div className="flex shrink-0 items-center gap-2 text-xs text-muted-foreground">
+            <span>
+              {formatDate(date)} · {readingTime}분 읽기
+            </span>
+            {viewCount !== undefined && (
+              <>
+                <span aria-hidden="true">·</span>
+                <ViewCountBadge count={viewCount} />
+              </>
+            )}
+          </div>
         </div>
       </Link>
     </article>

@@ -6,6 +6,14 @@ import {
   getNextProject,
 } from "@/features/portfolio";
 import { CaseStudyPage } from "@/features/portfolio/components/case-study-page";
+import { ViewCount } from "@/features/views";
+
+/**
+ * ISR — 빌드 시 prerender 후 60초마다 재생성. ViewCount Server Component의
+ * 초기 카운트가 SSG에 고정되지 않도록 한다. 실시간 보정은 ViewTracker가
+ * mount 직후 수행한다.
+ */
+export const revalidate = 60;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -42,6 +50,7 @@ export default async function ProjectCaseStudyPage({ params }: Props) {
     <CaseStudyPage
       project={{ ...project, caseStudy }}
       nextProject={nextProject}
+      viewCountSlot={<ViewCount type="project" slug={slug} />}
     />
   );
 }
