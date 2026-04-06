@@ -1,15 +1,24 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+// 서버/첫 렌더에서는 false, 클라이언트 hydration 이후에는 true를 반환한다.
+// next-themes의 hydration mismatch를 피하기 위한 표준 패턴을 useSyncExternalStore로
+// 구현하여 effect 안에서 setState를 호출하지 않는다.
+const emptySubscribe = () => () => {};
+
+function useHasMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+}
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHasMounted();
 
   if (!mounted) {
     return (
