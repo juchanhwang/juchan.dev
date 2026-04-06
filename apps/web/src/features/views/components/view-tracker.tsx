@@ -12,17 +12,18 @@ interface ViewTrackerProps {
   type: ViewType;
   slug: string;
   initialCount: number;
-  /**
-   * true면 카운트 증가만 수행하고 UI는 렌더하지 않는다.
-   * Redis 비활성(`disabled`) 상태에서 ViewCount가 숨김 처리할 때 사용.
-   */
-  hidden?: boolean;
   className?: string;
 }
 
 /**
  * 마운트 시 `trackView` Server Action을 호출해 view count를 증가시키고,
  * 결과 카운트를 compact 포맷으로 렌더한다.
+ *
+ * 숨김 규칙:
+ * - `count === 0`이면 렌더하지 않는다. 초기 카운트가 0일 때도 트래커는
+ *   마운트되어 useEffect에서 `trackView`를 호출하고, 성공하면 setCount로
+ *   UI가 자연스럽게 나타난다 (첫 방문 경험 보장). Redis 비활성 상태에서는
+ *   `skipped: "disabled"`가 반환되어 count가 0인 채로 유지되며 계속 숨김.
  *
  * 중복 가드:
  * - 같은 세션 내 동일 `(type, slug)`는 `sessionStorage`로 재호출을 차단한다.
@@ -39,7 +40,6 @@ export function ViewTracker({
   type,
   slug,
   initialCount,
-  hidden,
   className,
 }: ViewTrackerProps) {
   const [count, setCount] = useState(initialCount);
@@ -67,7 +67,7 @@ export function ViewTracker({
     };
   }, [type, slug]);
 
-  if (hidden || count === 0) return null;
+  if (count === 0) return null;
 
   return (
     <span

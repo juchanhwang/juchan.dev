@@ -88,28 +88,39 @@ describe("ViewTracker", () => {
     expect(screen.getByText("5")).toBeInTheDocument();
   });
 
-  it("hidden prop이 true면 렌더하지 않는다 (increment는 수행)", async () => {
+  it("initialCount === 0이면 초기엔 숨겨두고 trackView 성공 후에 나타난다", async () => {
+    // 첫 방문 플로우: SSR 시점에 count=0이지만 트래커는 마운트되어
+    // trackView를 호출하고, 결과로 count가 1 이상이 되면 UI가 나타난다.
     trackViewMock.mockResolvedValue({ count: 1, skipped: null });
 
     const { container } = render(
-      <ViewTracker type="blog" slug="hidden-case" initialCount={0} hidden />,
+      <ViewTracker type="blog" slug="first-visit-ui" initialCount={0} />,
     );
 
+    // 초기 렌더는 숨김 (count === 0)
+    expect(container).toBeEmptyDOMElement();
+
+    // trackView resolve 후 UI 노출
+    await waitFor(() => {
+      expect(screen.getByText("1")).toBeInTheDocument();
+    });
+  });
+
+  it("Redis 비활성(`skipped: 'disabled'`) 시 count가 0으로 유지되어 계속 숨김", async () => {
+    // Redis env가 없거나 비활성이면 trackView가 { count: 0, skipped: 'disabled' }
+    // 를 반환한다. count가 0이므로 UI는 렌더하지 않는다.
+    trackViewMock.mockResolvedValue({ count: 0, skipped: "disabled" });
+
+    const { container } = render(
+      <ViewTracker type="blog" slug="disabled-case" initialCount={0} />,
+    );
+
+    // trackView resolve 완료까지 대기
     await waitFor(() => {
       expect(trackViewMock).toHaveBeenCalled();
     });
-    expect(container).toBeEmptyDOMElement();
-  });
 
-  it("count === 0이고 hidden이 false여도 (initialCount 시점에) 렌더하지 않는다", () => {
-    // trackView가 resolve되기 전의 동기 시점을 관찰한다. mock을 pending
-    // Promise로 만들어 업데이트를 지연시키고, 초기 렌더 결과만 검증.
-    trackViewMock.mockReturnValue(new Promise(() => {}));
-
-    const { container } = render(
-      <ViewTracker type="blog" slug="zero-case" initialCount={0} />,
-    );
-
+    // 여전히 빈 DOM — count가 0인 채라 숨김 유지
     expect(container).toBeEmptyDOMElement();
   });
 
