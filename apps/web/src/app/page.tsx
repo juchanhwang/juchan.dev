@@ -2,10 +2,29 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getPublishedPosts, PostCard } from "@/features/blog";
 import { getFeaturedProjects, ProjectCard } from "@/features/portfolio";
+import { getViewCounts } from "@/features/views";
 
-export default function Home() {
+/**
+ * ISR — 추천 카드에 view count를 주입하기 위해 60초마다 재생성.
+ */
+export const revalidate = 60;
+
+export default async function Home() {
   const recentPosts = getPublishedPosts().slice(0, 3);
   const featuredProjects = getFeaturedProjects();
+
+  const [postViewCounts, projectViewCounts] = await Promise.all([
+    getViewCounts(
+      "blog",
+      recentPosts.map((post) => post.slugAsParams),
+    ),
+    getViewCounts(
+      "project",
+      featuredProjects
+        .map((project) => project.slug)
+        .filter((slug): slug is string => typeof slug === "string"),
+    ),
+  ]);
 
   return (
     <>
@@ -35,7 +54,13 @@ export default function Home() {
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {featuredProjects.map((project) => (
-            <ProjectCard key={project.title} project={project} />
+            <ProjectCard
+              key={project.title}
+              project={project}
+              viewCount={
+                project.slug ? projectViewCounts[project.slug] : undefined
+              }
+            />
           ))}
         </div>
       </section>
@@ -63,6 +88,7 @@ export default function Home() {
               tags={post.tags}
               readingTime={post.metadata.readingTime}
               permalink={post.permalink}
+              viewCount={postViewCounts[post.slugAsParams]}
             />
           ))}
         </div>

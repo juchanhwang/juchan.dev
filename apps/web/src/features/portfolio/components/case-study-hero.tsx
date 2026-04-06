@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "motion/react";
 
 interface CaseStudyHeroProps {
@@ -10,6 +11,12 @@ interface CaseStudyHeroProps {
   period: string;
   teamSize: string;
   status?: "in-progress" | "completed";
+  /**
+   * View count 슬롯. Client Component(CaseStudyHero) 안에서 async Server
+   * Component(`ViewCount`)를 직접 렌더할 수 없으므로, 상위 Server Component
+   * (/projects/[slug]/page.tsx)가 렌더한 JSX를 ReactNode로 주입받는다.
+   */
+  viewCountSlot?: ReactNode;
 }
 
 const containerVariants = {
@@ -39,6 +46,7 @@ export function CaseStudyHero({
   period,
   teamSize,
   status,
+  viewCountSlot,
 }: CaseStudyHeroProps) {
   return (
     <section className="flex min-h-[100svh] flex-col items-center justify-center px-4 text-center">
@@ -84,6 +92,14 @@ export function CaseStudyHero({
             </span>
           ))}
         </motion.div>
+        {viewCountSlot && (
+          <motion.div
+            variants={itemVariants}
+            className="mt-4 flex justify-center text-sm text-muted-foreground"
+          >
+            {viewCountSlot}
+          </motion.div>
+        )}
         <motion.div
           variants={itemVariants}
           className="mt-12 text-muted-foreground"

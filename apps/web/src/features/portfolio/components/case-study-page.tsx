@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { MotionConfig } from "motion/react";
 import type { Project } from "../lib/projects";
@@ -44,9 +45,18 @@ const ProjectLinks = dynamic(
 interface CaseStudyPageProps {
   project: Project & { caseStudy: NonNullable<Project["caseStudy"]> };
   nextProject: Project | null;
+  /**
+   * Server Component에서 전달받는 view count 슬롯. CaseStudyHero에
+   * pass-through된다.
+   */
+  viewCountSlot?: ReactNode;
 }
 
-export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
+export function CaseStudyPage({
+  project,
+  nextProject,
+  viewCountSlot,
+}: CaseStudyPageProps) {
   const { caseStudy } = project;
 
   return (
@@ -61,6 +71,7 @@ export function CaseStudyPage({ project, nextProject }: CaseStudyPageProps) {
         period={caseStudy.period}
         teamSize={caseStudy.teamSize}
         status={caseStudy.status}
+        viewCountSlot={viewCountSlot}
       />
 
       <CaseStudyOverview
