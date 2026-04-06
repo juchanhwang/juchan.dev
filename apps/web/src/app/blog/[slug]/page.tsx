@@ -10,6 +10,8 @@ import {
   TableOfContents,
   PostNavigation,
   ReadingProgressBar,
+  PostAnalytics,
+  RelatedPostLink,
 } from "@/features/blog";
 import { MDXContent } from "@/features/mdx";
 
@@ -52,6 +54,11 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <>
       <ReadingProgressBar />
+      <PostAnalytics
+        slug={post.slugAsParams}
+        tags={post.tags}
+        readingTime={post.metadata.readingTime}
+      />
       <div className="relative mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <PostHeader
           title={post.title}
@@ -75,16 +82,14 @@ export default async function PostPage({ params }: PostPageProps) {
             <h3 className="mb-4 text-lg font-semibold">관련 포스트</h3>
             <div className="flex flex-col gap-2">
               {relatedPosts.map((related) => (
-                <a
+                <RelatedPostLink
                   key={related.slugAsParams}
-                  href={related.permalink}
-                  className="flex items-center justify-between text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  <span>· {related.title}</span>
-                  <span className="shrink-0 text-xs">
-                    {formatDate(related.date)}
-                  </span>
-                </a>
+                  fromSlug={post.slugAsParams}
+                  toSlug={related.slugAsParams}
+                  toTitle={related.title}
+                  permalink={related.permalink}
+                  formattedDate={formatDate(related.date)}
+                />
               ))}
             </div>
           </section>
