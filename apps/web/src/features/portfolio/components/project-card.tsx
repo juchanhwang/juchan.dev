@@ -27,7 +27,7 @@ export function ProjectCard({ project, viewCount }: ProjectCardProps) {
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary text-xl">
             {project.emoji}
           </div>
-          {viewCount !== undefined && viewCount > 0 && (
+          {viewCount !== undefined && (
             <ViewCountBadge
               count={viewCount}
               className="mt-1 text-xs text-muted-foreground"

@@ -14,12 +14,12 @@ interface ViewCountBadgeProps {
  * 트래커 없이 단순 표시만 한다. 부모(페이지)에서 `getViewCounts`로 일괄
  * 조회 후 prop으로 내려준다.
  *
- * - `count === 0`은 Redis 비활성이거나 방문이 없는 경우 — 카드 메타 영역이
- *   어색해지지 않도록 자체 렌더를 건너뛴다 (`null` 반환).
+ * `count === 0`도 있는 그대로 `"0"`으로 표시한다. 카드마다 일관된 메타
+ * 영역을 보장하기 위함이며, "뱃지가 어떤 카드엔 있고 어떤 카드엔 없는"
+ * 비일관성을 피한다. Redis 비활성으로 카운트를 숨기고 싶은 경우에는
+ * 부모 컴포넌트가 `viewCount` prop 자체를 전달하지 않도록 한다.
  */
 export function ViewCountBadge({ count, className }: ViewCountBadgeProps) {
-  if (count === 0) return null;
-
   return (
     <span
       className={cn(

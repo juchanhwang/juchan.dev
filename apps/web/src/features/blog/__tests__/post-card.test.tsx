@@ -77,9 +77,11 @@ describe("PostCard", () => {
     );
   });
 
-  it("viewCount가 0이면 뱃지를 렌더링하지 않는다", () => {
+  it("viewCount가 0이어도 일관성을 위해 뱃지를 '0'으로 렌더링한다", () => {
     render(<PostCard {...defaultProps} viewCount={0} />);
-    expect(screen.queryByTestId("view-count-badge-mock")).not.toBeInTheDocument();
+    expect(screen.getByTestId("view-count-badge-mock")).toHaveTextContent(
+      "views:0",
+    );
   });
 
   it("viewCount가 undefined면 뱃지를 렌더링하지 않는다", () => {

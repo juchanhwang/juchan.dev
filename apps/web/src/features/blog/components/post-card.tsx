@@ -50,7 +50,7 @@ export function PostCard({
             <span>
               {formatDate(date)} · {readingTime}분 읽기
             </span>
-            {viewCount !== undefined && viewCount > 0 && (
+            {viewCount !== undefined && (
               <>
                 <span aria-hidden="true">·</span>
                 <ViewCountBadge count={viewCount} />
