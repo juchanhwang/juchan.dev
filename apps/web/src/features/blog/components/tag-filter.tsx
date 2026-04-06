@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import { captureEvent } from "@/lib/posthog";
 import { cn } from "@/lib/utils";
 
 interface TagFilterProps {
@@ -17,6 +18,7 @@ export function TagFilter({ tags }: TagFilterProps) {
     (tag: string) => {
       const params = new URLSearchParams(searchParams);
       const current = params.getAll("tag");
+      const isSelecting = !current.includes(tag);
 
       params.delete("tag");
 
@@ -29,6 +31,10 @@ export function TagFilter({ tags }: TagFilterProps) {
           params.append("tag", t);
         }
         params.append("tag", tag);
+      }
+
+      if (isSelecting) {
+        captureEvent("tag_filter_select", { tag });
       }
 
       const query = params.toString();

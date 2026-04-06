@@ -22,14 +22,19 @@ const ALL_SECTIONS: Section[] = [
 export function SectionProgress() {
   const [activeSection, setActiveSection] = useState<string>("");
   const [progress, setProgress] = useState(0);
-  const [visibleSections, setVisibleSections] = useState(ALL_SECTIONS);
+  // 기본값을 비워두고 effect에서 DOM 구독 후 observer 콜백 안에서 채운다.
+  // effect 본문에서 직접 setState를 호출하지 않기 위함이다.
+  const [visibleSections, setVisibleSections] = useState<Section[]>([]);
 
   useEffect(() => {
     const present = ALL_SECTIONS.filter((s) => document.getElementById(s.id));
-    setVisibleSections(present);
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // 첫 콜백에서 실제로 존재하는 섹션 목록을 commit한다.
+        // IntersectionObserver는 observe 직후 각 타겟에 대해 1회 콜백을 호출하므로
+        // 이 시점에 visibleSections를 확정할 수 있다.
+        setVisibleSections((prev) => (prev.length === 0 ? present : prev));
         for (const entry of entries) {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
