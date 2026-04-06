@@ -21,6 +21,14 @@ vi.mock("#velite", () => ({
   posts: [],
 }));
 
+// ViewCountBadge는 presentational이지만 barrel을 타면 server-only 헬퍼까지
+// import 체인을 만든다. jsdom에서 안전하게 돌리기 위해 feature barrel을 mock.
+vi.mock("@/features/views", () => ({
+  ViewCountBadge: ({ count }: { count: number }) => (
+    <span data-testid="view-count-badge-mock">views:{count}</span>
+  ),
+}));
+
 const defaultProps = {
   title: "React Server Components 실전 가이드",
   description: "RSC의 핵심 개념부터 실전 패턴까지 정리했습니다.",
@@ -60,5 +68,22 @@ describe("PostCard", () => {
     render(<PostCard {...defaultProps} />);
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute("href", "/blog/react-server-components");
+  });
+
+  it("viewCount가 전달되면 뱃지를 렌더링한다", () => {
+    render(<PostCard {...defaultProps} viewCount={42} />);
+    expect(screen.getByTestId("view-count-badge-mock")).toHaveTextContent(
+      "views:42",
+    );
+  });
+
+  it("viewCount가 0이면 뱃지를 렌더링하지 않는다", () => {
+    render(<PostCard {...defaultProps} viewCount={0} />);
+    expect(screen.queryByTestId("view-count-badge-mock")).not.toBeInTheDocument();
+  });
+
+  it("viewCount가 undefined면 뱃지를 렌더링하지 않는다", () => {
+    render(<PostCard {...defaultProps} />);
+    expect(screen.queryByTestId("view-count-badge-mock")).not.toBeInTheDocument();
   });
 });
