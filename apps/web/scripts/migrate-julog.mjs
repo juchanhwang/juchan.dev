@@ -17,7 +17,7 @@ const TARGET = "/Users/JuChan/Documents/FE/juchan.dev/apps/web/content/posts";
 
 // --- Slug 생성 ---
 
-function toSlug(filename, category) {
+function toSlug(filename) {
   // 확장자 제거
   let name = filename.replace(/\.md$/, "");
 
@@ -201,7 +201,7 @@ async function migrate() {
       const { frontmatter, body } = parseFrontmatter(raw);
 
       // slug 생성
-      let slug = toSlug(file, category);
+      let slug = toSlug(file);
 
       // slug 충돌 처리
       if (slugMap.has(slug)) {
