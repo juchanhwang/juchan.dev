@@ -418,7 +418,6 @@ export const projects: Project[] = [
       "pnpm Workspaces",
     ],
     emoji: "⛪",
-    githubUrl: "https://github.com/juchanhwang/missionary",
     featured: true,
     updatedAt: "2026-04-03",
     caseStudy: {
