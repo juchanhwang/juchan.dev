@@ -84,6 +84,7 @@ export function CaseStudyPage({
         callout={caseStudy.problemCallout}
         content={caseStudy.problemContent}
         asIsTable={caseStudy.asIsTable}
+        problemLink={caseStudy.problemLink}
       />
 
       <hr className="mx-auto max-w-3xl border-border" />

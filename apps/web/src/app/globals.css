@@ -218,6 +218,19 @@
   margin-bottom: 1.25rem;
 }
 
+.prose ul {
+  list-style-type: disc !important;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+}
+
+.prose ul:has(> li > input[type="checkbox"]) {
+  list-style-type: none !important;
+  padding-left: 0.25rem;
+}
+
 .prose li {
   margin-bottom: 0.5rem;
 }

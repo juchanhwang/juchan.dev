@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { AsIsRow } from "../lib/projects";
 import { FadeInUp } from "../animation/fade-in-up";
 
@@ -7,12 +8,14 @@ interface CaseStudyProblemProps {
   callout: string;
   content: string;
   asIsTable?: AsIsRow[];
+  problemLink?: { title: string; href: string };
 }
 
 export function CaseStudyProblem({
   callout,
   content,
   asIsTable,
+  problemLink,
 }: CaseStudyProblemProps) {
   return (
     <section id="problem" className="mx-auto max-w-[1100px] px-4 py-20">
@@ -39,8 +42,35 @@ export function CaseStudyProblem({
         </div>
       </FadeInUp>
 
+      {problemLink && (
+        <FadeInUp delay={0.3}>
+          <div className="mt-6">
+            <Link
+              href={problemLink.href}
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
+            >
+              {problemLink.title}
+              <svg
+                className="h-3.5 w-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
+          </div>
+        </FadeInUp>
+      )}
+
       {asIsTable && asIsTable.length > 0 && (
-        <FadeInUp delay={0.3} className="mt-10">
+        <FadeInUp delay={0.4} className="mt-10">
           <h3 className="text-lg font-semibold">AS-IS</h3>
 
           {/* Desktop: table */}
@@ -103,6 +133,7 @@ export function CaseStudyProblem({
           </div>
         </FadeInUp>
       )}
+
     </section>
   );
 }
