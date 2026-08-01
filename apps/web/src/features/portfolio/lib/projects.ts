@@ -107,7 +107,7 @@ export const projects: Project[] = [
     title: "my-harness",
     slug: "my-harness",
     description:
-      "oh-my-opencode 기반 Claude Code 하네스. 18개 에이전트·15개 스킬을 도입하고, 개인 개발 환경에 맞게 커스터마이징.",
+      "oh-my-opencode 기반 Claude Code 하네스. 16개 에이전트·18개 스킬을 도입하고, 개인 개발 환경에 맞게 커스터마이징.",
     tags: [
       "Claude Code",
       "AI Agent",
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     emoji: "🤖",
     githubUrl: "https://github.com/juchanhwang/my-harness",
     featured: true,
-    updatedAt: "2026-04-03",
+    updatedAt: "2026-08-01",
     caseStudy: {
       category: "AI Agent Engineering",
       impact: "전문 에이전트 팀이 협업하는 AI 네이티브 개발 환경",
@@ -126,7 +126,7 @@ export const projects: Project[] = [
       role: "Harness Engineering",
       teamSize: "",
       overview:
-        "Claude Code는 강력한 AI 코딩 에이전트지만, 기본 상태에서는 단일 에이전트로 동작합니다. 복잡한 프로젝트에서는 프론트엔드, 백엔드, QA, 디자인 등 도메인마다 고유한 설계 원칙과 판단 기준이 필요한데, 하나의 에이전트가 모든 영역을 동일한 깊이로 다루기 어렵습니다.\n\nmy-harness는 이 문제를 해결하기 위해 oh-my-opencode의 에이전트 시스템을 도입하고, 개인 개발 환경에 맞게 커스터마이징한 Claude Code 하네스입니다. 18개의 전문 에이전트와 15개의 스킬(7개 도메인 지식 베이스 + 8개 범용 스킬), 10개의 플러그인을 도입한 뒤, 스킬 시스템 마이그레이션, 팀 구성 자동화, PR 프로세스 설계 등을 통해 나만의 하네스로 발전시켰습니다.\n\n오케스트레이터가 작업을 분석하고, 적절한 전문 에이전트에게 위임하며, 결과를 검증하는 탐색→위임→검증 루프를 자동으로 수행합니다. 이를 통해 AI 에이전트 팀이 실제 개발팀처럼 협업하는 환경을 갖추게 되었습니다.",
+        "Claude Code는 강력한 AI 코딩 에이전트지만, 기본 상태에서는 단일 에이전트로 동작합니다. 복잡한 프로젝트에서는 프론트엔드, 백엔드, QA, 디자인 등 도메인마다 고유한 설계 원칙과 판단 기준이 필요한데, 하나의 에이전트가 모든 영역을 동일한 깊이로 다루기 어렵습니다.\n\nmy-harness는 이 문제를 해결하기 위해 oh-my-opencode의 에이전트 시스템을 도입하고, 개인 개발 환경에 맞게 커스터마이징한 Claude Code 하네스입니다. 16개의 전문 에이전트와 18개의 스킬(7개 도메인 지식 베이스 + 8개 범용 스킬 + 3개 평가 워크스페이스), 10개의 플러그인을 운영하며, 스킬 시스템 마이그레이션, 팀 구성 자동화, PR 프로세스 설계 등을 통해 나만의 하네스로 발전시켰습니다.\n\n오케스트레이터가 작업을 분석하고, 적절한 전문 에이전트에게 위임하며, 결과를 검증하는 탐색→위임→검증 루프를 자동으로 수행합니다. 이를 통해 AI 에이전트 팀이 실제 개발팀처럼 협업하는 환경을 갖추게 되었습니다.",
       overviewLink: {
         title: "GitHub에서 전체 구조 보기",
         href: "https://github.com/juchanhwang/my-harness",
@@ -169,13 +169,13 @@ export const projects: Project[] = [
           number: "01",
           title: "에이전트 시스템 도입",
           description:
-            "oh-my-opencode의 에이전트 아키텍처를 도입했습니다. 코어 에이전트(Orchestrator, Planner, Oracle 등 11개)가 탐색→계획→실행→검증 루프를 담당하고, 도메인 전문가 에이전트(FE, BE, Designer, PO, QA, Ops, DA 7개)가 각 영역의 구현과 판단을 맡는 2계층 구조입니다.",
+            "oh-my-opencode의 에이전트 아키텍처를 도입했습니다. 코어 에이전트(Orchestrator, Planner, Oracle 등 9개)가 탐색→계획→실행→검증 루프를 담당하고, 도메인 전문가 에이전트(FE, BE, Designer, PO, QA, Ops, DA 7개)가 각 영역의 구현과 판단을 맡는 2계층 구조입니다. 운영하면서 Claude Code 내장 에이전트와 역할이 겹치는 deep-worker·delegator는 제거해, 도입 당시 11개였던 코어 에이전트를 9개로 정리했습니다.",
         },
         {
           number: "02",
           title: "스킬 시스템 마이그레이션",
           description:
-            "도입된 도메인 지식 시스템(177개 이상의 참조 파일)을 Claude Code의 스킬 시스템으로 마이그레이션했습니다. 기존 knowledge/ 디렉토리에서 에이전트가 파일 경로를 직접 참조하는 방식을, SKILL.md의 frontmatter 기반으로 자동 트리거되는 구조로 전환했습니다. 태스크-지식 매핑 테이블을 통해 작업 맥락에 따라 관련 스킬이 자동 활성화됩니다.",
+            "도입된 도메인 지식 시스템(196개의 참조 파일)을 Claude Code의 스킬 시스템으로 마이그레이션했습니다. 기존 knowledge/ 디렉토리에서 에이전트가 파일 경로를 직접 참조하는 방식을, SKILL.md의 frontmatter 기반으로 자동 트리거되는 구조로 전환했습니다. 태스크-지식 매핑 테이블을 통해 작업 맥락에 따라 관련 스킬이 자동 활성화됩니다.\n\n마이그레이션 이후에는 스킬을 늘리는 대신 정확도를 검증하는 쪽으로 방향을 옮겼습니다. skill-creator 플러그인으로 스킬이 의도한 상황에서만 트리거되는지 eval로 측정하고, 그 산출물을 워크스페이스 3개로 관리합니다. be 스킬은 framework-agnostic 지식과 Fastify·NestJS 프레임워크별 지식을 분리해, 같은 도메인 안에서도 스택에 따라 다른 참조 파일이 활성화되도록 재구성했습니다.",
         },
         {
           number: "03",
@@ -271,7 +271,7 @@ export const projects: Project[] = [
         documentsLabel: "시스템 구성",
         documents: [
           {
-            title: "코어 에이전트 (11개)",
+            title: "코어 에이전트 (9개)",
             emoji: "🧠",
             headers: ["파일", "모델", "설명"],
             rows: [
@@ -280,10 +280,8 @@ export const projects: Project[] = [
               ["pre-planner.md", "opus", "사전 요구사항 분석, 모호성 식별"],
               ["plan-reviewer.md", "opus", "계획 검토 및 검증"],
               ["oracle.md", "opus", "아키텍처 설계, 고난이도 디버깅 컨설팅"],
-              ["analyzer.md", "opus", "코드베이스 분석 (read-only)"],
-              ["deep-worker.md", "opus", "자율 심층 작업, 목표 지향 실행"],
+              ["analyzer.md", "sonnet", "코드베이스 분석 (read-only)"],
               ["librarian.md", "opus", "외부 문서/OSS 검색, 공식 문서 참조"],
-              ["delegator.md", "sonnet", "범용 작업 위임 및 조율"],
               ["search.md", "haiku", "빠른 팩트 조회, 파일/경로 검색"],
               ["media-reader.md", "sonnet", "PDF, 이미지 등 미디어 파일 해석"],
             ],
@@ -298,23 +296,23 @@ export const projects: Project[] = [
               ["designer.md", "sonnet", "시니어 프로덕트 디자이너 (UI/UX, 디자인 시스템)"],
               ["po.md", "sonnet", "시니어 프로덕트 오너 (제품 전략, PRD, 로드맵)"],
               ["qa.md", "sonnet", "시니어 QA 엔지니어 (테스트 전략, 자동화, 보안)"],
-              ["ops-lead.md", "opus", "클라이언트 운영 총괄 (프로젝트 관리, CI/CD)"],
+              ["ops-lead.md", "sonnet", "클라이언트 운영 총괄 (프로젝트 관리, CI/CD)"],
               ["data-analyst.md", "opus", "시니어 데이터 애널리스트 (SQL, 퍼널/코호트 분석)"],
             ],
           },
           {
-            title: "도메인 스킬 (7개, 177+ 참조 파일)",
+            title: "도메인 스킬 (7개, 196개 참조 파일)",
             emoji: "📚",
             description: "각 전문가 에이전트의 지식 베이스. SKILL.md(진입점 + 태스크-지식 매핑 테이블)와 도메인별 참조 파일로 구성된다. 작업 맥락에 따라 자동 활성화.",
             headers: ["스킬", "역할", "참조 파일"],
             rows: [
-              ["be", "백엔드 — API 설계, DB, 보안, 캐싱, 분산 시스템, 성능", "25개"],
+              ["be", "백엔드 — Node.js/TS, PostgreSQL/Drizzle, Redis, BullMQ, Fastify 5 / NestJS 11 variant", "44개"],
               ["fe", "프론트엔드 — React/Next.js, 상태 관리, 테스트, 성능, 접근성", "32개"],
-              ["designer", "디자인 — UI/UX, 디자인 시스템, 토큰, 접근성, 리서치", "25개"],
-              ["po", "프로덕트 — 전략, PRD, 우선순위, 로드맵, 사용자 리서치", "25개"],
-              ["qa", "QA — 테스트 전략, 자동화, 성능/보안 테스트, 정적 분석", "25개"],
-              ["ops-lead", "운영 — 프로젝트 관리, 클라이언트, SLA, 프로세스 최적화", "25개"],
-              ["data-analyst", "데이터 — SQL, 퍼널/코호트 분석, A/B 테스트, 대시보드", "25개"],
+              ["designer", "디자인 — UI/UX, 디자인 시스템, 토큰, 접근성, 리서치", "24개"],
+              ["po", "프로덕트 — 전략, PRD, 우선순위, 로드맵, 사용자 리서치", "24개"],
+              ["qa", "QA — 테스트 전략, 자동화, 성능/보안 테스트, 정적 분석", "24개"],
+              ["ops-lead", "운영 — 프로젝트 관리, 클라이언트, SLA, 프로세스 최적화", "24개"],
+              ["data-analyst", "데이터 — SQL, 퍼널/코호트 분석, A/B 테스트, 대시보드", "24개"],
             ],
           },
           {
@@ -327,9 +325,20 @@ export const projects: Project[] = [
               ["mcp-builder", "MCP(Model Context Protocol) 서버 설계 및 구축 가이드 (Python/Node)"],
               ["pdf", "PDF 읽기·병합·분할·워터마크·폼 작성·OCR 등 전방위 PDF 처리"],
               ["pptx", "PPTX 읽기·생성·편집·템플릿 작업 (markitdown + pptxgenjs 기반)"],
+              ["planning-workflow", "도메인 스페셜리스트의 \"플랜 모드\" 트리거 시 표준 계획 수립 5단계 워크플로우"],
               ["remotion-best-practices", "Remotion(React 비디오) 개발 베스트 프랙티스 (30개+ 규칙)"],
-              ["vercel-react-best-practices", "Vercel 엔지니어링 기반 React/Next.js 성능 최적화 64개 규칙"],
               ["web-design-guidelines", "Vercel Web Interface Guidelines 기반 UI 접근성·UX 가이드"],
+            ],
+          },
+          {
+            title: "평가 워크스페이스 (3개)",
+            emoji: "🧪",
+            description: "skill-creator 플러그인으로 스킬 트리거 정확도를 측정한 산출물. 스킬이 의도한 상황에서만 활성화되는지 eval로 검증하고, 결과를 바탕으로 SKILL.md의 description을 개선한다.",
+            headers: ["워크스페이스", "대상 스킬", "측정 시나리오"],
+            rows: [
+              ["fe-workspace", "fe", "component-building, code-review, test-writing"],
+              ["fe-performance-workspace", "fe (성능)", "ssr-boundary, react-compiler-memo, code-splitting"],
+              ["po-workspace", "po", "prd-writing, prioritization-rice, implicit-feature-decision"],
             ],
           },
           {
@@ -371,14 +380,15 @@ export const projects: Project[] = [
             ],
           },
           {
-            title: "이벤트 훅 (4개)",
+            title: "이벤트 훅",
             emoji: "🔔",
+            description: "settings.json의 hooks에 등록된 항목. 원격 알림은 셸 스크립트로, macOS 로컬 알림은 인라인 osascript로 처리한다.",
             headers: ["훅", "이벤트", "역할"],
             rows: [
               ["claude-remote-notification.sh", "Notification", "원격 알림 전송"],
+              ["인라인 osascript", "Notification", "macOS 로컬 알림"],
               ["claude-remote-session-start.sh", "SessionStart", "세션 시작 알림"],
               ["claude-remote-stop.sh", "Stop", "세션 종료 알림"],
-              ["notify.sh", "Notification, Stop", "macOS 로컬 알림"],
             ],
           },
           {
