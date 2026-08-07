@@ -122,7 +122,7 @@ export const projects: Project[] = [
     caseStudy: {
       category: "AI Agent Engineering",
       impact: "전문 에이전트 팀이 협업하는 AI 네이티브 개발 환경",
-      period: "2025.02 — ing",
+      period: "2026.01 — ing",
       role: "Harness Engineering",
       teamSize: "",
       overview:
